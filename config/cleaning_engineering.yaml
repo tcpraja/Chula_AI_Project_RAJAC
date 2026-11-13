@@ -46,3 +46,15 @@ baseline:
 drop_from_clean: [fuel_rate_true_kgh, true_synthetic_best_action, scenario_id, is_fault_injected, quality_flag,
                   advice_eligibility, HTF_rho_kgm3, HTF_cp_kJkgK]
 rename_reported: {Q_out_MW: rep_Q_out_MW, Q_in_MW: rep_Q_in_MW, eta_direct_pct: rep_eta_direct_pct, SFC_kg_GJ: rep_SFC_kg_GJ}
+model:                             # Phase 3, frozen in reports/model_card.md before training
+  seed: 42
+  split: [0.6, 0.2, 0.2]
+  purge_steps: 12                    # amended from 3 (critic K19): >= longest feature look-back
+  grid: [[3, 0.05, 300, 20], [3, 0.1, 200, 20], [5, 0.05, 300, 20], [5, 0.1, 200, 40], [8, 0.05, 300, 40], [3, 0.03, 500, 20]]
+  conformal_coverage: 0.90
+  mape_min_y_kgh: 500
+  n_boot: 300
+  perm_repeats: 5
+  moisture_bands: [14, 22]
+  load_bands: [7.5, 9.5]
+  selection: {margin: 0.10, coverage_min: 0.80, gap_max: 0.50, worst_seg_max: 3.0, persistence_margin: 0.05, leak_r2: 0.995}

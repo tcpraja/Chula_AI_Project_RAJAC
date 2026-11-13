@@ -1,4 +1,4 @@
-"""Pipeline stages. Phase 2: generate, clean, baseline. Later phases add train, optimize, shadow, final, dryrun.
+"""Pipeline stages. Phase 3: generate, clean, baseline, train. Later phases add train, optimize, shadow, final, dryrun.
 
 Run: python -m src.pipeline --stage all|generate|clean|baseline [--site <yaml>] [--source synthetic|csv --path <file>]
 """
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw_synthetic" / "synthetic_heater_c_5min.csv"
 CLEAN = ROOT / "data" / "clean" / "clean_heater_c.csv"
 REJ = ROOT / "data" / "clean" / "rejected_rows.csv"
-LATER = ("train", "optimize", "shadow", "final", "dryrun")
+LATER = ("optimize", "shadow", "final", "dryrun")
 
 
 def stage_generate():
@@ -25,14 +25,20 @@ def stage_generate():
     print(f"generate: main {res['main'].shape}, stress {st['main'].shape}")
 
 
-def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
-    cfg = cleaning.load_cfg(cfg_path)
-    raw = pd.read_csv(raw_path)
+def clean_frame(raw, cfg):
+    """raw -> (full engineered clean frame with eligibility, rejected rows, report, lag). Pure function."""
     probe, _, _ = cleaning.clean(raw, cfg, lag_steps=0)
     lag, rs = cleaning.estimate_lag(probe, cfg, until_frac=cfg["lag"]["train_frac"])
     good, rej, rep = cleaning.clean(raw, cfg, lag_steps=lag)
     full = engineering.compute(good, cfg)
     full["eligibility"] = engineering.layer1_layer2(full, cfg)
+    return full, rej, rep, lag, rs
+
+
+def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
+    cfg = cleaning.load_cfg(cfg_path)
+    raw = pd.read_csv(raw_path)
+    full, rej, rep, lag, rs = clean_frame(raw, cfg)
     out, rejected = Path(out), Path(rejected)
     out.parent.mkdir(parents=True, exist_ok=True)
     full.round(5).to_csv(out, index=False)
@@ -61,9 +67,17 @@ def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
     return rep
 
 
+def stage_train():
+    from src import train, train_extras
+    r = train.run()
+    print(train.table_print(r["tbl"], train.NAMES))
+    print("selected:", r["chosen"], "| best reference:", r["best_ref"], "| beats it (val/test):", r["beats_ref"], r["beats_test"])
+    train_extras.run(r)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", *LATER])
+    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", "train", *LATER])
     ap.add_argument("--site", default=None, help="site yaml (thresholds); default config/cleaning_engineering.yaml")
     ap.add_argument("--source", default="synthetic", choices=["synthetic", "csv"])
     ap.add_argument("--path", default=None, help="raw CSV when --source csv")
@@ -78,6 +92,8 @@ def main():
     if a.stage in ("all", "baseline"):
         from src import baseline
         baseline.run()
+    if a.stage in ("all", "train"):
+        stage_train()
 
 
 if __name__ == "__main__":
