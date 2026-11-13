@@ -1,0 +1,32 @@
+# Advisory guardrail limits and optimizer weights (Phase 4, SPEC C7).
+# SYNTHETIC normalized envelopes, ASSUMED / NOT APPROVED. Never real plant limits (CLAUDE rule 4).
+# A real site config must replace these; any limit set to REQUIRES_OEM_APPROVAL forces NO_ADVICE (LIMITS_NOT_APPROVED).
+provenance: SYNTHETIC_ASSUMED_NOT_APPROVED
+limits:
+  draft_band_pa: [-60.0, -10.0]      # negative = normal; zero/positive = unsafe
+  o2_floor_pct: 5.0
+  co_limit_ppm: 250.0
+  furnace_temp_limit_c: 1000.0
+  htf_out_limit_c: 300.0
+  eta_valid: [0.40, 0.90]
+  flow_valid_m3h: [500.0, 900.0]
+  stable_steps: 12                   # 60 min of steady, contiguous, unblocked rows
+  max_step_fd_pct: 4.0
+  max_step_grate_pct: 4.0
+  fd_range_pct: [20.0, 100.0]
+  grate_range_pct: [0.0, 100.0]
+  interval_width_max_sfc_kg_gj: 3.0  # 90 % interval width of the predicted SFC change
+optimizer:                           # tuning weights, OWN-ESTIMATE (arbitrary, reported in the packet)
+  grid_steps_fd: [-4, -2, 0, 2, 4]
+  grid_steps_grate: [-4, -2, 0, 2, 4]
+  lambda_fan_kg_gj_per_kw: 0.02      # lambda1: kg/GJ-equivalent per kW of FD fan power
+  lambda_move_kg_gj_per_pct: 0.03    # lambda2: per % of command move (|dFD| + |dGrate|)
+  lambda_width: 0.25                 # lambda3: per kg/GJ of interval width
+  min_benefit_sfc_kg_gj: 0.0         # pessimistic (95th pct) SFC change must be below minus this
+  o2_margin_pct: 0.3                 # candidate O2 must stay this far above the floor
+  co_margin_factor: 1.25             # predicted CO x factor must stay below the limit
+  ood_quantile: 0.995
+  n_boot: 200
+  seed: 42
+  ci_level: 0.90
+  combo_max_step_pct: null           # null = full 5x5 grid; 2 = two-axis moves only up to 2 % (sensitivity run)

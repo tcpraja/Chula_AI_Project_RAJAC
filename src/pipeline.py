@@ -1,4 +1,4 @@
-"""Pipeline stages. Phase 3: generate, clean, baseline, train. Later phases add train, optimize, shadow, final, dryrun.
+"""Pipeline stages. Phase 4: generate, clean, baseline, train, optimize. Later phases add shadow, final, dryrun.
 
 Run: python -m src.pipeline --stage all|generate|clean|baseline [--site <yaml>] [--source synthetic|csv --path <file>]
 """
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw_synthetic" / "synthetic_heater_c_5min.csv"
 CLEAN = ROOT / "data" / "clean" / "clean_heater_c.csv"
 REJ = ROOT / "data" / "clean" / "rejected_rows.csv"
-LATER = ("optimize", "shadow", "final", "dryrun")
+LATER = ("shadow", "final", "dryrun")
 
 
 def stage_generate():
@@ -75,9 +75,14 @@ def stage_train():
     train_extras.run(r)
 
 
+def stage_optimize():
+    from src import compare
+    compare.run("test")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", "train", *LATER])
+    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", "train", "optimize", *LATER])
     ap.add_argument("--site", default=None, help="site yaml (thresholds); default config/cleaning_engineering.yaml")
     ap.add_argument("--source", default="synthetic", choices=["synthetic", "csv"])
     ap.add_argument("--path", default=None, help="raw CSV when --source csv")
@@ -94,6 +99,8 @@ def main():
         baseline.run()
     if a.stage in ("all", "train"):
         stage_train()
+    if a.stage in ("all", "optimize"):
+        stage_optimize()
 
 
 if __name__ == "__main__":

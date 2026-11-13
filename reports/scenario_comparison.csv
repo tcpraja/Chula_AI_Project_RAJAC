@@ -1,0 +1,9 @@
+split,method,subset,n_rows,n_target_rows,alerts,hit_exact,hit_rate_exact,hit_rate_any_alert,hit_rate_direction,false_alerts,false_alert_rate,precision_exact,provenance
+test,AI_advisory,actionable(gain>=0.15pp),1707,1491,708,134.0,0.0899,0.4326,0.1737,63,0.2917,0.1893,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,AI_advisory,avoidable(gain>=1.0pp),1707,309,708,31.0,0.1003,0.3495,0.123,600,0.4292,0.0438,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,rule_P75_alert_only(no action given),actionable(gain>=0.15pp),1707,1491,367,,,0.224,,33,0.1528,,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,rule_P75_alert_only(no action given),avoidable(gain>=1.0pp),1707,309,367,,,0.2104,,302,0.216,,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,rule_P75+default_action(FD-4),actionable(gain>=0.15pp),1707,1491,367,128.0,0.0858,0.224,0.0926,33,0.1528,0.3488,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,rule_P75+default_action(FD-4),avoidable(gain>=1.0pp),1707,309,367,25.0,0.0809,0.2104,0.0809,302,0.216,0.0681,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,no_change,actionable(gain>=0.15pp),1707,1491,0,0.0,0.0,0.0,0.0,0,0.0,0.0,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
+test,no_change,avoidable(gain>=1.0pp),1707,309,0,0.0,0.0,0.0,0.0,0,0.0,0.0,SYNTHETIC; test-period rows with rule P75 defined; truth = generator labels (evaluation only)
