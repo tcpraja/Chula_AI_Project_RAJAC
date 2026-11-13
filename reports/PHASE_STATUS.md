@@ -1,5 +1,3 @@
-Current phase: 0 (rev B) — complete, awaiting "APPROVE PHASE 0"
-Phase 0 rev B: definitions + success criteria added; provenance flagged; assumptions A01-A20; RACI/PDPA expanded.
-Tests: 2 passed (word-boundary denylist scan). Packet: reports/phase_0_packet.md.
-Open: confirm tag labels in 02; confirm window rules and success criteria; option quotes needed.
-Next: Phase 1 after approval.
+Current phase: 0 approved; Phase 1 not started (awaiting Phase 1 prompt)
+Phase 0 rev B approved by user. Packet: reports/phase_0_packet.md. Tests: 2 passed.
+Open items carried forward: tag labels in 02 stay internal; window rules/success criteria in 00 accepted as proposed; option quotes needed.
