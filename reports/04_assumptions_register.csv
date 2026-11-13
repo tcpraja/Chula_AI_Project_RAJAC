@@ -1,0 +1,14 @@
+id,parameter,value_or_range,provenance,effect_on_model,validation_owner,state
+A01,Heat demand,6-11 MW,SPEC C5 (ASSUMED synthetic envelope),Sets load range and SFC scale,Process engineer,ASSUMED
+A02,Fuel moisture,8-30 %wb,SPEC C5,Drives LHV and combustion difficulty,Process engineer + fuel supplier,ASSUMED
+A03,Fuel LHV as-fired,12-18 MJ/kg (falls with moisture),SPEC C5,Converts fuel kg to energy,Energy manager (lab assay),ASSUMED
+A04,Latent efficiency eta,0.62-0.72 centre 0.675,SPEC C5,Baseline efficiency and avoidable-SFC headroom,Energy manager,ASSUMED
+A05,HTF flow,500-900 m3/h,SPEC C5,Heat-balance scale,Process engineer,ASSUMED
+A06,HTF temperatures,Inside property table (SPEC C4),SPEC C5,Prevents cp/rho extrapolation,Process engineer + HTF datasheet,ASSUMED
+A07,Flue O2,5-12 % dry,SPEC C5,Combustion quality signal,Process engineer,ASSUMED
+A08,FD/ID/grate commands,0-100 %,SPEC C5,Action space for simulated options,OEM + operators,ASSUMED
+A09,Draft normal band,Negative; zero or positive = unsafe,SPEC C5,Hard guardrail; forces NO_ADVICE,EHS + OEM,ASSUMED
+A10,CO availability,60 % of days,SPEC C5,Missing-data handling tested,OT/IT,ASSUMED
+A11,Sample interval,5 min,CLAUDE.md conventions,Window and lag definitions,OT/IT (historian),ASSUMED
+A12,Operator action effect sizes,Generator-defined (Phase 2),OWN-ESTIMATE (method TBD),Synthetic gains are illustrations only,Process engineer + OEM,ASSUMED
+A13,Operational limits in code,Normalized synthetic; REQUIRES_OEM_APPROVAL for real,CLAUDE.md rule 4,Real limits only from signed site config,OEM + EHS,ASSUMED

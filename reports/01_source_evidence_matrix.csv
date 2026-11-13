@@ -1,0 +1,10 @@
+source_id,source_description,filename_or_ref,read_by_ai_tool,evidence_state,qualitative_content_used,used_for,limitations
+S01,Course midterm proposal (PDF),[filename withheld],no - confidential,SPEC C1 summary only,Problem framing and baseline concern (fuel above design benchmark),Scope charter; problem statement,Numbers not transcribed; unverified
+S02,Requirements document (docx),[filename withheld - contains denylisted term],no - confidential,SPEC C1 summary only,Build requirements for the AI solution,Scope; MVP question,Content not read by tool
+S03,Process and instrumentation diagram (PDF),PID.pdf,no - confidential,SPEC C1 summary only,Qualitative equipment list: travelling-grate furnace; FD+ID fans; dust collection; economizer/air preheater; HTF loop; soot blowing; ash removal,PFD figure 05; tag inventory,Tag-to-loop mapping unverified
+S04,Interlock checking document (PDF),Interlock checking document.pdf,no - confidential,SPEC C1 summary only,Existence of BMS/SIS interlocks (no settings),Safety gate 07; guardrail design,No trip settings known or used
+S05,HMI screenshot 1 (image),HMI_1.jpg,no - confidential,SPEC C1 summary only,Displayed variable list,Tag inventory 02 (observed flag),Values not transcribed
+S06,HMI screenshot 2 (image),HMI_2.png,no - confidential,SPEC C1 summary only,Displayed variable list,Tag inventory 02 (observed flag),Values not transcribed
+S07,Project specification,docs/SPEC.md C1 C2 C5 C8,yes - in repo,Project-controlled spec,Candidate tags; synthetic envelope; course rules,All Phase 0 files,Candidate tags need on-site verification
+S08,Pilot specification,docs/PILOT_SPEC.md,yes - in repo,Proposed targets,Targets and stop conditions,Charter success criteria; RACI,Targets proposed not approved
+S09,Unavailable measurements,n/a,n/a,Not on HMI per SPEC C1,CO; measured air flow; per-lot LHV; online moisture,Data dictionary UNAVAILABLE class,Must be synthetic in Level 1; lab/sensor plan needed in Level 2
