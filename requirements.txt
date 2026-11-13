@@ -1,0 +1,17 @@
+﻿numpy
+pandas
+scipy
+scikit-learn
+joblib
+pyyaml
+pydantic
+plotly
+matplotlib
+streamlit
+pytest
+pytest-cov
+openpyxl
+python-pptx
+reportlab
+pypdf
+kaleido

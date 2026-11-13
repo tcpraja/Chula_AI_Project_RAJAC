@@ -1,0 +1,1 @@
+{"permissions":{"deny":["Read(../company_private/**)","Read(./company_private/**)","Read(D:/heater_c_REAL/**)","Bash(curl:*)","Bash(wget:*)","Bash(Invoke-WebRequest:*)","WebFetch","WebSearch"],"allow":["Bash(python:*)","Bash(pytest:*)","Bash(streamlit:*)","Bash(git add:*)","Bash(git commit:*)","Bash(git status)"]}}

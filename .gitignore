@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+company_private/
+.streamlit/secrets.toml
+data/operator_log.db
