@@ -1,31 +1,31 @@
-variable,alias,group,unit,class,simulated_availability,actual_availability,notes
-Ambient temperature,SYN_AMB_T,ambient,degC,VALUABLE,always,unknown,Weak driver of air density and losses
-Fuel lot ID,SYN_LOT_ID,fuel lot,id,ESSENTIAL_COMBUSTION,always,unknown,Needed for lot-aware splits
-Fuel moisture,SYN_MOIST,fuel lot,%wb,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (not on HMI),Drives LHV
-Fuel LHV as-fired,SYN_LHV_LOT,fuel lot,MJ/kg,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (infrequent tests),Missing LHV gives UNVERIFIED PROXY or NO_ADVICE
-Fuel feed rate,SYN_FUEL_RATE,fuel rate,kg/s,ESSENTIAL_ENERGY,always,HMI (low confidence),Window/reset unknown
-Fuel daily total,SYN_FUEL_DAY,fuel rate,kg/day,VALUABLE,always,HMI (low confidence),Reconciliation only
-Feeder run status,SYN_FEEDER_RUN,fuel rate,bool,VALUABLE,always,HMI,Stability screening
-HTF flow,SYN_FT_HTF,HTF,m3/h,ESSENTIAL_ENERGY,always,HMI,Needs HTF property table
-HTF return temperature,SYN_TE_HTF_IN,HTF,degC,ESSENTIAL_ENERGY,always,HMI,Never extrapolate property table
-HTF supply temperature,SYN_TE_HTF_OUT,HTF,degC,ESSENTIAL_ENERGY,always,HMI,
-HTF controlled temperature and setpoint,SYN_TE_CTRL,HTF,degC,VALUABLE,always,HMI,Stability and target
-HTF bypass state,SYN_HTF_BYPASS,HTF,fraction,VALUABLE,always,unknown,Affects heat balance; existence to verify
-Useful heat (computed),SYN_Q_USEFUL,load,MW,ESSENTIAL_ENERGY,computed,computed from flow x dT x cp,Own computation; not the HMI figure
-Reported heat rate,SYN_Q_RATE,load,Mkcal/h,VALUABLE,always,HMI (method unknown),Cross-check only
-Process load/demand,SYN_LOAD,load,MW,VALUABLE,always,derived,Synthetic demand 6-11 MW (ASSUMED)
-Flue O2,SYN_O2,O2/CO,% dry,ESSENTIAL_COMBUSTION,always,HMI (basis unknown),Wet/dry basis to verify
-Flue CO,SYN_CO,O2/CO,ppm,ESSENTIAL_COMBUSTION,60 % of days,UNAVAILABLE (not on HMI),Missing CO means combustion quality unverified
-Furnace temperature,SYN_TE_FURN,furnace/draft,degC,VALUABLE,always,HMI,
-Flue temperature,SYN_TE_FLUE,furnace/draft,degC,ESSENTIAL_COMBUSTION,always,HMI,Stack loss driver
-Furnace draft,SYN_DRAFT,furnace/draft,Pa,ESSENTIAL_COMBUSTION,always,HMI,Zero or positive is unsafe
-FD fan command,SYN_FD_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow
-ID fan command,SYN_ID_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow
-Combustion air flow,SYN_AIR_FLOW,fans/air,kg/s,UNAVAILABLE,always,UNAVAILABLE (not measured),Proxy only via fan commands
-Grate command,SYN_GRATE_CMD,grate,%,VALUABLE,always,HMI (mapping unverified),
-Main safety status,SYN_SAFE_OK,alarms/interlocks,bool,ESSENTIAL_COMBUSTION,always,HMI (read-only copy),Eligibility gate; source of truth BMS/SIS
-Active alarms,SYN_ALARM_ACTIVE,alarms/interlocks,count,ESSENTIAL_COMBUSTION,always,HMI,Eligibility gate
-Ash removal event,SYN_ASH_EVENT,ash,bool,VALUABLE,events,unknown,Possible transient
-Soot-blowing/maintenance flag,SYN_MAINT_FLAG,maintenance,bool,VALUABLE,events,unknown,Exclude windows
-Specific fuel consumption,SYN_SFC,energy/cost,kg/MWh_th,ESSENTIAL_ENERGY,computed,computed,Primary KPI; formula in SPEC C3
-Fuel cost,SYN_FUEL_COST,energy/cost,currency/kg,VALUABLE,assumed constant,unknown,Money not guessed without measurement
+variable,alias,group,unit,class,simulated_availability,actual_availability,notes,valid_range_rule,missing_value_rule,time_alignment
+Ambient temperature,SYN_AMB_T,ambient,degC,VALUABLE,always,unknown,Weak driver of air density and losses,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Fuel lot ID,SYN_LOT_ID,fuel lot,id,ESSENTIAL_COMBUSTION,always,unknown,Needed for lot-aware splits,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Fuel moisture,SYN_MOIST,fuel lot,%wb,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (not on HMI),Drives LHV,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only
+Fuel LHV as-fired,SYN_LHV_LOT,fuel lot,MJ/kg,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (infrequent tests),Missing LHV gives UNVERIFIED PROXY or NO_ADVICE,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only
+Fuel feed rate,SYN_FUEL_RATE,fuel rate,kg/s,ESSENTIAL_ENERGY,always,HMI (low confidence),Window/reset unknown,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Fuel daily total,SYN_FUEL_DAY,fuel rate,kg/day,VALUABLE,always,HMI (low confidence),Reconciliation only,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Feeder run status,SYN_FEEDER_RUN,fuel rate,bool,VALUABLE,always,HMI,Stability screening,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+HTF flow,SYN_FT_HTF,HTF,m3/h,ESSENTIAL_ENERGY,always,HMI,Needs HTF property table,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+HTF return temperature,SYN_TE_HTF_IN,HTF,degC,ESSENTIAL_ENERGY,always,HMI,Never extrapolate property table,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+HTF supply temperature,SYN_TE_HTF_OUT,HTF,degC,ESSENTIAL_ENERGY,always,HMI,,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+HTF controlled temperature and setpoint,SYN_TE_CTRL,HTF,degC,VALUABLE,always,HMI,Stability and target,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+HTF bypass state,SYN_HTF_BYPASS,HTF,fraction,VALUABLE,always,unknown,Affects heat balance; existence to verify,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Useful heat (computed),SYN_Q_USEFUL,load,MW,ESSENTIAL_ENERGY,computed,computed from flow x dT x cp,Own computation; not the HMI figure,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Reported heat rate,SYN_Q_RATE,load,Mkcal/h,VALUABLE,always,HMI (method unknown),Cross-check only,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Process load/demand,SYN_LOAD,load,MW,VALUABLE,always,derived,Synthetic demand 6-11 MW (ASSUMED),within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Flue O2,SYN_O2,O2/CO,% dry,ESSENTIAL_COMBUSTION,always,HMI (basis unknown),Wet/dry basis to verify,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Flue CO,SYN_CO,O2/CO,ppm,ESSENTIAL_COMBUSTION,60 % of days,UNAVAILABLE (not on HMI),Missing CO means combustion quality unverified,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Furnace temperature,SYN_TE_FURN,furnace/draft,degC,VALUABLE,always,HMI,,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Flue temperature,SYN_TE_FLUE,furnace/draft,degC,ESSENTIAL_COMBUSTION,always,HMI,Stack loss driver,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Furnace draft,SYN_DRAFT,furnace/draft,Pa,ESSENTIAL_COMBUSTION,always,HMI,Zero or positive is unsafe,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+FD fan command,SYN_FD_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+ID fan command,SYN_ID_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Combustion air flow,SYN_AIR_FLOW,fans/air,kg/s,UNAVAILABLE,always,UNAVAILABLE (not measured),Proxy only via fan commands,within synthetic envelope in config; outside = invalid,not used as model input in actual mode,trailing window only
+Grate command,SYN_GRATE_CMD,grate,%,VALUABLE,always,HMI (mapping unverified),,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Main safety status,SYN_SAFE_OK,alarms/interlocks,bool,ESSENTIAL_COMBUSTION,always,HMI (read-only copy),Eligibility gate; source of truth BMS/SIS,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Active alarms,SYN_ALARM_ACTIVE,alarms/interlocks,count,ESSENTIAL_COMBUSTION,always,HMI,Eligibility gate,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
+Ash removal event,SYN_ASH_EVENT,ash,bool,VALUABLE,events,unknown,Possible transient,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Soot-blowing/maintenance flag,SYN_MAINT_FLAG,maintenance,bool,VALUABLE,events,unknown,Exclude windows,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
+Specific fuel consumption,SYN_SFC,energy/cost,kg/MWh_th,ESSENTIAL_ENERGY,computed,computed,Primary KPI; formula SPEC C3. HMI heat is in Mkcal (1 Mkcal = 4.1868 GJ by IT definition); reconcile before comparing,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+Fuel cost,SYN_FUEL_COST,energy/cost,currency/kg,VALUABLE,assumed constant,unknown,Money not guessed without measurement,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15

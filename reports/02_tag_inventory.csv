@@ -1,26 +1,26 @@
-tag_label_candidate,alias,description,unit,group,confidence,data_source,observed_status,criticality,verification_needed
-FT-1-1,SYN_FT_HTF,HTF flow,m3/h,HTF,High,HMI+P&ID,observed,high,Confirm meter location and range
-TE-1-5,SYN_TE_HTF_IN,HTF return temperature,degC,HTF,High,HMI+P&ID,observed,high,Confirm element and calibration
-TE-1-1,SYN_TE_HTF_OUT,HTF supply temperature,degC,HTF,High,HMI+P&ID,observed,high,Confirm element and calibration
-TE-1-2 (+SP),SYN_TE_CTRL,Controlled HTF temperature and setpoint,degC,HTF,Medium,HMI,observed,medium,Confirm which temperature is controlled and SP source
-TE-3-1/TE-3-2,SYN_TE_FURN,Furnace temperature,degC,furnace/draft,Medium,HMI,observed,medium,Confirm which element; averaging; range
-TE-3-3,SYN_TE_FLUE,Flue gas temperature,degC,furnace/draft,Medium,HMI,observed,medium,Confirm location (before/after economizer)
-DFT-1-1 (alias DT),SYN_DRAFT,Furnace draft,Pa (mmWC x 9.80665),furnace/draft,Medium,HMI,observed,high,Confirm alias DT vs DFT; sign convention
-O2,SYN_O2,Flue O2,%,O2/CO,Medium,HMI,observed,high,Wet or dry basis; sensor location
-M4,SYN_FD_CMD,Forced-draft fan command,%,fans/air,Low,HMI,observed,medium,Fan mapping M4/M5 unverified; command is not airflow
-M5,SYN_ID_CMD,Induced-draft fan command,%,fans/air,Low,HMI,observed,medium,Fan mapping M4/M5 unverified; command is not airflow
-M9,SYN_GRATE_CMD,Grate command,%,grate,Low,HMI,observed,medium,Mapping unverified; speed vs stroke
-(biomass kg/s),SYN_FUEL_RATE,Biomass feed rate,kg/s,fuel rate,Low,HMI,observed,high,Window and source (feeder calc vs scale); reset time
-(biomass kg/day),SYN_FUEL_DAY,Biomass daily total,kg/day,fuel rate,Low,HMI,observed,medium,Day boundary/reset; reconcile with kg/s
-(heat Mkcal/h),SYN_Q_RATE,Reported heat output,Mkcal/h,energy/cost,Low,HMI,observed,high,Calculation method and cp used
-(heat Mkcal/day),SYN_Q_DAY,Reported daily heat total,Mkcal/day,energy/cost,Low,HMI,observed,medium,Reconcile with rate integral
-(main safety status),SYN_SAFE_OK,Main safety status,bool,alarms/interlocks,Low,HMI,observed,high,Source of truth is BMS/SIS; read-only copy only
-(feeder motors),SYN_FEEDER_RUN,Feeder motor run status,bool,fuel rate,Low,HMI,observed,medium,Number of feeders and tag naming
-(alarm list),SYN_ALARM_ACTIVE,Active alarms,count/code,alarms/interlocks,Low,HMI,observed,high,Alarm export format and priorities
-(CO),SYN_CO,Flue CO,ppm,O2/CO,Low,none,not_observed,high,Confirm whether analyser exists; SPEC assumes 60 % of days (synthetic)
-(measured air flow),SYN_AIR_FLOW,Combustion air flow,kg/s,fans/air,Low,none,not_observed,medium,Not measured; fan command is only a proxy
-(per-lot LHV),SYN_LHV_LOT,Fuel lower heating value per lot,MJ/kg,fuel lot,Low,none,not_observed,high,Lab assay plan; tests infrequent today
-(online moisture),SYN_MOIST,Fuel moisture,%wb,fuel lot,Low,none,not_observed,high,Lab/at-line method needed
-(ambient),SYN_AMB_T,Ambient temperature,degC,ambient,Low,none,not_observed,low,Source (weather station vs plant)
-(ash),SYN_ASH_EVENT,Ash removal event,bool,ash,Low,none,not_observed,low,Whether logged at all
-(maintenance),SYN_MAINT_FLAG,Maintenance/soot-blowing event,bool,maintenance,Low,none,not_observed,medium,Whether logged in a read-only accessible system
+tag_label_candidate,alias,description,unit,group,confidence,data_source,observed_status,criticality,verification_needed,provenance,criticality_basis,sample_rate_and_range
+FT-1-1,SYN_FT_HTF,HTF flow,m3/h,HTF,High,HMI (P&ID cross-check unverified),observed,high,Confirm meter location and range,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+TE-1-5,SYN_TE_HTF_IN,HTF return temperature,degC,HTF,High,HMI (P&ID cross-check unverified),observed,high,Confirm element and calibration,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+TE-1-1,SYN_TE_HTF_OUT,HTF supply temperature,degC,HTF,High,HMI (P&ID cross-check unverified),observed,high,Confirm element and calibration,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+TE-1-2 (+SP),SYN_TE_CTRL,Controlled HTF temperature and setpoint,degC,HTF,Medium,HMI,observed,medium,Confirm which temperature is controlled and SP source,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+TE-3-1/TE-3-2,SYN_TE_FURN,Furnace temperature,degC,furnace/draft,Medium,HMI,observed,medium,Confirm which element; averaging; range,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+TE-3-3,SYN_TE_FLUE,Flue gas temperature,degC,furnace/draft,Medium,HMI,observed,medium,Confirm location (before/after economizer),SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+DFT-1-1 (alias DT),SYN_DRAFT,Furnace draft,Pa (mmWC x 9.80665),furnace/draft,Medium,HMI,observed,high,Confirm alias DT vs DFT; sign convention,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+O2,SYN_O2,Flue O2,%,O2/CO,Medium,HMI,observed,high,Wet or dry basis; sensor location,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+M4,SYN_FD_CMD,Forced-draft fan command,%,fans/air,Low,HMI,observed,medium,Fan mapping M4/M5 unverified; command is not airflow,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+M5,SYN_ID_CMD,Induced-draft fan command,%,fans/air,Low,HMI,observed,medium,Fan mapping M4/M5 unverified; command is not airflow,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+M9,SYN_GRATE_CMD,Grate command,%,grate,Low,HMI,observed,medium,Mapping unverified; speed vs stroke,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(biomass kg/s),SYN_FUEL_RATE,Biomass feed rate,kg/s,fuel rate,Low,HMI,observed,high,Window and source (feeder calc vs scale); reset time,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(biomass kg/day),SYN_FUEL_DAY,Biomass daily total,kg/day,fuel rate,Low,HMI,observed,medium,Day boundary/reset; reconcile with kg/s,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(heat Mkcal/h),SYN_Q_RATE,Reported heat output,Mkcal/h,energy/cost,Low,HMI,observed,high,Calculation method and cp used,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(heat Mkcal/day),SYN_Q_DAY,Reported daily heat total,Mkcal/day,energy/cost,Low,HMI,observed,medium,Reconcile with rate integral,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(main safety status),SYN_SAFE_OK,Main safety status,bool,alarms/interlocks,Low,HMI,observed,high,Source of truth is BMS/SIS; read-only copy only,SPEC_C2,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(feeder motors),SYN_FEEDER_RUN,Feeder motor run status,bool,fuel rate,Low,HMI,observed,medium,"Number of feeders and tag naming; alias and criticality proposed, not from SPEC",PROPOSED_by_AI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(alarm list),SYN_ALARM_ACTIVE,Active alarms,count/code,alarms/interlocks,Low,HMI,observed,high,"Alarm export format and priorities; alias and criticality proposed, not from SPEC",PROPOSED_by_AI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(CO),SYN_CO,Flue CO,ppm,O2/CO,Low,none,not_observed,high,Confirm whether analyser exists; SPEC assumes 60 % of days (synthetic),SPEC_C1_not_on_HMI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(measured air flow),SYN_AIR_FLOW,Combustion air flow,kg/s,fans/air,Low,none,not_observed,medium,Not measured; fan command is only a proxy,SPEC_C1_not_on_HMI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(per-lot LHV),SYN_LHV_LOT,Fuel lower heating value per lot,MJ/kg,fuel lot,Low,none,not_observed,high,Lab assay plan; tests infrequent today,SPEC_C1_not_on_HMI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(online moisture),SYN_MOIST,Fuel moisture,%wb,fuel lot,Low,none,not_observed,high,Lab/at-line method needed,SPEC_C1_not_on_HMI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(ambient),SYN_AMB_T,Ambient temperature,degC,ambient,Low,none,not_observed,low,"Source (weather station vs plant); alias and criticality proposed, not from SPEC",PROPOSED_by_AI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(ash),SYN_ASH_EVENT,Ash removal event,bool,ash,Low,none,not_observed,low,"Whether logged at all; alias and criticality proposed, not from SPEC",PROPOSED_by_AI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)
+(maintenance),SYN_MAINT_FLAG,Maintenance/soot-blowing event,bool,maintenance,Low,none,not_observed,medium,"Whether logged in a read-only accessible system; alias and criticality proposed, not from SPEC",PROPOSED_by_AI,"AI judgment, needs process-engineer review",unknown - verify (assume 5 min synthetic)

@@ -1,15 +1,15 @@
-# 06 Options Comparison (SYNTHETIC / OWN-ESTIMATE; no real savings claimed)
-Cost ranges are OWN-ESTIMATE order-of-magnitude placeholders (THB, one heater, 6-week scope) to be replaced by quotes; they are not measured.
+# 06 Options Comparison (no money estimated; no real savings claimed)
+Cost is given as cost drivers plus "quote required". No currency amounts are guessed (C8: refuse to guess unmeasurable money).
 
-| Option | Cost range (OWN-ESTIMATE) | Complexity | Benefit | Limits | Risk | Testable now (synthetic)? |
-|---|---|---|---|---|---|---|
-| 1 No change | 0 | None | None; keeps current fuel-above-benchmark baseline | Operator-dependent air/grate, infrequent LHV tests persist | Continued avoidable fuel use | Yes: this is the baseline in simulation |
-| 2 Process change (SOP, fuel-lot LHV/moisture sampling, operator training) | Low (tens of kTHB) | Low | Better fuel data and consistent practice | Depends on discipline; no live detection | Drift back to old habits | Partly: generator can model operator variability |
-| 3 Simple automation (rule-based monitoring: O2/draft/flue-T thresholds, SFC regression, alerts) | Low-medium (≈ 100-300 kTHB) | Low-medium | Detect avoidable high SFC with transparent rules | Fixed thresholds; no ranking of actions | False alerts; rule rot | Yes: rule baseline + simple regression |
-| 4 AI (forecast next-interval fuel; rank simulated feasible actions with uncertainty) | Medium (≈ 300-800 kTHB incl. pilot support) | High | Possible ranking of actions beyond rules | Needs LHV/moisture/CO data; generalization unproven; explainability | Over-trust; leakage; unsafe advice | Yes, on synthetic ground truth only |
+| Option | Cost drivers (quote required) | Complexity | Benefit | Limits | Risk | Data source | Runs where | PDPA | Testable now (synthetic)? |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 No change | None | None | None; baseline stays | Operator-dependent air/grate, infrequent LHV tests persist | Continued avoidable fuel use | Existing HMI only | n/a | n/a | Yes: baseline in simulation |
+| 2 Process change (SOP, lot LHV/moisture sampling, training) | Lab time, sampling labour, training hours | Low | Better fuel data, consistent practice | Discipline-dependent; no live detection | Drift to old habits | Lab assays, shift logs | Paper/spreadsheet | Shift logs name operators: restrict access | Partly: generator models operator variability |
+| 3 Simple automation (rule monitoring + SFC regression + alerts) | Engineering hours, historian read access, display | Low-medium | Transparent detection of high SFC | Fixed thresholds; no action ranking | False alerts; rule rot | Historian export (read-only) | On-site read-only workstation | Alert acknowledgements pseudonymized | Yes: rules + regression comparator |
+| 4 AI (forecast next-interval fuel; rank simulated feasible actions with uncertainty) | Option 3 costs + data engineering, validation, model governance | High | Possible action ranking beyond rules | Needs LHV/moisture/CO data; generalization unproven | Over-trust, leakage, unsafe advice | Historian + lot assays | On-site read-only server, offline | As option 3 plus model-log retention | Yes: synthetic ground truth only |
 
 ## Choice rule
-AI (option 4) is chosen ONLY if Phase 3 shows model MAE ≥10 % below the simple regression (option 3) and ranked actions beat rule-based monitoring on held-out, lot-aware synthetic data. Otherwise option 3 (or 2) is recommended. Until Phase 3 completes, no option is selected.
+AI (option 4) is chosen ONLY if Phase 3 meets all success criteria in 00 (MAE ≥10 % below simple regression, better detection than rules at equal false-alert rate, 0 guardrail failures). Otherwise option 3, or 2, is recommended. No option is selected until Phase 3 completes.
 
 ## Common to all options
-Read-only; data stays on-site; operator decides; BMS/SIS/DCS remain control authorities; PDPA: no personal data in features, operator-log user IDs pseudonymized. Where it runs: offline workstation (Level 1), on-site read-only server (Level 2).
+Read-only; operator decides; BMS/SIS/DCS remain control authorities; no personal data in process features.
