@@ -1,0 +1,58 @@
+{
+ "n_raw": 18706,
+ "n_clean": 18655,
+ "n_rejected": 51,
+ "reject_counts": {
+  "FROZEN_SENSOR": 27,
+  "HEAT_IMPLAUSIBLE": 14,
+  "SCHEMA_INVALID": 7,
+  "FUEL_IMPLAUSIBLE": 3
+ },
+ "flag_counts": {
+  "after_gap": 7,
+  "totalizer_reset": 1,
+  "unit_suspect": 0,
+  "cmd_feedback_mismatch": 0,
+  "heat_balance_unverified": 191,
+  "volumetric_fuel": 1152
+ },
+ "gaps": 7,
+ "missing_rows": 21,
+ "lag_steps": 2,
+ "lag_corr": [
+  0.3739,
+  0.4663,
+  0.5215,
+  0.4158,
+  0.3519,
+  0.2755,
+  0.2112,
+  0.1646,
+  0.1288
+ ],
+ "eligibility": {
+  "NO_ADVICE": 10444,
+  "ELIGIBLE": 5023,
+  "DIAGNOSTIC_ONLY": 3188
+ },
+ "status_SFC": {
+  "CALCULATED": 15939,
+  "ESTIMATED": 2380,
+  "UNAVAILABLE": 336
+ },
+ "status_eta": {
+  "CALCULATED": 10956,
+  "ESTIMATED": 7369,
+  "UNAVAILABLE": 330
+ },
+ "status_Q_out": {
+  "CALCULATED": 17047,
+  "ESTIMATED": 1492,
+  "UNAVAILABLE": 116
+ },
+ "lhv_basis": {
+  "LAB_LOT": 12693,
+  "TRAILING_LOT_BAND": 5704,
+  "ENVELOPE_BAND": 258
+ }
+}

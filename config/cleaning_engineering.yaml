@@ -1,0 +1,48 @@
+# Tool-side thresholds for cleaning, engineering and baseline (Phase 2). Synthetic normalized values:
+# real limits only from a signed site config (CLAUDE rule 4). Units: Pa, degC, MW, kg/h, %.
+timezone: Asia/Bangkok
+heater_id: HEATER_C_SYNTHETIC
+step_min: 5
+frozen_run: 3                      # >2 identical samples = frozen (SPEC C7 layer 1)
+frozen_cols: [O2_pct_dry, HTF_flow_m3h, HTF_Tin_C, HTF_Tout_C, fuel_rate_measured_kgh, flue_temp_C]
+frozen_ignore_zero: [fuel_rate_measured_kgh]
+feeder_cap_kgh: 5000.0             # fuel-rate cross-check against feeder speed
+fuel_speed_mismatch: 0.35
+heat_max_mw: 13.75
+dT_valid_K: [5.0, 40.0]
+flow_valid_m3h: [500.0, 900.0]
+draft_band_pa: [-60.0, -10.0]
+draft_abs_max_pa: 500.0            # unit sanity (mmWC vs Pa slips)
+o2_floor: 5.0
+co_limit_ppm: 250.0
+furnace_temp_limit_c: 1000.0
+htf_out_limit_c: 300.0
+eta_valid: [0.40, 0.90]
+stable_steps: 12
+fan_rated_kw: {FD: 45.0, ID: 75.0}
+cmd_feedback_tol: 0.25
+cmd_feedback_min_cmd: 20.0
+unc:                               # standard uncertainties; 95 % intervals use z95
+  flow_rel: 0.02
+  dT_K: 0.5
+  fuel_belt_rel: 0.02
+  fuel_vol_rel: 0.10               # volumetric basis: wider
+  lhv_lab_abs_mjkg: 0.30
+  z95: 1.96
+lhv_band:
+  trailing_days: 7
+  min_lots: 3
+  envelope_mjkg: [12.0, 18.0]
+lag: {max_steps: 8, train_frac: 0.7, diff_steps: 3}   # 3-step differences suppress fuel-rate noise
+baseline:
+  train_frac: 0.7
+  avoidable_gain_pp: 1.0           # synthetic truth label: best-action eta gain >= this
+  band_mw: 1.0
+  trailing_days: 7
+  quantile: 0.75
+  min_obs: 30
+  n_boot: 500
+  seed: 42
+drop_from_clean: [fuel_rate_true_kgh, true_synthetic_best_action, scenario_id, is_fault_injected, quality_flag,
+                  advice_eligibility, HTF_rho_kgm3, HTF_cp_kJkgK]
+rename_reported: {Q_out_MW: rep_Q_out_MW, Q_in_MW: rep_Q_in_MW, eta_direct_pct: rep_eta_direct_pct, SFC_kg_GJ: rep_SFC_kg_GJ}
