@@ -1,3 +1,5 @@
-Current phase: 0 approved; Phase 1 not started (awaiting Phase 1 prompt)
-Phase 0 rev B approved by user. Packet: reports/phase_0_packet.md. Tests: 2 passed.
-Open items carried forward: tag labels in 02 stay internal; window rules/success criteria in 00 accepted as proposed; option quotes needed.
+Current phase: 1 complete, awaiting "APPROVE PHASE 1"
+Phase 0 approved (rev B). Phase 1: generator, HTF table, units, dictionary (106 cols), figs, data card done.
+Tests: 24 passed. Packet: reports/phase_1_packet.md.
+Open: eligibility 27 % by design; ranking easy by design; seed 101 not generated.
+Next: Phase 2 after approval.

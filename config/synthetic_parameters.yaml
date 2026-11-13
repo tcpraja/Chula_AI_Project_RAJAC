@@ -1,0 +1,176 @@
+# Synthetic generator parameters. ASSUMED / NOT APPROVED (SPEC C5, C6; assumptions register A01-A20).
+# All limits are arbitrary normalized synthetic envelopes, never real plant limits.
+heater_id: HEATER_C_SYNTHETIC
+start: "2026-01-05 00:00:00"   # local time, Asia/Bangkok, stored tz-naive
+step_min: 5
+fault_case_steps: 96            # each fault case = 8 h; fault block appended after the normal block
+startup_steps: 36
+standby_steps: 24
+restart_steps: 24
+trip_steps: 10
+
+demand:                         # A01 (MW)
+  min_mw: 6.0
+  max_mw: 11.0
+  base_mw: 8.6
+  daily_amp_mw: 1.3
+  level_sd_mw: 0.9
+  seg_steps: [24, 72]
+  ramp_steps: [4, 10]
+  ar_phi: 0.85
+  ar_sd_mw: 0.06
+
+fuel:                           # A02, A03, A19
+  lot_steps: [72, 216]          # 6-18 h
+  moisture_min: 8.0
+  moisture_max: 30.0
+  moisture_beta: [2.2, 3.0]
+  lhv_at_min_moisture: 18.2
+  lhv_slope_per_pct: 0.275
+  lhv_lot_sd: 0.25
+  lhv_min: 12.0
+  lhv_max: 18.0
+  bed_tau_min: [10.0, 20.0]
+  ash_range: [2.0, 9.0]
+  lhv_known_prob: 0.7
+  lab_lhv_sd: 0.15
+  lab_moist_sd: 0.5
+  lab_ash_sd: 0.3
+  lab_unburnt_sd: 0.3
+  lab_sample_step: 36           # lab ash/unburnt result for a lot appears this many steps after lot start
+  feeder_cap_kgh: 5000.0        # 100 % feeder speed
+  volumetric_bias_sd: 0.07
+  volumetric_all: false
+  volumetric_episodes_days: [[10, 12], [41, 43]]
+  belt_noise_sd: 0.012
+  vol_noise_sd: 0.02
+  price_index_base: 100.0
+  price_step_sd: 0.8
+
+combustion:                     # A04, A07, A08, A12 (generator-defined effect sizes, OWN-ESTIMATE)
+  eta_base: 0.695
+  eta_moist_per_pct: 0.0024
+  moist_ref: 19.0
+  foul_pen: 0.030
+  over_air_k: 0.0045
+  under_air_k: 0.008
+  grate_k: 0.0001
+  derate_pen: 0.012
+  sootblow_pen: 0.020
+  amb_k: 0.0003
+  ar_phi: 0.90
+  ar_sd: 0.003
+  eta_min: 0.50
+  eta_max: 0.74
+  o2_opt_base: 6.3
+  o2_opt_moist: 0.09
+  o2_opt_load: -0.25
+  o2_opt_min: 5.2
+  o2_opt_max: 10.0
+  fd_stoich_per_mw: 3.0
+  derate_factor: 0.85
+  g_opt_base: 40.0
+  g_opt_per_mw: 3.2
+  g_opt_moist: -0.5
+  controller_noise_sd: 0.015
+  lhv_ctrl_gain: 0.08
+  co_base_ppm: 25.0
+  co_amp_ppm: 700.0
+  co_decay: 1.1
+  co_o2_ref: 2.5
+  co_avail_prob: 0.6            # A10 (per day)
+  unburnt_base: 2.5
+  unburnt_low_o2: 0.9
+  unburnt_o2_ref: 7.0
+  unburnt_grate: 0.06
+  unburnt_grate_ref: 50.0
+
+fouling:
+  rate_per_step: 0.0022
+  soot_trigger: 0.70
+  soot_prob: 0.02
+  reset_to: 0.08
+  forced_at: 0.95
+  soot_steps: 2
+  dp_base_pa: 180.0
+  dp_gain_pa: 520.0
+
+htf:                            # A05, A06
+  sp_c: 275.0
+  flow_min: 500.0
+  flow_max: 900.0
+  flow_noise_sd: 0.05
+  flow_episodes_per_10d: 2.0
+  bypass_episodes_per_10d: 1.5
+  bypass_range: [0.05, 0.20]
+
+gas:
+  draft_gain: 2.2
+  draft_fd_coupling: 0.9
+  draft_offset: 5.0
+  draft_load_gain: 1.5
+  draft_noise_pa: 0.8
+  fan_fd_rated_kw: 45.0
+  fan_id_rated_kw: 75.0
+  fan_exponent: 3.0             # fan-law proxy, OWN-ESTIMATE
+
+operators:                      # A17
+  o2_target: 6.8
+  o2_noise: 0.5
+  grate_noise: 3.0
+  id_noise: 1.5
+  decision_steps: [4, 12]
+  load_trigger_mw: 0.6
+  explore_prob: 0.15
+  explore_o2: [-1.5, 2.0]
+  explore_grate: [-6.0, 6.0]
+  deadband: 1.0
+  shift_bias:
+    OP-A: {o2: -0.2, grate: 0.0}
+    OP-B: {o2: 0.3, grate: 2.0}
+    OP-C: {o2: 0.9, grate: -3.0}
+
+sensors:                        # A16
+  flow_sd: 0.004
+  temp_sd: 0.12
+  temp_bias: 0.10
+  o2_sd: 0.08
+  o2_lag: 0.5
+  co_sd_log: 0.15
+  fuel_fouling_none: true
+
+guardrails:                     # normalized synthetic, never real limits (C7)
+  draft_band_pa: [-60.0, -10.0]
+  draft_sp_pa: -35.0
+  o2_floor: 5.0
+  co_limit_ppm: 250.0
+  furnace_temp_limit_c: 1000.0
+  htf_out_limit_c: 300.0
+  eta_valid: [0.40, 0.90]
+  heat_max_mw: 13.75
+  dT_valid: [5.0, 40.0]
+  fuel_speed_mismatch: 0.35
+  stable_steps: 12              # 60 min (A20)
+  ramp_window_steps: 6
+  ramp_mw: 0.8
+  max_step_fd: 4.0
+  max_step_grate: 4.0
+  best_gain_min_pp: 0.15
+
+profiles:
+  main: {}
+  stress:                       # seed 77: wider moisture, volumetric fuel, shifted hidden optimum, noisier sensors
+    fuel: {moisture_beta: [1.3, 1.3], volumetric_all: true, lhv_known_prob: 0.4}
+    combustion: {o2_opt_base: 6.9, o2_opt_load: -0.40, co_avail_prob: 0.3}
+    fouling: {rate_per_step: 0.0035}
+    htf: {flow_noise_sd: 0.08}
+    operators: {explore_prob: 0.20}
+    sensors: {flow_sd: 0.010, temp_sd: 0.25}
+  site_style:                   # seed 101: sparser lab data, different optimum
+    fuel: {lhv_known_prob: 0.3}
+    combustion: {o2_opt_base: 5.9, o2_opt_moist: 0.12, co_avail_prob: 0.8}
+    operators:
+      shift_bias:
+        OP-A: {o2: 0.6, grate: 1.0}
+        OP-B: {o2: 0.6, grate: 1.0}
+        OP-C: {o2: 1.2, grate: -2.0}

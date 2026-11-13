@@ -1,31 +1,107 @@
-variable,alias,group,unit,class,simulated_availability,actual_availability,notes,valid_range_rule,missing_value_rule,time_alignment
-Ambient temperature,SYN_AMB_T,ambient,degC,VALUABLE,always,unknown,Weak driver of air density and losses,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Fuel lot ID,SYN_LOT_ID,fuel lot,id,ESSENTIAL_COMBUSTION,always,unknown,Needed for lot-aware splits,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Fuel moisture,SYN_MOIST,fuel lot,%wb,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (not on HMI),Drives LHV,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only
-Fuel LHV as-fired,SYN_LHV_LOT,fuel lot,MJ/kg,ESSENTIAL_ENERGY,per lot,UNAVAILABLE (infrequent tests),Missing LHV gives UNVERIFIED PROXY or NO_ADVICE,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only
-Fuel feed rate,SYN_FUEL_RATE,fuel rate,kg/s,ESSENTIAL_ENERGY,always,HMI (low confidence),Window/reset unknown,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Fuel daily total,SYN_FUEL_DAY,fuel rate,kg/day,VALUABLE,always,HMI (low confidence),Reconciliation only,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Feeder run status,SYN_FEEDER_RUN,fuel rate,bool,VALUABLE,always,HMI,Stability screening,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-HTF flow,SYN_FT_HTF,HTF,m3/h,ESSENTIAL_ENERGY,always,HMI,Needs HTF property table,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-HTF return temperature,SYN_TE_HTF_IN,HTF,degC,ESSENTIAL_ENERGY,always,HMI,Never extrapolate property table,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-HTF supply temperature,SYN_TE_HTF_OUT,HTF,degC,ESSENTIAL_ENERGY,always,HMI,,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-HTF controlled temperature and setpoint,SYN_TE_CTRL,HTF,degC,VALUABLE,always,HMI,Stability and target,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-HTF bypass state,SYN_HTF_BYPASS,HTF,fraction,VALUABLE,always,unknown,Affects heat balance; existence to verify,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Useful heat (computed),SYN_Q_USEFUL,load,MW,ESSENTIAL_ENERGY,computed,computed from flow x dT x cp,Own computation; not the HMI figure,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Reported heat rate,SYN_Q_RATE,load,Mkcal/h,VALUABLE,always,HMI (method unknown),Cross-check only,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Process load/demand,SYN_LOAD,load,MW,VALUABLE,always,derived,Synthetic demand 6-11 MW (ASSUMED),within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Flue O2,SYN_O2,O2/CO,% dry,ESSENTIAL_COMBUSTION,always,HMI (basis unknown),Wet/dry basis to verify,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Flue CO,SYN_CO,O2/CO,ppm,ESSENTIAL_COMBUSTION,60 % of days,UNAVAILABLE (not on HMI),Missing CO means combustion quality unverified,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Furnace temperature,SYN_TE_FURN,furnace/draft,degC,VALUABLE,always,HMI,,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Flue temperature,SYN_TE_FLUE,furnace/draft,degC,ESSENTIAL_COMBUSTION,always,HMI,Stack loss driver,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Furnace draft,SYN_DRAFT,furnace/draft,Pa,ESSENTIAL_COMBUSTION,always,HMI,Zero or positive is unsafe,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-FD fan command,SYN_FD_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-ID fan command,SYN_ID_CMD,fans/air,%,VALUABLE,always,HMI (mapping unverified),Command not airflow,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Combustion air flow,SYN_AIR_FLOW,fans/air,kg/s,UNAVAILABLE,always,UNAVAILABLE (not measured),Proxy only via fan commands,within synthetic envelope in config; outside = invalid,not used as model input in actual mode,trailing window only
-Grate command,SYN_GRATE_CMD,grate,%,VALUABLE,always,HMI (mapping unverified),,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Main safety status,SYN_SAFE_OK,alarms/interlocks,bool,ESSENTIAL_COMBUSTION,always,HMI (read-only copy),Eligibility gate; source of truth BMS/SIS,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Active alarms,SYN_ALARM_ACTIVE,alarms/interlocks,count,ESSENTIAL_COMBUSTION,always,HMI,Eligibility gate,within synthetic envelope in config; outside = invalid,NO_ADVICE or reduced confidence,trailing window only
-Ash removal event,SYN_ASH_EVENT,ash,bool,VALUABLE,events,unknown,Possible transient,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Soot-blowing/maintenance flag,SYN_MAINT_FLAG,maintenance,bool,VALUABLE,events,unknown,Exclude windows,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only
-Specific fuel consumption,SYN_SFC,energy/cost,kg/MWh_th,ESSENTIAL_ENERGY,computed,computed,Primary KPI; formula SPEC C3. HMI heat is in Mkcal (1 Mkcal = 4.1868 GJ by IT definition); reconcile before comparing,within synthetic envelope in config; outside = invalid,NO_ADVICE or UNVERIFIED PROXY,trailing window only; fuel-to-heat lag (grate bed) assumed A15
-Fuel cost,SYN_FUEL_COST,energy/cost,currency/kg,VALUABLE,assumed constant,unknown,Money not guessed without measurement,within synthetic envelope in config; outside = invalid,impute flag only; never silently fill,trailing window only; fuel-to-heat lag (grate bed) assumed A15
+column,group,description,unit,type,role,how_generated,use_in_model,provenance,dataset
+timestamp_local,meta,"Local time (Asia/Bangkok, tz-naive), 5-min grid",datetime,datetime,IDENTIFIER,start + k x 5 min; rows removed only in DATA_GAP fault,index only,SYNTHETIC,main|truth
+heater_id,meta,Anonymized heater id,-,str,IDENTIFIER,constant HEATER_C_SYNTHETIC,no,SYNTHETIC,main
+operating_mode,load,STARTUP|STEADY|RAMP|STANDBY|TRIP|FEEDER_STOP,-,str,FLAG,state machine; RAMP if demand range over 30 min > 0.8 MW,eligibility,SYNTHETIC,main
+fuel_lot,fuel lot,Lot id (6-18 h per lot),-,str,IDENTIFIER,random lot durations,split key only,SYNTHETIC,main
+fuel_moisture_wb_pct,fuel lot,"Lab moisture, only when lhv_known=1",%wb,float,FEATURE_CANDIDATE,lot truth + lab noise; NaN if not assayed,yes when lhv_known,SYNTHETIC,main
+fuel_LHV_asfired_MJkg,fuel lot,"Lab as-fired LHV, only when lhv_known=1",MJ/kg,float,FEATURE_CANDIDATE,lot truth (falls with moisture) + lab noise,yes when lhv_known,SYNTHETIC,main
+lhv_known,fuel lot,1 if lot has a lab assay,bool,int,FLAG,Bernoulli per lot (config),eligibility,SYNTHETIC,main
+fuel_rate_true_kgh,fuel rate,True feeder delivery rate,kg/h,float,TRUTH_ONLY,controller feed-forward x noise,NO (truth leak),SYNTHETIC,main
+fuel_rate_measured_kgh,fuel rate,Measured fuel rate (weigh belt or volumetric),kg/h,float,FEATURE_CANDIDATE,truth x noise; volumetric adds lot density bias,yes (lag>=1),SYNTHETIC,main
+fuel_totalizer_kg,fuel rate,Cumulative measured fuel,kg,float,FEATURE_CANDIDATE,cumsum of measured rate; reset in fault F08,reconciliation,SYNTHETIC,main
+HTF_flow_m3h,HTF,Measured HTF flow through heater branch,m3/h,float,FEATURE_CANDIDATE,truth x noise; frozen/high/low faults,yes,SYNTHETIC,main
+HTF_Tin_C,HTF,Measured HTF return temperature,degC,float,FEATURE_CANDIDATE,truth + bias + noise,yes,SYNTHETIC,main
+HTF_Tout_C,HTF,"Measured HTF supply (header, after bypass mix) temperature",degC,float,FEATURE_CANDIDATE,truth mix + bias + noise; spike faults,yes,SYNTHETIC,main
+HTF_rho_kgm3,HTF,Density at mean temperature from property table,kg/m3,float,DERIVED,table interpolation; NaN outside table,yes,SYNTHETIC,main
+HTF_cp_kJkgK,HTF,Specific heat at mean temperature from property table,kJ/kgK,float,DERIVED,table interpolation; NaN outside table (never water cp),yes,SYNTHETIC,main
+Q_out_MW,energy/cost,Measured heat to HTF,MW,float,DERIVED,V/3600 x rho x integral cp dT / 1000,yes,SYNTHETIC,main
+Q_in_MW,energy/cost,Fuel heat input from measured fuel and lab LHV,MW,float,DERIVED,rate/3600 x LHV; NaN when LHV unknown,yes,SYNTHETIC,main
+eta_direct_pct,energy/cost,Direct efficiency,%,float,DERIVED,100 x Q_out / Q_in; NaN if LHV unknown,target candidate (valid rows),SYNTHETIC,main
+SFC_kg_GJ,energy/cost,Specific fuel consumption,kg/GJ,float,TARGET_CANDIDATE,rate/(3.6 x Q_out) = 1/(eta x LHV[GJ/kg]),target,SYNTHETIC,main
+O2_pct_dry,O2/CO,Measured flue O2,% dry,float,FEATURE_CANDIDATE,truth filtered (lag) + noise,yes,SYNTHETIC,main
+CO_ppm,O2/CO,Measured CO; NaN on days without analyser,ppm,float,FEATURE_CANDIDATE,truth x lognormal noise,yes when co_available,SYNTHETIC,main
+co_available,O2/CO,CO analyser available (60 % of days),bool,int,FLAG,Bernoulli per day; fault CO_MISSING,eligibility,SYNTHETIC,main
+FD_command_pct,fans/air,Forced-draft fan command (operator setting),%,float,SETTING,piecewise constant; changes logged,action variable,SYNTHETIC,main
+ID_command_pct,fans/air,Induced-draft fan command (operator setting),%,float,SETTING,piecewise constant; changes logged,action variable,SYNTHETIC,main
+grate_command_pct,grate,Grate command (operator setting),%,float,SETTING,piecewise constant; changes logged,action variable,SYNTHETIC,main
+furnace_temp_C,furnace/draft,Furnace temperature,degC,float,FEATURE_CANDIDATE,"load, O2, moisture function + noise",yes,SYNTHETIC,main
+flue_temp_C,furnace/draft,Flue gas temperature before economizer,degC,float,FEATURE_CANDIDATE,"load, O2, fouling function + noise",yes,SYNTHETIC,main
+draft_pa,furnace/draft,Furnace draft (negative = safe),Pa,float,FEATURE_CANDIDATE,fan-command balance + load term + noise,yes,SYNTHETIC,main
+fan_derated,fans/air,Fans deliver 85 % of command (aging),bool,int,FLAG,fault FAN_DERATE,eligibility,SYNTHETIC,main
+sootblow,maintenance,Soot blowing active,bool,int,FLAG,triggered when fouling high; resets fouling,eligibility,SYNTHETIC,main
+interlock_active,alarms/interlocks,Trip/interlock active,bool,int,FLAG,draft >= 0 trips fuel for 10 steps,eligibility,SYNTHETIC,main
+quality_flag,meta,Data quality flags (OK or ;-joined),-,str,FLAG,detectors on measured data,filter,SYNTHETIC,main
+advice_eligibility,meta,ELIGIBLE | DIAGNOSTIC_ONLY:NO_CO | NO_ADVICE:<codes>,-,str,LABEL,"SPEC C7 layers 1-2 on measured data, 12-step stable window",gate,SYNTHETIC,main
+true_synthetic_best_action,meta,"Generator-best feasible action (HOLD, FD+-2/4, GRATE+-2/4, combos)",-,str,LABEL,argmax eta gain over feasible set using hidden model,evaluation only (NEVER input),SYNTHETIC,main
+scenario_id,meta,Event label; FAULT_<type> for the 8 h fault-case blocks,-,str,LABEL,priority rules,evaluation,SYNTHETIC,main
+is_fault_injected,meta,1 inside injected fault window,bool,int,LABEL,fault plan,evaluation,SYNTHETIC,main
+HTF_Tout_SP_C,HTF,Supply temperature setpoint (constant),degC,float,FEATURE_CANDIDATE,config,yes,SYNTHETIC,main
+HTF_bypass_pct,HTF,Reported bypass valve opening; >0 means heat-balance check,%,float,FLAG,random 12-36 step episodes,eligibility,SYNTHETIC,main
+HTF_pump_status,HTF,HTF pump running,bool,int,FLAG,constant 1 in this build,no,SYNTHETIC,main
+ambient_temp_C,ambient,Ambient temperature,degC,float,FEATURE_CANDIDATE,daily sine + AR(1),yes,SYNTHETIC,main
+ambient_RH_pct,ambient,Ambient relative humidity,%,float,FEATURE_CANDIDATE,anti-correlated with temperature + noise,yes,SYNTHETIC,main
+fan_power_kW_FD,fans/air,FD fan power (fan-law proxy),kW,float,DERIVED,"rated x (cmd/100)^3, OWN-ESTIMATE",AI energy/cost only,SYNTHETIC,main
+fan_power_kW_ID,fans/air,ID fan power (fan-law proxy),kW,float,DERIVED,"rated x (cmd/100)^3, OWN-ESTIMATE",AI energy/cost only,SYNTHETIC,main
+feeder_speed_pct,fuel rate,Feeder speed,%,float,FEATURE_CANDIDATE,true feed / capacity x 100 + noise,yes,SYNTHETIC,main
+fuel_mass_basis,fuel rate,WEIGH_BELT or VOLUMETRIC fuel measurement,-,str,FLAG,belt except service episodes (all volumetric in stress),eligibility,SYNTHETIC,main
+fuel_ash_pct,ash,"Lab ash content, sparse (one row per lot)",%,float,FEATURE_CANDIDATE,lot truth + lab noise at lot start + 3 h,lot-level only,SYNTHETIC,main
+unburnt_in_ash_pct,ash,"Lab unburnt in ash, sparse; rises at low O2 or high grate",%,float,FEATURE_CANDIDATE,mean of true unburnt over first 3 h + lab noise,lot-level only,SYNTHETIC,main
+stack_temp_C,furnace/draft,Stack temperature after economizer,degC,float,FEATURE_CANDIDATE,"flue minus recovery, shrinks with fouling",yes,SYNTHETIC,main
+economizer_dP_pa,maintenance,Economizer differential pressure (fouling proxy),Pa,float,FEATURE_CANDIDATE,"rises with fouling, resets on sootblow",yes,SYNTHETIC,main
+draft_SP_pa,furnace/draft,Draft setpoint (constant),Pa,float,FEATURE_CANDIDATE,config,yes,SYNTHETIC,main
+alarm_code,alarms/interlocks,Active alarm code or empty,-,str,FLAG,"draft, O2, feeder, trip, temperature rules",eligibility,SYNTHETIC,main
+fuel_price_index,energy/cost,Fuel price index (base 100),index,float,FEATURE_CANDIDATE,daily random walk; no money claimed,cost scenarios only,SYNTHETIC,main
+fuel_lot_idx,truth,Lot number,-,int,TRUTH_ONLY,lot generator,NO,SYNTHETIC,truth
+moisture_true_wb_pct,truth,True lot moisture,%wb,float,TRUTH_ONLY,beta draw,NO,SYNTHETIC,truth
+LHV_true_MJkg,truth,True lot as-fired LHV,MJ/kg,float,TRUTH_ONLY,falls with moisture,NO,SYNTHETIC,truth
+bed_tau_min,truth,Bed lag time constant,min,float,TRUTH_ONLY,uniform 10-20,NO,SYNTHETIC,truth
+Q_demand_MW,truth,Process heat demand,MW,float,TRUTH_ONLY,demand generator,NO,SYNTHETIC,truth
+fuel_feed_true_kgh,truth,Feeder delivery,kg/h,float,TRUTH_ONLY,controller,NO,SYNTHETIC,truth
+fuel_burn_true_kgh,truth,Bed burn rate (lagged feed),kg/h,float,TRUTH_ONLY,first-order lag,NO,SYNTHETIC,truth
+Q_in_true_MW,truth,True fuel heat released,MW,float,TRUTH_ONLY,burn x LHV,NO,SYNTHETIC,truth
+eta_true,truth,Latent efficiency,-,float,TRUTH_ONLY,SPEC C6 function,NO,SYNTHETIC,truth
+Q_out_true_MW,truth,True heat to HTF,MW,float,TRUTH_ONLY,eta x Q_in,NO,SYNTHETIC,truth
+HTF_flow_true_m3h,truth,True heater-branch flow,m3/h,float,TRUTH_ONLY,flow generator,NO,SYNTHETIC,truth
+HTF_Tin_true_C,truth,True return temperature,degC,float,TRUTH_ONLY,from setpoint and demand,NO,SYNTHETIC,truth
+HTF_Tout_heater_true_C,truth,True heater outlet temperature,degC,float,TRUTH_ONLY,solves heat balance,NO,SYNTHETIC,truth
+bypass_frac_true,truth,True bypass fraction,-,float,TRUTH_ONLY,episodes,NO,SYNTHETIC,truth
+O2_true_pct_dry,truth,True flue O2,% dry,float,TRUTH_ONLY,21(1-1/lambda),NO,SYNTHETIC,truth
+lambda_true,truth,Air ratio,-,float,TRUTH_ONLY,FD effective / stoichiometric,NO,SYNTHETIC,truth
+O2_opt_true_pct,truth,Hidden optimum O2,% dry,float,TRUTH_ONLY,function of load and moisture,NO,SYNTHETIC,truth
+grate_opt_true_pct,truth,Hidden optimum grate command,%,float,TRUTH_ONLY,function of fuel heat and moisture,NO,SYNTHETIC,truth
+fouling_index,truth,Fouling 0-1,-,float,TRUTH_ONLY,"linear rise, reset by sootblow",NO,SYNTHETIC,truth
+unburnt_true_pct,truth,True unburnt in ash,%,float,TRUTH_ONLY,rises at low O2 or high grate,NO,SYNTHETIC,truth
+CO_true_ppm,truth,True CO,ppm,float,TRUTH_ONLY,exponential in low O2 + grate mismatch,NO,SYNTHETIC,truth
+draft_true_pa,truth,True draft,Pa,float,TRUTH_ONLY,fan balance,NO,SYNTHETIC,truth
+best_action_eta_gain_pp,truth,Efficiency gain of best feasible action,% points,float,TRUTH_ONLY,argmax over action set,evaluation only,SYNTHETIC,truth
+ash_true_pct,truth,True lot ash,%,float,TRUTH_ONLY,uniform per lot,NO,SYNTHETIC,truth
+timestamp,action log,Time the setting changed (matches 5-min row),datetime,datetime,IDENTIFIER,decision step,join key,SYNTHETIC,action_log
+variable,action log,Setting changed,-,str,IDENTIFIER,FD/ID/grate command,join key,SYNTHETIC,action_log
+old,action log,Setting before change,%,float,SETTING,state,yes,SYNTHETIC,action_log
+new,action log,Setting after change,%,float,SETTING,state,yes,SYNTHETIC,action_log
+shift_id,action log,"OP-A 06-14, OP-B 14-22, OP-C 22-06",-,str,IDENTIFIER,clock,behaviour grouping,SYNTHETIC,action_log
+reason_code,action log,"O2_TRIM_*, DRAFT_TRIM, GRATE_MATCH, EXPLORATION_STEP, AIR_REDUCTION, TRIM_ERROR, FAULT_RESPONSE",-,str,LABEL,decision rule,analysis,SYNTHETIC,action_log
+source,action log,"OPERATOR or EXPLORATION (randomized, identifiability)",-,str,LABEL,exploration probability in config,analysis,SYNTHETIC,action_log
+case_id,fault cases,Fault case id,-,str,IDENTIFIER,plan,evaluation,SYNTHETIC,fault_cases
+fault_type,fault cases,Fault type,-,str,LABEL,plan,evaluation,SYNTHETIC,fault_cases
+case_start,fault cases,Case block start,datetime,str,IDENTIFIER,plan,evaluation,SYNTHETIC,fault_cases
+case_end,fault cases,Case block end,datetime,str,IDENTIFIER,plan,evaluation,SYNTHETIC,fault_cases
+injected_start,fault cases,Injection start,datetime,str,IDENTIFIER,plan,evaluation,SYNTHETIC,fault_cases
+injected_end,fault cases,Injection end,datetime,str,IDENTIFIER,plan,evaluation,SYNTHETIC,fault_cases
+injected_rows,fault cases,Rows present inside injection window,count,int,LABEL,plan,evaluation,SYNTHETIC,fault_cases
+description,fault cases,What is injected,-,str,LABEL,plan,evaluation,SYNTHETIC,fault_cases
+expected_detection,fault cases,Expected flag or reason code,-,str,LABEL,plan,evaluation,SYNTHETIC,fault_cases
+record_id,display,Display record id,-,str,IDENTIFIER,daily sample,evaluation,SYNTHETIC,display_reconciliation
+date,display,Record date,date,str,IDENTIFIER,day,evaluation,SYNTHETIC,display_reconciliation
+time,display,Record time,time,str,IDENTIFIER,random daytime step,evaluation,SYNTHETIC,display_reconciliation
+kgs_disp,display,Displayed biomass rate,kg/s,float,FEATURE_CANDIDATE,measured rate/3600,proxy only,SYNTHETIC,display_reconciliation
+kgday_disp,display,Displayed biomass daily total,kg/day,float,FEATURE_CANDIDATE,sum of measured rate over day,proxy only,SYNTHETIC,display_reconciliation
+mkcal_h_disp,display,Displayed heat rate,Mkcal/h,float,FEATURE_CANDIDATE,Q_out/1.16222,proxy only,SYNTHETIC,display_reconciliation
+mw_disp,display,Displayed heat rate in MW,MW,float,FEATURE_CANDIDATE,Q_out,proxy only,SYNTHETIC,display_reconciliation
+mkcal_day_disp,display,Displayed daily heat,Mkcal/day,float,FEATURE_CANDIDATE,sum Q_out over day,proxy only,SYNTHETIC,display_reconciliation
+injected_case,display,"Injected display fault, if any",-,str,LABEL,fixed records R005 R011 R017,evaluation,SYNTHETIC,display_reconciliation
+implied_kgday,display,kg/s x 86400,kg/day,float,DERIVED,identity valid only if sustained,evaluation,SYNTHETIC,display_reconciliation
+rel_diff_fuel_pct,display,Gap between displayed and implied daily fuel,%,float,DERIVED,abs diff / implied,evaluation,SYNTHETIC,display_reconciliation
+mw_from_mkcal_h,display,Mkcal/h x 1.16222,MW,float,DERIVED,unit conversion,evaluation,SYNTHETIC,display_reconciliation
+verdict,display,OK | WINDOW_MISMATCH | REJECT,-,str,LABEL,units.reconcile_display,evaluation,SYNTHETIC,display_reconciliation
+reasons,display,Reconciliation reason codes,-,str,LABEL,units.reconcile_display,evaluation,SYNTHETIC,display_reconciliation
