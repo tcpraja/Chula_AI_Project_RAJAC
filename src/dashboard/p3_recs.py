@@ -24,7 +24,7 @@ def checklist(rec, L):
 
 
 def render():
-    st.title("3 · AI Recommendations")
+    C.page_header("recs")
     df, label, is_def = C.filtered()
     if df.empty:
         st.warning("No rows in the selected time range.")
@@ -52,10 +52,7 @@ def render():
     if rec["decision"] == "ADVICE":
         st.success(f"## ADVICE (simulated) — {rec['action']} · {rec['advice_class'].replace('_', ' ').title()}")
     else:
-        st.markdown("<div style='background:#4a0010;border:3px solid #ff3b5c;border-radius:8px;padding:26px;text-align:center'>"
-                    f"<div style='font-size:48px;font-weight:800;color:#ff3b5c'>NO ADVICE</div>"
-                    f"<div style='font-size:18px;color:#fff'>{'DIAGNOSTIC ONLY — ' if rec['decision'] == 'DIAGNOSTIC_ONLY' else ''}"
-                    "the system will not propose a change for this moment</div></div>", unsafe_allow_html=True)
+        C.no_advice_box("the system will not propose a change for this moment", "DIAGNOSTIC ONLY — " if rec["decision"] == "DIAGNOSTIC_ONLY" else "")
     st.markdown("**HUMAN REVIEW REQUIRED** · model " + rec.get("model_version", "n/a") + " · " + rec.get("banner", C.BANNER))
     codes = rec.get("reason_codes") or []
     if codes:

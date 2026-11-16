@@ -132,9 +132,8 @@ def filtered():
 
 # ---------------------------------------------------------------- layout
 def banner():
-    st.markdown(f"<div style='background:#b00020;color:#fff;padding:10px 14px;border-radius:6px;font-weight:700;text-align:center;"
-                f"letter-spacing:.5px'>{BANNER}</div>", unsafe_allow_html=True)
-    st.caption(SUB_BANNER + f" Times shown in {TZ_LABEL}.")
+    st.markdown(f"<div class='hc-banner'>{BANNER}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='hc-sub'>{SUB_BANNER} Times shown in {TZ_LABEL}.</div>", unsafe_allow_html=True)
 
 
 def sidebar():
@@ -174,10 +173,55 @@ def sidebar():
         st.caption("Badges: CALCULATED = from validated inputs · PROXY = estimated, unverified · UNAVAILABLE = cannot be computed.")
 
 
+CSS = """
+<style>
+.block-container{padding-top:4.2rem;max-width:1400px}
+html, body, [class*="css"]{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif}
+[data-testid="stSidebar"]{background:#0b0f14;border-right:1px solid #1f2733}
+[data-testid="stSidebar"] h2{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#8b98a5;margin-top:.8rem}
+.stAppDeployButton{display:none}
+h1,h2,h3{letter-spacing:-.01em}
+h2,h3{font-weight:650}
+[data-testid="stMetric"]{background:#141a22;border:1px solid #232c38;border-radius:12px;padding:14px 16px}
+[data-testid="stMetricLabel"]{color:#8b98a5}
+[data-testid="stMetricValue"]{font-size:1.55rem;font-weight:650}
+[data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
+[data-testid="stVerticalBlockBorderWrapper"]{border-radius:12px;border-color:#232c38}
+[data-testid="stCaptionContainer"]{color:#8b98a5}
+.hc-banner{background:linear-gradient(90deg,#8e0019,#c1122f);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
+  letter-spacing:.08em;font-size:.95rem;box-shadow:0 2px 10px rgba(193,18,47,.35)}
+.hc-sub{color:#8b98a5;font-size:.8rem;margin:.35rem 0 .2rem}
+.hc-head{margin:.6rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid #232c38}
+.hc-kicker{color:#ff9f1c;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.hc-title{font-size:2rem;font-weight:750;line-height:1.15;margin:.1rem 0}
+.hc-lead{color:#aab6c2;font-size:.95rem}
+.hc-noadv{background:#3a0a14;border:2px solid #ff4d6d;border-radius:14px;padding:26px;text-align:center}
+.hc-noadv b{display:block;font-size:2.9rem;color:#ff4d6d;letter-spacing:.06em}
+.hc-noadv span{color:#ffd6dd}
+</style>
+"""
+
+PAGE_INFO = {"live": ("1 of 6", "Live Performance", "Replay of the held-out period, row by row. The cursor never shows future rows."),
+             "combustion": ("2 of 6", "Combustion Diagnostics", "Fuel quality, flue gas, commands (not airflow), temperatures, draft, faults."),
+             "recs": ("3 of 6", "AI Recommendations", "A simulated option with interval and checklist. NO ADVICE is the fail-safe state."),
+             "whatif": ("4 of 6", "What-if Simulator", "Try a bounded FD / grate move. Out-of-bounds input gives an error and no result."),
+             "decisions": ("5 of 6", "Operator Decisions", "Role IDs only (OP-A / OP-B). Logs opinions; changes nothing in the plant."),
+             "value": ("6 of 6", "Business Value", "Simulated effect and assumption-driven sensitivities. No verified savings.")}
+
+
+def page_header(key):
+    kicker, title, lead = PAGE_INFO[key]
+    st.markdown(f"<div class='hc-head'><div class='hc-kicker'>Heater C · synthetic · {kicker}</div><div class='hc-title'>{title}</div>"
+                f"<div class='hc-lead'>{lead}</div></div>", unsafe_allow_html=True)
+
+
+def no_advice_box(text, prefix=""):
+    st.markdown(f"<div class='hc-noadv'><b>NO ADVICE</b><span>{prefix}{text}</span></div>", unsafe_allow_html=True)
+
+
 def setup():
     st.set_page_config(page_title="Heater C advisory (synthetic)", layout="wide")
-    st.markdown("<style>[data-testid='stMetricValue']{font-size:1.45rem}[data-testid='stMetricValue']>div{overflow:visible;text-overflow:clip;"
-                "white-space:normal}</style>", unsafe_allow_html=True)
+    st.markdown(CSS, unsafe_allow_html=True)
     banner()
     sidebar()
 
@@ -191,11 +235,18 @@ def provenance(text):
     st.caption("Provenance: SYNTHETIC · " + text)
 
 
-def chart(fig, prov, key=None):
-    fig.update_layout(template="plotly_dark", height=300, margin=dict(l=10, r=10, t=30, b=10), legend=dict(orientation="h", y=1.15),
-                      paper_bgcolor="rgba(0,0,0,0)")
-    st.plotly_chart(fig, width="stretch", key=key)
-    provenance(prov)
+COLORWAY = ["#4c9be8", "#ff9f1c", "#3fb27f", "#e5484d", "#a78bfa", "#2dd4bf"]
+
+
+def chart(fig, prov, key=None, height=300):
+    fig.update_layout(template="plotly_dark", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
+                      legend=dict(orientation="h", y=1.14, x=0, font=dict(size=11)), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+                      font=dict(family="Inter, Segoe UI, sans-serif", size=12, color="#c9d3dd"))
+    fig.update_xaxes(gridcolor="#1c2430", zeroline=False, showline=False)
+    fig.update_yaxes(gridcolor="#1c2430", zeroline=False, showline=False)
+    with st.container(border=True):
+        st.plotly_chart(fig, width="stretch", key=key)
+        provenance(prov)
 
 
 def thin(df, n=3000):

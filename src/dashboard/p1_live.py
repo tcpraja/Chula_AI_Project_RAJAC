@@ -1,4 +1,5 @@
 """Screen 1 — Live Performance (replay of the filtered period; the cursor never reveals future rows)."""
+import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
@@ -45,7 +46,7 @@ def metric(col, label, value, unit, status=None, fmt="{:.1f}"):
 
 
 def render():
-    st.title("1 · Live Performance")
+    C.page_header("live")
     df, label, _ = C.filtered()
     if df.empty:
         st.warning("No rows in the selected time range.")
@@ -73,8 +74,11 @@ def render():
     win = st.select_slider("Trailing window shown", list(WINDOWS), value="6 h")
     w = df.iloc[max(0, i - WINDOWS[win] + 1): i + 1]
     band = C.baseline_band()
-    w = w.assign(band=w["Q_out_MW"].floordiv(1))
-    w = w.join(band[["p25", "p75"]], on="band")
+    ctr = band.index.to_numpy(float) + 0.5                       # smooth band: interpolate P25/P75 between 1 MW band centres
+    q = w["Q_out_MW"].to_numpy(float)
+    ok = ~np.isnan(q)
+    w = w.assign(p25=np.where(ok, np.interp(np.nan_to_num(q), ctr, band["p25"].to_numpy(float)), np.nan),
+                 p75=np.where(ok, np.interp(np.nan_to_num(q), ctr, band["p75"].to_numpy(float)), np.nan))
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_scatter(x=w["t"], y=w["HTF_Tin_C"], name="HTF in °C", row=1, col=1)
@@ -90,7 +94,7 @@ def render():
 
     fig = go.Figure()
     fig.add_scatter(x=w["t"], y=w["p75"], line=dict(width=0), showlegend=False, hoverinfo="skip")
-    fig.add_scatter(x=w["t"], y=w["p25"], line=dict(width=0), fill="tonexty", fillcolor="rgba(120,160,200,.25)", name="baseline P25–P75")
+    fig.add_scatter(x=w["t"], y=w["p25"], line=dict(width=0), fill="tonexty", fillcolor="rgba(76,155,232,.20)", name="baseline P25–P75")
     fig.add_scatter(x=w["t"], y=w["SFC_kg_GJ"], name="SFC kg/GJ", line=dict(color="#ff9f1c"))
     fig.update_yaxes(title_text="kg/GJ")
     C.chart(fig, f"{label}. SFC = fuel mass (kg) ÷ useful HTF heat (GJ), per 5-min row; PROXY/UNAVAILABLE rows left blank or flagged on the tile. "

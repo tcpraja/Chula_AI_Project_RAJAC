@@ -10,7 +10,7 @@ Rules, scope and phase status: `CLAUDE.md`, `docs/SPEC.md`, `reports/PHASE_STATU
 ```
 Linux / macOS / Git Bash: `./run_dashboard.sh`. The server binds to 127.0.0.1 only (`.streamlit/config.toml`).
 
-## Six screens
+## Six screens (page tabs along the top; data source and time filter in the sidebar)
 1 Live Performance (replay slider / play) · 2 Combustion Diagnostics · 3 AI Recommendations (NO ADVICE is the fail-safe) ·
 4 What-if Simulator (inputs bounded by `config/guardrail_limits.yaml`) · 5 Operator Decisions (OP-A / OP-B → `data/operator_log.db`, CSV download) ·
 6 Business Value (index, ASSUMED-input THB sensitivity, "no verified savings").

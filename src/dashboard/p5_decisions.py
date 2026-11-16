@@ -8,7 +8,7 @@ from src.dashboard import common as C
 
 
 def render():
-    st.title("5 · Operator Decisions")
+    C.page_header("decisions")
     st.error("SYNTHETIC SIMULATION — NOT FOR PLANT OPERATION · this log records opinions about simulated advice; it does not change any setting.")
     df, label, is_def = C.filtered()
     recs = C.load_advisory() if is_def else {}

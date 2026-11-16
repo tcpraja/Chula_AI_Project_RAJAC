@@ -8,7 +8,7 @@ from src.dashboard import common as C
 
 
 def render():
-    st.title("4 · What-if Simulator")
+    C.page_header("whatif")
     df, label, is_def = C.filtered()
     st.error("SYNTHETIC SIMULATION — NOT FOR PLANT OPERATION · human review required · results are model illustrations, not instructions.")
     if not is_def:
@@ -57,8 +57,7 @@ def render():
     if res["all_pass"]:
         st.success("All checks pass → this move would be a candidate, still **human review required**.")
     else:
-        st.markdown("<div style='background:#4a0010;border:2px solid #ff3b5c;border-radius:8px;padding:14px;text-align:center;"
-                    "font-size:28px;font-weight:800;color:#ff3b5c'>NO ADVICE for this move — a check failed</div>", unsafe_allow_html=True)
+        C.no_advice_box("a check failed for this move")
     C.provenance(f"{label}. Ridge efficiency-response model (OWN-ESTIMATE, train split), O2 from FD by stoichiometry at fixed demand, fan power ∝ FD³, "
                  "ΔSFC in kg fuel per GJ useful heat for the next 5-min interval; interval = 90 % of 200 lot-bootstraps (coefficient uncertainty only). "
                  "Associational model, synthetic only.")

@@ -15,7 +15,7 @@ def _lot_lines(fig, df):
 
 
 def render():
-    st.title("2 · Combustion Diagnostics")
+    C.page_header("combustion")
     df, label, _ = C.filtered()
     if df.empty:
         st.warning("No rows in the selected time range.")

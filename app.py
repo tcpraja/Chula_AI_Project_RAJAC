@@ -15,4 +15,4 @@ pages = [st.Page(p1_live.render, title="1 Live Performance", default=True),
          st.Page(p4_whatif.render, title="4 What-if Simulator", url_path="whatif"),
          st.Page(p5_decisions.render, title="5 Operator Decisions", url_path="decisions"),
          st.Page(p6_value.render, title="6 Business Value", url_path="value")]
-st.navigation(pages).run()
+st.navigation(pages, position="top").run()
