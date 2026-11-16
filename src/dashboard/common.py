@@ -200,7 +200,7 @@ h2,h3{font-weight:650}
 [data-testid="stMetricLabel"]{color:#666666}
 [data-testid="stMetricValue"]{font-size:1.4rem;font-weight:700;color:#002E61}
 [data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
-[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:1px solid #5f7b9e;box-shadow:0 3px 14px rgba(0,46,97,.12);padding:.35rem}
+[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:1px solid #d5dde9;box-shadow:0 2px 8px rgba(0,46,97,.06);padding:.35rem}
 [data-testid="stMain"] [data-testid="stCaptionContainer"]{color:#555;border-left:3px solid #009933;padding-left:.6rem}
 [data-testid="stColumn"] [data-testid="stCaptionContainer"]{border-left:none;padding-left:0}
 /* top page tabs as pill buttons */
@@ -295,8 +295,8 @@ def chart(fig, prov, key=None, height=300):
     fig.update_layout(template="plotly_white", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
                       legend=dict(orientation="h", y=1.14, x=0, font=dict(size=11)), paper_bgcolor="#ffffff", plot_bgcolor="#fafbfd",
                       font=dict(family="Arial, Calibri, sans-serif", size=12, color="#333333"))
-    fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1)
-    fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1)
+    fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#dfe5ee", linewidth=1)
+    fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#dfe5ee", linewidth=1)
     with st.container(border=True):
         st.plotly_chart(fig, width="stretch", key=key)
         provenance(prov)
