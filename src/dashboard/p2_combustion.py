@@ -56,8 +56,11 @@ def render():
             co = p.assign(CO=p["CO_ppm"].where(p["co_available"] == 1))
             fig = go.Figure(go.Scatter(x=co["t"], y=co["CO"], name="CO ppm"))
             fig.add_hline(y=C.limits()["limits"]["co_limit_ppm"], line=dict(color="#d1495b", dash="dash"), annotation_text="synthetic limit (ASSUMED)")
-            fig.update_yaxes(title_text="ppm")
-            C.chart(fig, f"{label}. CO, ppm; blank where the sensor is not available. Limit is a synthetic envelope.", "co")
+            cap = 1000.0
+            n_clip = int((co["CO"] > cap).sum())
+            fig.update_yaxes(title_text="ppm", range=[0, cap])
+            C.chart(fig, f"{label}. CO, ppm; blank where the sensor is not available. Limit is a synthetic envelope. Axis clipped at {cap:,.0f} ppm so the limit stays readable: "
+                         f"{n_clip} plotted point(s) above it are off-scale (not removed from the data).", "co")
             share = (df["co_available"] == 0).mean()
             if share:
                 st.warning(f"CO sensor not available for {share:.0%} of rows in range — those rows can only be DIAGNOSTIC ONLY (no advice).")

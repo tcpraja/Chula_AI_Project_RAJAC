@@ -25,7 +25,7 @@ Scope: `app.py` + `src/dashboard/` (6 pages), `src/whatif.py`, `src/oplog.py`, `
 - Server binds to 127.0.0.1 only (config); no external calls from the app.
 
 ## Not verified (honest limits)
-- Screenshots (assets/screenshots/screen_1..6.png) were captured headlessly with Edge by src/capture_screenshots.py in Phase 7; I viewed screens 1, 3, 4 and 6 and fixed a "Page not found" default URL and truncated metrics; screens 2 and 5 and the Play button are still unreviewed by a human.
+- Screenshots (assets/screenshots/screen_1..6.png) were captured headlessly with Edge by src/capture_screenshots.py in Phase 7; I viewed screens 1, 3, 4 and 6 and fixed a "Page not found" default URL and truncated metrics; screen 2 (CO axis clipped at 1,000 ppm after review) and screen 5 were viewed in Phase 7 follow-up; the Play button is still unreviewed by a human.
 - Play / auto-advance (fragment timer) is not exercised by AppTest; only the step buttons and slider path are plain code. Test it by hand.
 - File upload through the browser widget is not driven in tests (schema function is).
 - Screen 6 THB values come from ASSUMED inputs (price 2,500 THB/t, 7,000 h/yr, 4 THB/kWh, 30 W) — placeholders, not data.
