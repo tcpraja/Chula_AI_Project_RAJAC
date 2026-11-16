@@ -138,6 +138,7 @@ def banner():
 
 def sidebar():
     with st.sidebar:
+        st.markdown("<div class='hc-side-title'>Heater C advisory</div><div class='hc-side-sub'>Synthetic decision support · PET Resin Plant P</div><div class='hc-side-bar'></div>", unsafe_allow_html=True)
         st.header("Data")
         choice = st.radio("Source", ["Default synthetic file", "Upload CSV"], key="source_choice", label_visibility="collapsed")
         if choice == "Upload CSV":
@@ -201,12 +202,22 @@ h2,h3{font-weight:650}
 [data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
 [data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:1px solid #d9dfe7;box-shadow:0 2px 12px rgba(0,46,97,.08)}
 [data-testid="stCaptionContainer"]{color:#666666}
-/* top page tabs as buttons */
-[data-testid="stTopNavLinkContainer"]{gap:.3rem}
-a[data-testid="stTopNavLink"]{background:#fff;border:1px solid #CCCCCC;border-radius:9px;padding:.28rem .5rem;font-size:.78rem;color:#002E61;font-weight:600;transition:all .15s;white-space:nowrap}
-a[data-testid="stTopNavLink"]:hover{border-color:#009933;color:#009933;background:#f2f8f4}
-a[data-testid="stTopNavLink"][aria-current="page"]{background:#002E61;border-color:#002E61;color:#fff;box-shadow:0 2px 0 #009933}
+/* top page tabs as pill buttons */
+[data-testid="stTopNavLinkContainer"]{gap:.25rem}
+a[data-testid="stTopNavLink"]{background:#fff;border:1px solid #d3d9e2;border-radius:999px;padding:.32rem .75rem;font-size:.82rem;color:#002E61;font-weight:600;
+  transition:all .15s;white-space:nowrap;box-shadow:0 1px 2px rgba(0,46,97,.06)}
+a[data-testid="stTopNavLink"]:hover{border-color:#009933;color:#006b24;background:#f1f9f4;transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,153,51,.18)}
+a[data-testid="stTopNavLink"][aria-current="page"]{background:#002E61;border-color:#002E61;color:#fff;box-shadow:0 3px 0 #009933,0 4px 10px rgba(0,46,97,.25)}
 a[data-testid="stTopNavLink"][aria-current="page"] *{color:#fff}
+[data-testid="stSidebar"] .hc-side-title{font-size:1.05rem;font-weight:800;letter-spacing:.02em;line-height:1.2;font-family:'Century Gothic','Antonio',Arial,sans-serif}
+[data-testid="stSidebar"] .hc-side-sub{font-size:.72rem;opacity:.8;margin-bottom:.4rem}
+[data-testid="stSidebar"] .hc-side-bar{height:3px;width:46px;background:#009933;border-radius:2px;margin:.4rem 0 .8rem}
+.hc-foot{margin:2rem 0 .5rem;padding-top:.6rem;border-top:1px solid #d3d9e2;color:#666;font-size:.74rem;text-align:center}
+[data-testid="stDataFrame"]{border-radius:10px;overflow:hidden;border:1px solid #d9dfe7}
+[data-testid="stRadio"] label p,[data-testid="stCheckbox"] label p{font-size:.9rem}
+[data-testid="stAlert"]{border-radius:10px}
+.stButton>button,.stDownloadButton>button{border-radius:9px;border:1px solid #002E61;color:#002E61;font-weight:600;background:#fff}
+.stButton>button:hover,.stDownloadButton>button:hover{background:#002E61;color:#fff;border-color:#002E61}
 .hc-logo{position:fixed;top:9px;right:64px;z-index:1000001;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;
   background:#fff;border:1px solid #CCCCCC;border-radius:9px;color:#002E61;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .hc-logo img{height:24px}
@@ -231,6 +242,11 @@ PAGE_INFO = {"live": ("1 of 6", "Live Performance", "Replay of the held-out peri
              "value": ("6 of 6", "Business Value", "Simulated effect and assumption-driven sensitivities. No verified savings.")}
 
 
+def footer():
+    st.markdown("<div class='hc-foot'>SYNTHETIC SIMULATION — NOT FOR PLANT OPERATION · humans decide; BMS / SIS / DCS remain the only control authorities · "
+                "every number carries its provenance</div>", unsafe_allow_html=True)
+
+
 def page_header(key):
     kicker, title, lead = PAGE_INFO[key]
     st.markdown(f"<div class='hc-head'><div class='hc-kicker'>Heater C · synthetic · {kicker}</div><div class='hc-title'>{title}</div>"
@@ -248,7 +264,7 @@ def logo_html():
     if LOGO.exists():
         import base64
         return f"<div class='hc-logo'><img alt='logo' src='data:image/png;base64,{base64.b64encode(LOGO.read_bytes()).decode()}'></div>"
-    return "<div class='hc-logo'>PET Resin Plant P</div>"
+    return "<div class='hc-logo'>Plant P</div>"
 
 
 def setup():

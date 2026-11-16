@@ -46,6 +46,11 @@ def metric(col, label, value, unit, status=None, fmt="{:.1f}"):
 
 
 def render():
+    _render_body()
+    C.footer()
+
+
+def _render_body():
     C.page_header("live")
     df, label, _ = C.filtered()
     if df.empty:

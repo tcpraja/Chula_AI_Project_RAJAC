@@ -8,6 +8,11 @@ from src.dashboard import common as C
 
 
 def render():
+    _render_body()
+    C.footer()
+
+
+def _render_body():
     C.page_header("whatif")
     df, label, is_def = C.filtered()
     st.error("SYNTHETIC SIMULATION — NOT FOR PLANT OPERATION · human review required · results are model illustrations, not instructions.")

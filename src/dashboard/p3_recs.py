@@ -24,6 +24,11 @@ def checklist(rec, L):
 
 
 def render():
+    _render_body()
+    C.footer()
+
+
+def _render_body():
     C.page_header("recs")
     df, label, is_def = C.filtered()
     if df.empty:

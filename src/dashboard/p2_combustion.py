@@ -15,6 +15,11 @@ def _lot_lines(fig, df):
 
 
 def render():
+    _render_body()
+    C.footer()
+
+
+def _render_body():
     C.page_header("combustion")
     df, label, _ = C.filtered()
     if df.empty:

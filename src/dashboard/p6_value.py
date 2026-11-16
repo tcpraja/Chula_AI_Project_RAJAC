@@ -23,6 +23,11 @@ def effect_stats(df, recs):
 
 
 def render():
+    _render_body()
+    C.footer()
+
+
+def _render_body():
     C.page_header("value")
     df, label, is_def = C.filtered()
     st.error("NO VERIFIED SAVINGS. Everything below is a synthetic simulation or an assumption-driven sensitivity — not a measured or approved benefit.")
