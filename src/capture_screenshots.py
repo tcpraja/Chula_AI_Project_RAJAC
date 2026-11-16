@@ -37,12 +37,15 @@ def main():
                                              f"--screenshot={OUT / f'screen_{i}.png'}", f"http://127.0.0.1:{a.port}/{pg}"], capture_output=True, timeout=180)
         shot(1, "")                                   # warm-up: first run loads and caches the data
         for i, pg in enumerate(PAGES, 1):
-            for attempt in range(6):                  # a near-empty page (< 100 kB) means the app was still loading
+            prev = None
+            for attempt in range(8):                  # accept only when two consecutive captures are byte-identical (page fully rendered)
                 shot(i, pg)
-                if (OUT / f"screen_{i}.png").stat().st_size > 100_000:
+                cur = (OUT / f"screen_{i}.png").read_bytes()
+                if cur == prev:
                     break
-                time.sleep(3)
-            print(f"screen_{i}.png", (OUT / f"screen_{i}.png").stat().st_size, "bytes")
+                prev = cur
+                time.sleep(2)
+            print(f"screen_{i}.png", len(cur), "bytes", "(stable)" if cur == prev else "(NOT stable)")
     finally:
         proc.terminate()
 

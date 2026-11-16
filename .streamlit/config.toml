@@ -7,9 +7,9 @@ port = 8501
 address = "127.0.0.1"
 
 [theme]
-base = "dark"
-primaryColor = "#ff9f1c"
-backgroundColor = "#0e1117"
-secondaryBackgroundColor = "#141a22"
-textColor = "#e6edf3"
+base = "light"
+primaryColor = "#009933"
+backgroundColor = "#f2f2f2"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#333333"
 font = "sans serif"

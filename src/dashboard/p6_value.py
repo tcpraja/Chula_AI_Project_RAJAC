@@ -44,7 +44,7 @@ def render():
     fig = go.Figure()
     fig.add_bar(x=["Baseline (no advice)", "Simulated, advice followed"], y=[100, 100 + es["pt"]],
                 error_y=dict(type="data", symmetric=False, array=[0, es["hi"] - es["pt"]], arrayminus=[0, es["pt"] - es["lo"]]),
-                marker_color=["#66737d", "#ff9f1c"])
+                marker_color=["#999999", "#009933"])
     fig.update_yaxes(range=[min(98, 100 + es["lo"] - 0.3), 100.3], title_text="SFC index (base = 100)")
     C.chart(fig, f"{label}. Index = 100 × (1 + share of rows with ADVICE × mean predicted ΔSFC ÷ SFC), next-interval, same useful heat; error bar = mean of row-level 90 % "
                  "bootstrap bounds × share (coefficient uncertainty only, not model error). Assumes every advice is followed, which no one has verified. OWN-ESTIMATE model on synthetic data.", "idx")

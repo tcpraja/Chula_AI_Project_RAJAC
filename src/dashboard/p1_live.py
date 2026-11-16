@@ -94,8 +94,8 @@ def render():
 
     fig = go.Figure()
     fig.add_scatter(x=w["t"], y=w["p75"], line=dict(width=0), showlegend=False, hoverinfo="skip")
-    fig.add_scatter(x=w["t"], y=w["p25"], line=dict(width=0), fill="tonexty", fillcolor="rgba(76,155,232,.20)", name="baseline P25–P75")
-    fig.add_scatter(x=w["t"], y=w["SFC_kg_GJ"], name="SFC kg/GJ", line=dict(color="#ff9f1c"))
+    fig.add_scatter(x=w["t"], y=w["p25"], line=dict(width=0), fill="tonexty", fillcolor="rgba(0,46,97,.12)", name="baseline P25–P75")
+    fig.add_scatter(x=w["t"], y=w["SFC_kg_GJ"], name="SFC kg/GJ", line=dict(color="#009933"))
     fig.update_yaxes(title_text="kg/GJ")
     C.chart(fig, f"{label}. SFC = fuel mass (kg) ÷ useful HTF heat (GJ), per 5-min row; PROXY/UNAVAILABLE rows left blank or flagged on the tile. "
                  "Band = P25–P75 of training-split eligible CALCULATED SFC in the same 1 MW load band (OWN-ESTIMATE), a reference, not a target.", "c3")

@@ -175,38 +175,51 @@ def sidebar():
 
 CSS = """
 <style>
+.stApp{background:linear-gradient(135deg,#eef3f9 0%,#f2f2f2 45%,#eaf5ee 100%);background-attachment:fixed}
+[data-testid="stHeader"]{background:rgba(255,255,255,.55);backdrop-filter:blur(8px)}
 .block-container{padding-top:4.2rem;max-width:1400px}
-html, body, [class*="css"]{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif}
-[data-testid="stSidebar"]{background:#0b0f14;border-right:1px solid #1f2733}
-[data-testid="stSidebar"] h2{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:#8b98a5;margin-top:.8rem}
+html, body, [class*="css"]{font-family:Arial,Calibri,'Segoe UI',sans-serif}
+[data-testid="stSidebar"]{background:linear-gradient(180deg,#002E61 0%,#00417f 100%);border-right:none}
+[data-testid="stSidebar"] *{color:#fff !important}
+[data-testid="stSidebar"] h2{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;opacity:.85;margin-top:.8rem}
+[data-testid="stSidebar"] [data-baseweb="input"],[data-testid="stSidebar"] [data-baseweb="input"]>div,[data-testid="stSidebar"] [data-baseweb="select"]>div{background:#fff;border-color:#CCCCCC}
+[data-testid="stSidebar"] [data-baseweb="input"] *,[data-testid="stSidebar"] [data-baseweb="select"] *{color:#1b2540 !important}
 .stAppDeployButton{display:none}
-h1,h2,h3{letter-spacing:-.01em}
+[data-testid="stSidebar"] [data-testid="stDateInput"] *,[data-testid="stSidebar"] input{color:#002E61 !important;-webkit-text-fill-color:#002E61 !important}
+[data-testid="stSidebar"] [data-testid="stDateInput"] [data-baseweb="input"]{background:#fff}
+[data-testid="stSidebar"] [data-testid="stDateInput"] label *{color:#fff !important;-webkit-text-fill-color:#fff !important}
+h1,h2,h3{letter-spacing:-.01em;color:#002E61;font-family:'Century Gothic','Antonio',Arial,sans-serif}
 h2,h3{font-weight:650}
-[data-testid="stMetric"]{background:#141a22;border:1px solid #232c38;border-radius:12px;padding:14px 16px}
-[data-testid="stMetricLabel"]{color:#8b98a5}
-[data-testid="stMetricValue"]{font-size:1.55rem;font-weight:650}
+[data-testid="stMetric"]{background:#fff;border:1px solid #d9dfe7;border-left:5px solid #002E61;border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,46,97,.08)}
+[data-testid="stColumn"]:nth-child(2) [data-testid="stMetric"]{border-left-color:#009933}
+[data-testid="stColumn"]:nth-child(3) [data-testid="stMetric"]{border-left-color:#CC0033}
+[data-testid="stColumn"]:nth-child(4) [data-testid="stMetric"]{border-left-color:#666666}
+[data-testid="stColumn"]:nth-child(5) [data-testid="stMetric"]{border-left-color:#002E61}
+[data-testid="stColumn"]:nth-child(6) [data-testid="stMetric"]{border-left-color:#009933}
+[data-testid="stMetricLabel"]{color:#666666}
+[data-testid="stMetricValue"]{font-size:1.4rem;font-weight:700;color:#002E61}
 [data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
-[data-testid="stVerticalBlockBorderWrapper"]{border-radius:12px;border-color:#232c38}
-[data-testid="stCaptionContainer"]{color:#8b98a5}
+[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:1px solid #d9dfe7;box-shadow:0 2px 12px rgba(0,46,97,.08)}
+[data-testid="stCaptionContainer"]{color:#666666}
 /* top page tabs as buttons */
 [data-testid="stTopNavLinkContainer"]{gap:.3rem}
-a[data-testid="stTopNavLink"]{background:#141a22;border:1px solid #2a3442;border-radius:9px;padding:.3rem .6rem;font-size:.82rem;color:#c9d3dd;font-weight:600;transition:all .15s;white-space:nowrap}
-a[data-testid="stTopNavLink"]:hover{border-color:#ff9f1c;color:#fff;background:#1b2330}
-a[data-testid="stTopNavLink"][aria-current="page"]{background:#ff9f1c;border-color:#ff9f1c;color:#10141a}
-a[data-testid="stTopNavLink"][aria-current="page"] *{color:#10141a}
+a[data-testid="stTopNavLink"]{background:#fff;border:1px solid #CCCCCC;border-radius:9px;padding:.28rem .5rem;font-size:.78rem;color:#002E61;font-weight:600;transition:all .15s;white-space:nowrap}
+a[data-testid="stTopNavLink"]:hover{border-color:#009933;color:#009933;background:#f2f8f4}
+a[data-testid="stTopNavLink"][aria-current="page"]{background:#002E61;border-color:#002E61;color:#fff;box-shadow:0 2px 0 #009933}
+a[data-testid="stTopNavLink"][aria-current="page"] *{color:#fff}
 .hc-logo{position:fixed;top:9px;right:64px;z-index:1000001;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;
-  background:#141a22;border:1px solid #2a3442;border-radius:9px;color:#c9d3dd;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  background:#fff;border:1px solid #CCCCCC;border-radius:9px;color:#002E61;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .hc-logo img{height:24px}
-.hc-banner{background:linear-gradient(90deg,#8e0019,#c1122f);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
-  letter-spacing:.08em;font-size:.95rem;box-shadow:0 2px 10px rgba(193,18,47,.35)}
-.hc-sub{color:#8b98a5;font-size:.8rem;margin:.35rem 0 .2rem}
-.hc-head{margin:.6rem 0 1rem;padding-bottom:.6rem;border-bottom:1px solid #232c38}
-.hc-kicker{color:#ff9f1c;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-.hc-title{font-size:2rem;font-weight:750;line-height:1.15;margin:.1rem 0}
-.hc-lead{color:#aab6c2;font-size:.95rem}
-.hc-noadv{background:#3a0a14;border:2px solid #ff4d6d;border-radius:14px;padding:26px;text-align:center}
-.hc-noadv b{display:block;font-size:2.9rem;color:#ff4d6d;letter-spacing:.06em}
-.hc-noadv span{color:#ffd6dd}
+.hc-banner{background:#CC0033;color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
+  letter-spacing:.08em;font-size:.95rem;box-shadow:0 3px 12px rgba(204,0,51,.30)}
+.hc-sub{color:#666666;font-size:.8rem;margin:.35rem 0 .2rem}
+.hc-head{margin:.6rem 0 1rem;padding:14px 18px;border-radius:14px;background:#fff;border:1px solid #d9dfe7;border-left:6px solid #009933}
+.hc-kicker{color:#009933;font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.hc-title{font-size:2rem;font-weight:800;line-height:1.15;margin:.1rem 0;color:#002E61;font-family:'Century Gothic','Antonio',Arial,sans-serif}
+.hc-lead{color:#666666;font-size:.95rem}
+.hc-noadv{background:#fde8ed;border:2px solid #CC0033;border-radius:14px;padding:26px;text-align:center}
+.hc-noadv b{display:block;font-size:2.9rem;color:#CC0033;letter-spacing:.06em}
+.hc-noadv span{color:#7a1a2b}
 </style>
 """
 
@@ -235,7 +248,7 @@ def logo_html():
     if LOGO.exists():
         import base64
         return f"<div class='hc-logo'><img alt='logo' src='data:image/png;base64,{base64.b64encode(LOGO.read_bytes()).decode()}'></div>"
-    return "<div class='hc-logo'>PET Resin Plant P · anonymized</div>"
+    return "<div class='hc-logo'>PET Resin Plant P</div>"
 
 
 def setup():
@@ -254,15 +267,15 @@ def provenance(text):
     st.caption("Provenance: SYNTHETIC · " + text)
 
 
-COLORWAY = ["#4c9be8", "#ff9f1c", "#3fb27f", "#e5484d", "#a78bfa", "#2dd4bf"]
+COLORWAY = ["#002E61", "#009933", "#CC0033", "#4d7aa8", "#66b87a", "#e07a90"]
 
 
 def chart(fig, prov, key=None, height=300):
-    fig.update_layout(template="plotly_dark", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
+    fig.update_layout(template="plotly_white", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
                       legend=dict(orientation="h", y=1.14, x=0, font=dict(size=11)), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                      font=dict(family="Inter, Segoe UI, sans-serif", size=12, color="#c9d3dd"))
-    fig.update_xaxes(gridcolor="#1c2430", zeroline=False, showline=False)
-    fig.update_yaxes(gridcolor="#1c2430", zeroline=False, showline=False)
+                      font=dict(family="Arial, Calibri, sans-serif", size=12, color="#333333"))
+    fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=False)
+    fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=False)
     with st.container(border=True):
         st.plotly_chart(fig, width="stretch", key=key)
         provenance(prov)
