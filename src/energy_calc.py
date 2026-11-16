@@ -64,12 +64,17 @@ def compute(split="test"):
                                                       + d.loc[[r["timestamp"] for r in recs], "fan_power_kW_ID"]).mean())}
 
 
+def run(split="test"):
+    r = compute(split)
+    OUT.write_text(json.dumps(r, indent=1), encoding="utf-8")
+    return r
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--split", default="test", choices=["val", "test"])
     a = ap.parse_args()
-    r = compute(a.split)
-    OUT.write_text(json.dumps(r, indent=1), encoding="utf-8")
+    r = run(a.split)
     print({k: (round(v, 3) if isinstance(v, float) else v) for k, v in r.items() if not isinstance(v, dict)})
     for k in ("delta_fuel_kg", "delta_fuel_energy_MJ", "delta_fuel_energy_kWh_thermal"):
         print(k, {a: round(b, 1) for a, b in r[k].items()})

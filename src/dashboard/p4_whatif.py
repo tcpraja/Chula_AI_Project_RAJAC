@@ -29,8 +29,10 @@ def render():
                 "Values outside are rejected, not clipped.")
     c1, c2 = st.columns(2)
     fd0, g0 = float(row["FD_command_pct"]), float(row["grate_command_pct"])
-    fd = c1.number_input("FD fan command target (%)", value=round(fd0, 1), step=0.5, key=f"wi_fd_{sel}")
-    g = c2.number_input("Grate command target (%)", value=round(g0, 1), step=0.5, key=f"wi_g_{sel}")
+    prop = recs.get(sel, {}).get("proposed_simulated_settings") or {"FD_command_pct": fd0, "grate_command_pct": g0}   # open on the advisory option if one exists
+    fd = c1.number_input("FD fan command target (%)", value=round(float(prop["FD_command_pct"]), 1), step=0.5, key=f"wi_fd_{sel}")
+    g = c2.number_input("Grate command target (%)", value=round(float(prop["grate_command_pct"]), 1), step=0.5, key=f"wi_g_{sel}")
+    st.caption(f"Current settings: FD {fd0:.1f} %, grate {g0:.1f} %. Targets start at the advisory option for this row when one exists.")
     bad = whatif.validate(row, fd, g, G)
     if bad:
         st.error("Input out of bounds — no result is produced.\n\n" + "\n".join(f"- {b}" for b in bad))
@@ -43,8 +45,8 @@ def render():
     if abs(fd - fd0) < 1e-9 and abs(g - g0) < 1e-9:
         st.info("Targets equal the current settings (HOLD) — change a target to simulate a move.")
     k = st.columns(4)
-    k[0].metric("SFC current → option", f"{res['SFC_current']:.2f} → {res['SFC_option']:.2f} kg/GJ")
-    k[1].metric("ΔSFC (point)", f"{res['dSFC_point']:+.3f} kg/GJ", f"{res['dSFC_pct']:+.2f} %", delta_color="inverse")
+    k[0].metric("SFC now → option (kg/GJ)", f"{res['SFC_current']:.2f} → {res['SFC_option']:.2f}")
+    k[1].metric("ΔSFC point (kg/GJ)", f"{res['dSFC_point']:+.3f}", f"{res['dSFC_pct']:+.2f} %", delta_color="inverse")
     k[2].metric("90 % interval", f"[{res['dSFC_lo90']:+.3f}, {res['dSFC_hi90']:+.3f}]")
     k[3].metric("Δ FD fan power (model)", f"{res['dfan_kw']:+.2f} kW")
     st.markdown(f"Predicted O2 {row['O2_pct_dry']:.2f} → **{res['O2_option_pct']:.2f} %**, CO → **{res['CO_option_ppm']:.0f} ppm**, "

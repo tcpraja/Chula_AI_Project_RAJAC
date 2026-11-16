@@ -9,7 +9,7 @@ import streamlit as st  # noqa: E402
 from src.dashboard import common, p1_live, p2_combustion, p3_recs, p4_whatif, p5_decisions, p6_value  # noqa: E402
 
 common.setup()
-pages = [st.Page(p1_live.render, title="1 Live Performance", url_path="live", default=True),
+pages = [st.Page(p1_live.render, title="1 Live Performance", default=True),
          st.Page(p2_combustion.render, title="2 Combustion Diagnostics", url_path="combustion"),
          st.Page(p3_recs.render, title="3 AI Recommendations", url_path="recommendations"),
          st.Page(p4_whatif.render, title="4 What-if Simulator", url_path="whatif"),

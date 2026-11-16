@@ -45,7 +45,7 @@ def render():
     fig.add_bar(x=["Baseline (no advice)", "Simulated, advice followed"], y=[100, 100 + es["pt"]],
                 error_y=dict(type="data", symmetric=False, array=[0, es["hi"] - es["pt"]], arrayminus=[0, es["pt"] - es["lo"]]),
                 marker_color=["#66737d", "#ff9f1c"])
-    fig.update_yaxes(range=[min(98, 100 + es["lo"] - 0.3), 100.3], title_text="SFC index (baseline = 100; lower is better)")
+    fig.update_yaxes(range=[min(98, 100 + es["lo"] - 0.3), 100.3], title_text="SFC index (base = 100)")
     C.chart(fig, f"{label}. Index = 100 × (1 + share of rows with ADVICE × mean predicted ΔSFC ÷ SFC), next-interval, same useful heat; error bar = mean of row-level 90 % "
                  "bootstrap bounds × share (coefficient uncertainty only, not model error). Assumes every advice is followed, which no one has verified. OWN-ESTIMATE model on synthetic data.", "idx")
 
@@ -70,11 +70,12 @@ def render():
                      "saving pessimistic": round(-es["hi"] / 100 * cost), "saving point": round(-es["pt"] / 100 * cost),
                      "saving optimistic": round(-es["lo"] / 100 * cost)})
     t = pd.DataFrame(rows)
+    st.caption("Gross sensitivity: before the realisation share (ASSUMED 0.2–1.0) and before running costs. The Phase 6 workbook (reports/economics_and_energy.xlsx) nets these off: base case is negative, no payback.")
     st.dataframe(t, hide_index=True, width="stretch")
     fig = go.Figure(go.Bar(x=t["fuel_price_index scenario"], y=t["saving point"],
                            error_y=dict(type="data", symmetric=False, array=(t["saving optimistic"] - t["saving point"]),
                                         arrayminus=(t["saving point"] - t["saving pessimistic"]))))
-    fig.update_yaxes(title_text="simulated fuel-cost change avoided, THB/yr")
+    fig.update_yaxes(title_text="THB/yr (simulated)")
     C.chart(fig, f"{label}. THB/yr = simulated ΔSFC share × fuel tonnes/yr ({fuel_kgh:,.0f} kg/h mean over scored rows × {hours:,.0f} h) × ASSUMED price × fuel_price_index scenario "
                  f"(P10/P50/P90 of the synthetic index relative to P50). Bars = point; whiskers = 90 % bounds. ASSUMED inputs, synthetic effect: not a savings claim.", "thb")
 

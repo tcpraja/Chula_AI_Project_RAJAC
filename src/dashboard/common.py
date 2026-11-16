@@ -176,6 +176,8 @@ def sidebar():
 
 def setup():
     st.set_page_config(page_title="Heater C advisory (synthetic)", layout="wide")
+    st.markdown("<style>[data-testid='stMetricValue']{font-size:1.45rem}[data-testid='stMetricValue']>div{overflow:visible;text-overflow:clip;"
+                "white-space:normal}</style>", unsafe_allow_html=True)
     banner()
     sidebar()
 

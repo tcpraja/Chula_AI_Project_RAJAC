@@ -21,7 +21,7 @@ Reading: payback appears only if nearly all of the simulated 0.24 % fuel effect 
 Energy (replay window of 253.4 h): simulated fuel energy change −7,559 kWh thermal (90 % interval −9,111 to −5,936; coefficient uncertainty only; Δfuel kg × LHV ÷ 3.6); FD fan electricity change −49.7 kWh (fan_power_kW_FD columns, fan law, negative = avoided). AI computing: about 3.6 kWh over six weeks (1.4–9.1), 2.6 kWh per month at an assumed 60 W (OWN-ESTIMATE, no wattmeter). No CO2 claim: no lifecycle boundary is defined.
 
 ## Evidence so far and what failed
-- 107 tests pass; deterministic shadow replay (identical hash on repeat); dashboard runs.
+- All tests pass (see final/number_source_map.csv for the count); deterministic shadow replay (identical hash on repeat); dashboard runs.
 - AI vs rule on the synthetic test split: exact-action hit 9.0 % vs 8.6 %; false-alert rate 29 % vs 15 % (Phase 4). The advisory is not clearly better than the rule.
 - The effect model is associational; real data would be confounded. Synthetic gains are generator illustrations.
 

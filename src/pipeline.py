@@ -1,4 +1,4 @@
-"""Pipeline stages. Phase 5: generate, clean, baseline, train, optimize, shadow. Later phases add final, dryrun.
+"""Pipeline stages. Phase 7: generate, clean, baseline, train, optimize, shadow, final. Later phase adds dryrun.
 
 Run: python -m src.pipeline --stage all|generate|clean|baseline [--site <yaml>] [--source synthetic|csv --path <file>]
 """
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw_synthetic" / "synthetic_heater_c_5min.csv"
 CLEAN = ROOT / "data" / "clean" / "clean_heater_c.csv"
 REJ = ROOT / "data" / "clean" / "rejected_rows.csv"
-LATER = ("final", "dryrun")
+LATER = ("dryrun",)
 
 
 def stage_generate():
@@ -86,9 +86,17 @@ def stage_shadow():
     print(f"shadow: {len(S)} held-out rows replayed; decisions {S['ai_decision'].value_counts().to_dict()}; sha256 {shadow.file_hash()[:16]}")
 
 
+def stage_final():
+    """Energy bookkeeping, economics workbook, then the submission set in final/ (needs reports/ai_runtime_measured.csv)."""
+    from src import build_final, economics, energy_calc
+    energy_calc.run("test")
+    economics.run()
+    build_final.run()
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", "train", "optimize", "shadow", *LATER])
+    ap.add_argument("--stage", default="all", choices=["all", "generate", "clean", "baseline", "train", "optimize", "shadow", "final", *LATER])
     ap.add_argument("--site", default=None, help="site yaml (thresholds); default config/cleaning_engineering.yaml")
     ap.add_argument("--source", default="synthetic", choices=["synthetic", "csv"])
     ap.add_argument("--path", default=None, help="raw CSV when --source csv")
@@ -109,6 +117,8 @@ def main():
         stage_optimize()
     if a.stage in ("all", "shadow"):
         stage_shadow()
+    if a.stage in ("all", "final"):
+        stage_final()
 
 
 if __name__ == "__main__":

@@ -224,8 +224,11 @@ def tornado_png(book, tun, a, rows, base):
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.parse_args()
+    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).parse_args()
+    run()
+
+
+def run():
     a, rows = assumptions(), model_rows()
     A_row, M_row, tun = build_xlsx(a, rows)
     b = Book(XLSX)
@@ -234,6 +237,17 @@ def main():
     tornado_png(b, tun, a, rows, base_net)
     res["tornado"] = {k: {"pess": b.value("Tornado", f"D{i}"), "opt": b.value("Tornado", f"E{i}")} for i, k in enumerate(tun, 2)}
     OUT.write_text(json.dumps({"label": BANNER, "model": res}, indent=1, default=str), encoding="utf-8")
+    units = {r[0]: (r[2], r[4]) for r in rows}
+    flat = [{"key": k, "scenario": sc, "value": v, "unit": units[k][0], "label": units[k][1] + " | " + BANNER}
+            for k in M_row for sc, v in res[k].items()]
+    en = json.loads((REP / "energy_synthetic.json").read_text(encoding="utf-8"))
+    for k in ("window_hours", "advice_rows_used", "fuel_mean_kgh_all_rows", "lhv_mean_MJkg", "fan_FD_delta_kWh_electric", "fan_FD_increase_kWh_electric",
+              "fan_FD_decrease_kWh_electric"):
+        flat.append({"key": "energy_" + k, "scenario": "synthetic", "value": en[k], "unit": "see key", "label": "SYNTHETIC (src.energy_calc)"})
+    for nm in ("delta_fuel_kg", "delta_fuel_energy_MJ", "delta_fuel_energy_kWh_thermal"):
+        for sc, v in en[nm].items():
+            flat.append({"key": "energy_" + nm, "scenario": sc, "value": v, "unit": nm.split("_")[-1], "label": "SYNTHETIC (src.energy_calc), coefficient uncertainty only"})
+    pd.DataFrame(flat).to_csv(REP / "economics_summary.csv", index=False)
     for k in ("kwh_6w", "kwh_month", "kwh_year", "kwh_fuel_pt", "kwh_fuel_lo", "kwh_fuel_hi", "kwh_fan_yr", "gross", "running", "net", "one_time", "payback", "breakeven", "sim_pct"):
         print(f"{k:12s}", {s: (round(v, 3) if isinstance(v, float) else v) for s, v in res[k].items()})
 

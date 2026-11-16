@@ -23,3 +23,10 @@ Sidebar: default synthetic file or CSV upload (schema-checked, never verified), 
 .venv\Scripts\python -m pytest -q --tb=short            # 99 tests, includes streamlit AppTest smoke tests
 ```
 Screenshots for the report go in `assets/screenshots/screen_1.png … screen_6.png`. QA notes: `reports/dashboard_qa.md`.
+
+## Submission set (Phase 7)
+```powershell
+.venv\Scripts\python -m src.capture_screenshots          # six dashboard screenshots via headless Edge/Chrome (optional)
+.venv\Scripts\python -m src.pipeline --stage all         # clean rebuild incl. final/ (proposal, appendix, deck, notes, Q&A) and number -> source map
+```
+`final/` holds Heater_C_Final_Proposal.pdf (2 pages), Appendix.pdf, Heater_C_Final_Deck.pptx (5 slides), 6_min_speaker_notes.md, panel_QA.md, source_and_AI_error_log.md, rubric_checklist.md and number_source_map.csv. Every number in them comes from reports/*.csv via `src/build_final.py`.

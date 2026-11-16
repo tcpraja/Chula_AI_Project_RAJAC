@@ -1,0 +1,90 @@
+label,value,source
+figure_baseline_bands,5.0,data/clean/clean_heater_c.csv load bands with >=30 windows
+MAE kg/h P,70.8439,"reports/model_comparison.csv[model=P,eligible_test,ALL].MAE"
+MAE kg/h P2,58.4597,"reports/model_comparison.csv[model=P2,eligible_test,ALL].MAE"
+MAE kg/h B,106.3764,"reports/model_comparison.csv[model=B,eligible_test,ALL].MAE"
+MAE kg/h L,53.9217,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE"
+MAE kg/h C0,55.7703,"reports/model_comparison.csv[model=C0,eligible_test,ALL].MAE"
+MAE kg/h C,55.367,"reports/model_comparison.csv[model=C,eligible_test,ALL].MAE"
+L better than P (persistence) %,23.8865,computed from reports/model_comparison.csv MAE
+L better than P2 (repeat current feed) %,7.7626,computed from reports/model_comparison.csv MAE
+L better than B (2-variable regression) %,49.3104,computed from reports/model_comparison.csv MAE
+C0 (boosting) worse than L %,3.4282,computed from reports/model_comparison.csv MAE
+L 90 % interval coverage %,90.083,"reports/model_comparison.csv[model=L,eligible_test,ALL].coverage"
+L MAE CI low,48.7642,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE_ci_lo"
+L MAE CI high,59.6346,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE_ci_hi"
+AI exact-action hit %,8.99,"reports/scenario_comparison.csv[AI_advisory*,actionable*].hit_rate_exact"
+Rule+default exact hit %,8.58,"reports/scenario_comparison.csv[rule_P75+default_action*,actionable*].hit_rate_exact"
+AI false-alert rate %,29.17,"reports/scenario_comparison.csv[AI_advisory*,actionable*].false_alert_rate"
+Rule false-alert rate %,15.28,"reports/scenario_comparison.csv[rule_P75+default_action*,actionable*].false_alert_rate"
+AI any-alert hit %,43.26,"reports/scenario_comparison.csv[AI_advisory*,actionable*].hit_rate_any_alert"
+Rule any-alert hit %,22.4,"reports/scenario_comparison.csv[rule_P75_alert_only*,actionable*].hit_rate_any_alert"
+rows_total,18655.0,reports/final_numbers.csv[rows_total]
+days_total,64.7743,reports/final_numbers.csv[days_total]
+lots_total,132.0,reports/final_numbers.csv[lots_total]
+eligible_share_pct,26.9258,reports/final_numbers.csv[eligible_share_pct]
+diag_only_share_pct,17.0893,reports/final_numbers.csv[diag_only_share_pct]
+baseline_sfc_median,96.7402,reports/final_numbers.csv[baseline_sfc_median]
+baseline_sfc_p25,89.9813,reports/final_numbers.csv[baseline_sfc_p25]
+baseline_sfc_p75,102.642,reports/final_numbers.csv[baseline_sfc_p75]
+baseline_sfc_n,3283.0,reports/final_numbers.csv[baseline_sfc_n]
+test_rows,3041.0,reports/final_numbers.csv[test_rows]
+test_share_pct,16.3013,reports/final_numbers.csv[test_share_pct]
+shadow_advice,708.0,reports/final_numbers.csv[shadow_advice]
+shadow_no_advice,1518.0,reports/final_numbers.csv[shadow_no_advice]
+shadow_diag_only,815.0,reports/final_numbers.csv[shadow_diag_only]
+shadow_advice_share_pct,23.2818,reports/final_numbers.csv[shadow_advice_share_pct]
+shadow_ai_only,505.0,reports/final_numbers.csv[shadow_ai_only]
+shadow_rule_only,164.0,reports/final_numbers.csv[shadow_rule_only]
+shadow_both,203.0,reports/final_numbers.csv[shadow_both]
+tests_total,107.0,reports/final_numbers.csv[tests_total]
+tests_passed,107.0,reports/final_numbers.csv[tests_passed]
+screenshots,6.0,reports/final_numbers.csv[screenshots]
+wall s generate,2.548,reports/ai_runtime_measured.csv[generate].wall_s_mean
+wall s train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean
+wall s shadow,2.364,reports/ai_runtime_measured.csv[shadow].wall_s_mean
+wall s dashboard_start_to_healthy,1.542,reports/ai_runtime_measured.csv[dashboard_start_to_healthy].wall_s_mean
+one_time [Pessimistic],1.5816,"reports/economics_summary.csv[one_time,Pessimistic]"
+running [Pessimistic],0.4312,"reports/economics_summary.csv[running,Pessimistic]"
+net [Pessimistic],-416.3367,"reports/economics_summary.csv[net,Pessimistic]"
+breakeven [Pessimistic],1.3961,"reports/economics_summary.csv[breakeven,Pessimistic]"
+sim_pct [Pessimistic],0.048,"reports/economics_summary.csv[sim_pct,Pessimistic]"
+kwh_6w [Pessimistic],9.0625,"reports/economics_summary.csv[kwh_6w,Pessimistic]"
+one_time [Base],0.8831,"reports/economics_summary.csv[one_time,Base]"
+running [Base],0.2148,"reports/economics_summary.csv[running,Base]"
+net [Base],-154.7791,"reports/economics_summary.csv[net,Base]"
+breakeven [Base],0.4293,"reports/economics_summary.csv[breakeven,Base]"
+sim_pct [Base],0.12,"reports/economics_summary.csv[sim_pct,Base]"
+kwh_6w [Base],3.6337,"reports/economics_summary.csv[kwh_6w,Base]"
+one_time [Optimistic],0.4282,"reports/economics_summary.csv[one_time,Optimistic]"
+running [Optimistic],0.0826,"reports/economics_summary.csv[running,Optimistic]"
+net [Optimistic],93.0791,"reports/economics_summary.csv[net,Optimistic]"
+breakeven [Optimistic],0.1129,"reports/economics_summary.csv[breakeven,Optimistic]"
+sim_pct [Optimistic],0.24,"reports/economics_summary.csv[sim_pct,Optimistic]"
+kwh_6w [Optimistic],1.3681,"reports/economics_summary.csv[kwh_6w,Optimistic]"
+payback years [Optimistic],4.5999,"reports/economics_summary.csv[payback,Optimistic]"
+kwh_month [Base],2.5955,"reports/economics_summary.csv[kwh_month,Base]"
+kwh_year [Base],31.5785,"reports/economics_summary.csv[kwh_year,Base]"
+energy_delta_fuel_energy_kWh_thermal [point],7558.8376,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,point]"
+energy_delta_fuel_energy_kWh_thermal [lo90],9110.7193,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,lo90]"
+energy_delta_fuel_energy_kWh_thermal [hi90],5935.5835,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,hi90]"
+energy_fan_FD_delta_kWh_electric [synthetic],49.6933,"reports/economics_summary.csv[energy_fan_FD_delta_kWh_electric,synthetic]"
+energy_window_hours [synthetic],253.4167,"reports/economics_summary.csv[energy_window_hours,synthetic]"
+fuel kWh per AI kWh (window vs 6 wk),2080.2076,computed from reports/economics_summary.csv
+pilot targets (count),9.0,reports/pilot_scorecard.csv type=target
+pilot stop conditions (count),6.0,reports/pilot_scorecard.csv type=stop
+pilot weeks,6.0,docs/PILOT_SPEC.md 'Six-week pilot'
+tests test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_n]
+passed test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_passed]
+tests test_app_smoke.py,16.0,reports/final_numbers.csv[tests_test_app_smoke.py_n]
+passed test_app_smoke.py,16.0,reports/final_numbers.csv[tests_test_app_smoke.py_passed]
+tests test_cleaning_engineering.py,21.0,reports/final_numbers.csv[tests_test_cleaning_engineering.py_n]
+passed test_cleaning_engineering.py,21.0,reports/final_numbers.csv[tests_test_cleaning_engineering.py_passed]
+tests test_energy_math.py,8.0,reports/final_numbers.csv[tests_test_energy_math.py_n]
+passed test_energy_math.py,8.0,reports/final_numbers.csv[tests_test_energy_math.py_passed]
+tests test_model_leakage.py,15.0,reports/final_numbers.csv[tests_test_model_leakage.py_n]
+passed test_model_leakage.py,15.0,reports/final_numbers.csv[tests_test_model_leakage.py_passed]
+tests test_no_secrets.py,2.0,reports/final_numbers.csv[tests_test_no_secrets.py_n]
+passed test_no_secrets.py,2.0,reports/final_numbers.csv[tests_test_no_secrets.py_passed]
+tests test_synthetic_physics.py,22.0,reports/final_numbers.csv[tests_test_synthetic_physics.py_n]
+passed test_synthetic_physics.py,22.0,reports/final_numbers.csv[tests_test_synthetic_physics.py_passed]
