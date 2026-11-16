@@ -194,6 +194,9 @@ a[data-testid="stTopNavLink"]{background:#141a22;border:1px solid #2a3442;border
 a[data-testid="stTopNavLink"]:hover{border-color:#ff9f1c;color:#fff;background:#1b2330}
 a[data-testid="stTopNavLink"][aria-current="page"]{background:#ff9f1c;border-color:#ff9f1c;color:#10141a}
 a[data-testid="stTopNavLink"][aria-current="page"] *{color:#10141a}
+.hc-logo{position:fixed;top:9px;right:64px;z-index:1000001;display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;
+  background:#141a22;border:1px solid #2a3442;border-radius:9px;color:#c9d3dd;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.hc-logo img{height:24px}
 .hc-banner{background:linear-gradient(90deg,#8e0019,#c1122f);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
   letter-spacing:.08em;font-size:.95rem;box-shadow:0 2px 10px rgba(193,18,47,.35)}
 .hc-sub{color:#8b98a5;font-size:.8rem;margin:.35rem 0 .2rem}
@@ -225,9 +228,19 @@ def no_advice_box(text, prefix=""):
     st.markdown(f"<div class='hc-noadv'><b>NO ADVICE</b><span>{prefix}{text}</span></div>", unsafe_allow_html=True)
 
 
+LOGO = ROOT / "assets" / "brand" / "logo.png"      # optional; CLAUDE.md rule 1 keeps public outputs anonymized unless the owner changes it
+
+
+def logo_html():
+    if LOGO.exists():
+        import base64
+        return f"<div class='hc-logo'><img alt='logo' src='data:image/png;base64,{base64.b64encode(LOGO.read_bytes()).decode()}'></div>"
+    return "<div class='hc-logo'>PET Resin Plant P · anonymized</div>"
+
+
 def setup():
     st.set_page_config(page_title="Heater C advisory (synthetic)", layout="wide")
-    st.markdown(CSS, unsafe_allow_html=True)
+    st.markdown(CSS + logo_html(), unsafe_allow_html=True)
     banner()
     sidebar()
 
