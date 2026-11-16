@@ -188,6 +188,12 @@ h2,h3{font-weight:650}
 [data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
 [data-testid="stVerticalBlockBorderWrapper"]{border-radius:12px;border-color:#232c38}
 [data-testid="stCaptionContainer"]{color:#8b98a5}
+/* top page tabs as buttons */
+[data-testid="stTopNavLinkContainer"]{gap:.3rem}
+a[data-testid="stTopNavLink"]{background:#141a22;border:1px solid #2a3442;border-radius:9px;padding:.3rem .6rem;font-size:.82rem;color:#c9d3dd;font-weight:600;transition:all .15s;white-space:nowrap}
+a[data-testid="stTopNavLink"]:hover{border-color:#ff9f1c;color:#fff;background:#1b2330}
+a[data-testid="stTopNavLink"][aria-current="page"]{background:#ff9f1c;border-color:#ff9f1c;color:#10141a}
+a[data-testid="stTopNavLink"][aria-current="page"] *{color:#10141a}
 .hc-banner{background:linear-gradient(90deg,#8e0019,#c1122f);color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
   letter-spacing:.08em;font-size:.95rem;box-shadow:0 2px 10px rgba(193,18,47,.35)}
 .hc-sub{color:#8b98a5;font-size:.8rem;margin:.35rem 0 .2rem}
