@@ -1,0 +1,11 @@
+step,what,n_runs,wall_s_mean,wall_s_min,wall_s_max,exit_code,label
+generate,python -m src.pipeline --stage generate,3,2.548,2.465,2.7,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+train,python -m src.pipeline --stage train,3,18.505,18.353,18.729,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+shadow,python -m src.pipeline --stage shadow,3,2.364,2.33,2.384,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_start_to_healthy,streamlit run app.py (headless) until /_stcore/health = ok,1,1.542,1.542,1.542,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p1_live,AppTest render of p1_live,3,0.28,0.129,0.556,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p2_combustion,AppTest render of p2_combustion,3,0.395,0.375,0.423,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p3_recs,AppTest render of p3_recs,3,0.188,0.143,0.248,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p4_whatif,AppTest render of p4_whatif,3,0.51,0.11,1.254,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p5_decisions,AppTest render of p5_decisions,3,0.19,0.15,0.215,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
+dashboard_render_p6_value,AppTest render of p6_value,3,0.181,0.155,0.231,0,"MEASURED-IN-PROTOTYPE (wall clock, this PC, wall time not CPU time)"
