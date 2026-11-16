@@ -191,7 +191,7 @@ html, body, [class*="css"]{font-family:Arial,Calibri,'Segoe UI',sans-serif}
 [data-testid="stSidebar"] [data-testid="stDateInput"] label *{color:#fff !important;-webkit-text-fill-color:#fff !important}
 h1,h2,h3{letter-spacing:-.01em;color:#002E61;font-family:'Century Gothic','Antonio',Arial,sans-serif}
 h2,h3{font-weight:650}
-[data-testid="stMetric"]{background:#fff;border:2px solid #5f7b9e;border-left:7px solid #002E61;border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,46,97,.08)}
+[data-testid="stMetric"]{background:#fff;border:1px solid #5f7b9e;border-left:4px solid #002E61;border-radius:12px;padding:14px 16px;box-shadow:0 2px 10px rgba(0,46,97,.08)}
 [data-testid="stColumn"]:nth-child(2) [data-testid="stMetric"]{border-left-color:#009933}
 [data-testid="stColumn"]:nth-child(3) [data-testid="stMetric"]{border-left-color:#CC0033}
 [data-testid="stColumn"]:nth-child(4) [data-testid="stMetric"]{border-left-color:#666666}
@@ -200,12 +200,12 @@ h2,h3{font-weight:650}
 [data-testid="stMetricLabel"]{color:#666666}
 [data-testid="stMetricValue"]{font-size:1.4rem;font-weight:700;color:#002E61}
 [data-testid="stMetricValue"]>div{overflow:visible;text-overflow:clip;white-space:normal}
-[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:2px solid #5f7b9e;box-shadow:0 3px 14px rgba(0,46,97,.12);padding:.35rem}
+[data-testid="stVerticalBlockBorderWrapper"]{background:#fff;border-radius:14px;border:1px solid #5f7b9e;box-shadow:0 3px 14px rgba(0,46,97,.12);padding:.35rem}
 [data-testid="stMain"] [data-testid="stCaptionContainer"]{color:#555;border-left:3px solid #009933;padding-left:.6rem}
 [data-testid="stColumn"] [data-testid="stCaptionContainer"]{border-left:none;padding-left:0}
 /* top page tabs as pill buttons */
 [data-testid="stTopNavLinkContainer"]{gap:.25rem}
-a[data-testid="stTopNavLink"]{background:#fff;border:1px solid #d3d9e2;border-radius:999px;padding:.32rem .75rem;font-size:.82rem;color:#002E61;font-weight:600;
+a[data-testid="stTopNavLink"]{width:136px;justify-content:center;overflow:visible;background:#fff;border:1px solid #d3d9e2;border-radius:999px;padding:.32rem .75rem;font-size:.82rem;color:#002E61;font-weight:600;
   transition:all .15s;white-space:nowrap;box-shadow:0 1px 2px rgba(0,46,97,.06)}
 a[data-testid="stTopNavLink"]:hover{border-color:#009933;color:#006b24;background:#f1f9f4;transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,153,51,.18)}
 a[data-testid="stTopNavLink"][aria-current="page"]{background:#002E61;border-color:#002E61;color:#fff;box-shadow:0 3px 0 #009933,0 4px 10px rgba(0,46,97,.25)}
@@ -214,12 +214,12 @@ a[data-testid="stTopNavLink"][aria-current="page"] *{color:#fff}
 [data-testid="stSidebar"] .hc-side-sub{font-size:.72rem;opacity:.8;margin-bottom:.4rem}
 [data-testid="stSidebar"] .hc-side-bar{height:3px;width:46px;background:#009933;border-radius:2px;margin:.4rem 0 .8rem}
 .hc-foot{margin:2rem 0 .5rem;padding-top:.6rem;border-top:1px solid #d3d9e2;color:#666;font-size:.74rem;text-align:center}
-[data-testid="stDataFrame"]{border-radius:10px;overflow:hidden;border:2px solid #5f7b9e;background:#fff}
+[data-testid="stDataFrame"]{border-radius:10px;overflow:hidden;border:1px solid #5f7b9e;background:#fff}
 [data-testid="stRadio"] label p,[data-testid="stCheckbox"] label p{font-size:.9rem}
-[data-testid="stAlert"]{border-radius:10px;border:2px solid #5f7b9e;border-left:7px solid #002E61;background-clip:padding-box}
-[data-baseweb="input"],[data-baseweb="select"]>div,[data-baseweb="base-input"]{border:1.5px solid #8fa3bf !important;border-radius:9px}
+[data-testid="stAlert"]{border-radius:10px;border:1px solid #5f7b9e;border-left:4px solid #002E61;background-clip:padding-box}
+[data-baseweb="input"],[data-baseweb="select"]>div,[data-baseweb="base-input"]{border:1px solid #8fa3bf !important;border-radius:9px}
 [data-testid="stSidebar"] [data-baseweb="input"],[data-testid="stSidebar"] [data-baseweb="select"]>div{border-color:#cfd8e6 !important}
-.hc-note{margin:.4rem .1rem .2rem;padding:.55rem .8rem;border:1.5px dashed #8fa3bf;border-left:5px solid #009933;border-radius:9px;background:#f6f9fc;color:#444;font-size:.78rem;line-height:1.45}
+.hc-note{margin:.4rem .1rem .2rem;padding:.55rem .8rem;border:1px dashed #8fa3bf;border-left:3px solid #009933;border-radius:9px;background:#f6f9fc;color:#444;font-size:.78rem;line-height:1.45}
 .hc-note b{color:#002E61}
 .stButton>button,.stDownloadButton>button{border-radius:9px;border:1px solid #002E61;color:#002E61;font-weight:600;background:#fff}
 .stButton>button:hover,.stDownloadButton>button:hover{background:#002E61;color:#fff;border-color:#002E61}
@@ -229,11 +229,11 @@ a[data-testid="stTopNavLink"][aria-current="page"] *{color:#fff}
 .hc-banner{background:#CC0033;color:#fff;padding:10px 16px;border-radius:10px;font-weight:700;text-align:center;
   letter-spacing:.08em;font-size:.95rem;box-shadow:0 3px 12px rgba(204,0,51,.30)}
 .hc-sub{color:#666666;font-size:.8rem;margin:.35rem 0 .2rem}
-.hc-head{margin:.6rem 0 1rem;padding:14px 18px;border-radius:14px;background:#fff;border:2px solid #5f7b9e;border-left:8px solid #009933;box-shadow:0 3px 12px rgba(0,46,97,.10)}
+.hc-head{margin:.6rem 0 1rem;padding:14px 18px;border-radius:14px;background:#fff;border:1px solid #5f7b9e;border-left:4px solid #009933;box-shadow:0 3px 12px rgba(0,46,97,.10)}
 .hc-kicker{color:#009933;font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
 .hc-title{font-size:2rem;font-weight:800;line-height:1.15;margin:.1rem 0;color:#002E61;font-family:'Century Gothic','Antonio',Arial,sans-serif}
 .hc-lead{color:#666666;font-size:.95rem}
-.hc-noadv{background:#fde8ed;border:3px solid #CC0033;border-radius:14px;padding:26px;text-align:center}
+.hc-noadv{background:#fde8ed;border:1px solid #CC0033;border-radius:14px;padding:26px;text-align:center}
 .hc-noadv b{display:block;font-size:2.9rem;color:#CC0033;letter-spacing:.06em}
 .hc-noadv span{color:#7a1a2b}
 </style>
@@ -295,8 +295,8 @@ def chart(fig, prov, key=None, height=300):
     fig.update_layout(template="plotly_white", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
                       legend=dict(orientation="h", y=1.14, x=0, font=dict(size=11)), paper_bgcolor="#ffffff", plot_bgcolor="#fafbfd",
                       font=dict(family="Arial, Calibri, sans-serif", size=12, color="#333333"))
-    fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1.5)
-    fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1.5)
+    fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1)
+    fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#5f7b9e", linewidth=1)
     with st.container(border=True):
         st.plotly_chart(fig, width="stretch", key=key)
         provenance(prov)

@@ -41,11 +41,11 @@ def main():
             for attempt in range(8):                  # accept only when two consecutive captures are byte-identical (page fully rendered)
                 shot(i, pg)
                 cur = (OUT / f"screen_{i}.png").read_bytes()
-                if cur == prev:
+                if cur == prev and len(cur) > 100_000:
                     break
                 prev = cur
                 time.sleep(2)
-            print(f"screen_{i}.png", len(cur), "bytes", "(stable)" if cur == prev else "(NOT stable)")
+            print(f"screen_{i}.png", len(cur), "bytes", "(stable)" if cur == prev and len(cur) > 100_000 else "(NOT stable)")
     finally:
         proc.terminate()
 
