@@ -37,8 +37,8 @@ shadow_advice_share_pct,23.2818,reports/final_numbers.csv[shadow_advice_share_pc
 shadow_ai_only,505.0,reports/final_numbers.csv[shadow_ai_only]
 shadow_rule_only,164.0,reports/final_numbers.csv[shadow_rule_only]
 shadow_both,203.0,reports/final_numbers.csv[shadow_both]
-tests_total,155.0,reports/final_numbers.csv[tests_total]
-tests_passed,155.0,reports/final_numbers.csv[tests_passed]
+tests_total,161.0,reports/final_numbers.csv[tests_total]
+tests_passed,161.0,reports/final_numbers.csv[tests_passed]
 screenshots,8.0,reports/final_numbers.csv[screenshots]
 wall s generate,2.548,reports/ai_runtime_measured.csv[generate].wall_s_mean
 wall s train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean
@@ -74,6 +74,63 @@ fuel kWh per AI kWh (window vs 6 wk),2080.2076,computed from reports/economics_s
 pilot targets (count),9.0,reports/pilot_scorecard.csv type=target
 pilot stop conditions (count),6.0,reports/pilot_scorecard.csv type=stop
 pilot weeks,6.0,docs/PILOT_SPEC.md 'Six-week pilot'
+data-dictionary columns,106.0,reports/03_data_dictionary.csv
+tag-map site columns,40.0,config/tag_map_template.yaml
+tag-map critical columns,11.0,config/tag_map_template.yaml
+dashboard pages,7.0,app.py
+guardrail reason codes,21.0,src/guardrails.py CODES
+raw rows,18706.0,data/clean/clean_report.json
+clean rows,18655.0,data/clean/clean_report.json
+rejected rows,51.0,data/clean/clean_report.json
+fuel-to-heat lag steps,2.0,data/clean/clean_report.json
+rejected FROZEN_SENSOR,27.0,data/clean/clean_report.json
+rejected HEAT_IMPLAUSIBLE,14.0,data/clean/clean_report.json
+volumetric-fuel rows,1152.0,data/clean/clean_report.json
+baseline R2 train,0.91,reports/energy_baseline.md
+baseline MAE test kg/GJ,2.37,reports/energy_baseline.md
+critic findings,20.0,reports/ai_critique_log.md
+genuine errors fixed,5.0,reports/ai_critique_log.md
+FD range low,20.0,config/guardrail_limits.yaml
+FD range high,100.0,config/guardrail_limits.yaml
+grate range low,0.0,config/guardrail_limits.yaml
+grate range high,100.0,config/guardrail_limits.yaml
+max step % per axis,4.0,config/guardrail_limits.yaml
+O2 floor %,5.0,config/guardrail_limits.yaml
+CO limit ppm,250.0,config/guardrail_limits.yaml
+lambda_fan_kg_gj_per_kw,0.02,config/guardrail_limits.yaml
+lambda_move_kg_gj_per_pct,0.03,config/guardrail_limits.yaml
+lambda_width,0.25,config/guardrail_limits.yaml
+candidate moves in grid,25.0,config/guardrail_limits.yaml grid
+bootstrap draws (effect model),200.0,config/guardrail_limits.yaml
+excess air lambda,1.5369,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+stoichiometric air kg/kg,4.8374,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+flue O2 now %,7.3357,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss dry_flue_gas,10.3423,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss water_vapour,1.8579,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss CO,0.0189,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss unburnt_carbon,0.1708,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss radiation_other,1.5,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+eta chemistry %,86.1101,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+eta heat balance %,71.7785,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+best allowed O2 %,5.3,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+delta eta chemistry pts,0.3453,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+delta eta ridge pp,0.252,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+objective J,-0.2497,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+best reachable eta %,87.489,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+room to improve points,1.3789,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+mass balance closure %,0.0,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+lever O2 points,1.3789,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+lever stack -10 K points,0.578,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+monitor data quality %,98.1989,reports/monitoring/latest.json
+monitor max PSI,0.1981,reports/monitoring/latest.json
+false alerts per shift,1.9888,reports/monitoring/latest.json
+A/A effect %,0.0454,reports/mv/mv_retrospective.json
+A/A CI low %,-0.7644,reports/mv/mv_retrospective.json
+A/A CI high %,0.7973,reports/mv/mv_retrospective.json
+recovered effect %,-2.8588,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+recovered CI low %,-3.6553,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+recovered CI high %,-2.1343,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+smallest resolvable effect % (half-width of A/A interval),0.7808,reports/mv/mv_retrospective.json
 tests test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_n]
 passed test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_passed]
 tests test_app_smoke.py,21.0,reports/final_numbers.csv[tests_test_app_smoke.py_n]

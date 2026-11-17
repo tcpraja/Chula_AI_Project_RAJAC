@@ -62,7 +62,9 @@ def footer(title):
 
 
 def proposal(D, L, admin):
+    from src.build_project_deck import extras
     n, st = nums(D, L), styles(9.3)
+    x = extras(L, n)
     W = A4[0] - 3.0 * cm
     S = []
     S.append(Paragraph("Heater C AI Decision Support: final proposal for a six-week read-only pilot", st["t"]))
@@ -94,6 +96,7 @@ def proposal(D, L, admin):
                     ["4 AI advisory", "fuel forecast + ranked simulated moves, all gated", f"forecast MAE {n.mae_C0} kg/h (boosting) vs {n.mae_L} (linear); exact-action hit {n.ai_hit} % vs rule {n.rule_hit} %", "shadow only; keep only if MAE gain over regression is at least 10 % on real data"]],
                    [2.6 * cm, 4.4 * cm, W - 11.3 * cm, 4.3 * cm], st))
     S.append(Paragraph("<b>Choice:</b> start with options 2 and 3 and run option 4 in shadow; where it runs: offline on a site PC (no cloud, no network, no write path). "
+                       "A pilot package is ready for a site run: read-only adapters with a tag-map check, a monitor that forces NO ADVICE on drift or bad data, a tamper-evident audit log and a container with no network. "
                        "<b>PDPA:</b> operators appear only as role IDs (OP-A, OP-B), notes carry no names, log kept for the pilot plus 90 days (proposal), site privacy contact to confirm.", st["b"]))
     S.append(Paragraph("4 Test results (SYNTHETIC, held-out later fuel lots)", st["h"]))
     S.append(Paragraph(f"<b>Simple vs AI.</b> Next-15-minute fuel forecast, mean absolute error (kg/h): repeat the current feed {n.mae_P2}; 2-variable regression {n.mae_B}; "
@@ -103,7 +106,9 @@ def proposal(D, L, admin):
                        f"<b>Failure and fix.</b> My first comparison used last fuel value as the reference, which made the linear model look {n.L_vs_P} % better; a critic review showed the models also saw the current feed, "
                        f"so I added the fair reference 'repeat current feed' and the gain fell to {n.L_vs_P2} %; selection was moved to validation rows only. "
                        f"<b>Energy.</b> Computing for the whole pilot uses about {n.kwh6_base} kWh (OWN-ESTIMATE: 60 W assumed, no meter, times measured run times: train {n.t_train} s, shadow {n.t_shadow} s), "
-                       f"against a synthetic fuel-energy reduction of {n.fuel_pt} kWh thermal over a {n.win_h} h replay (90 % interval {n.fuel_hi}-{n.fuel_lo}; delta fuel kg x LHV / 3.6) - a generator illustration, not a saving.", st["b"]))
+                       f"against a synthetic fuel-energy reduction of {n.fuel_pt} kWh thermal over a {n.win_h} h replay (90 % interval {n.fuel_hi}-{n.fuel_lo}; delta fuel kg x LHV / 3.6) - a generator illustration, not a saving. "
+                       f"<b>Chemistry check.</b> A heat-loss balance from the fuel's combustion chemistry (assumed fuel analysis) puts the example row at {x.eta_chem} % against {x.eta_hb} % from the HTF heat balance; "
+                       f"cutting excess air from {x.lam} times the stoichiometric air toward O2 {x.o2_opt} % is worth about {x.lev_o2} points, and the chemistry agrees in sign with the model ({x.d_chem} vs {x.d_ridge}).", st["b"]))
     S.append(Paragraph("5 People and sustainability", st["h"]))
     S.append(Paragraph(f"<b>Who checks:</b> shift supervisor (decisions), EHS lead (safety re-check of every advisory), process engineer (false alerts), energy manager (measurement). "
                        f"<b>Who is affected:</b> operators (review of at most 2 minutes), laboratory (more LHV assays), maintenance (CO analyser). "
@@ -114,7 +119,7 @@ def proposal(D, L, admin):
     S.append(Paragraph("6 Trial plan", st["h"]))
     S.append(Paragraph(f"<b>Measure:</b> {n.n_targets} targets in the scorecard (e.g. {n.targets[0]}; {n.targets[1]}; {n.targets[2]}; {n.targets[3]}). "
                        f"<b>GO</b> = {n.n_targets} of {n.n_targets} targets met on measured data and 0 of {n.n_stops} stop conditions fired; <b>REVISE</b> = safety and data targets met but effect or economics not shown; "
-                       f"<b>STOP</b> = any of: {n.stops}.", st["b"]))
+                       f"<b>STOP</b> = any of: {n.stops}. A six-week trial can only resolve about ±{x.mde} % of fuel (own test on synthetic data), so a smaller effect would be reported as not shown, never as a saving.", st["b"]))
     doc = SimpleDocTemplate(str(FIN / "Heater_C_Final_Proposal.pdf"), pagesize=A4, leftMargin=1.5 * cm, rightMargin=1.5 * cm, topMargin=1.2 * cm, bottomMargin=1.5 * cm,
                             title="Heater C Final Proposal", author=admin["name"])
     doc.build(S, onFirstPage=footer("Heater C final proposal"), onLaterPages=footer("Heater C final proposal"))
