@@ -12,7 +12,7 @@ from src.dashboard import common
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = {"p1_live": "Live Performance", "p2_combustion": "Combustion Diagnostics", "p3_recs": "AI Recommendations",
-         "p4_whatif": "What-if Simulator", "p5_decisions": "Operator Decisions", "p6_value": "Business Value"}
+         "p4_whatif": "What-if Simulator", "p5_decisions": "Operator Decisions", "p6_value": "Business Value", "p7_optimize": "Optimize"}
 SCRIPT = "import sys\nsys.path.insert(0, r'{root}')\nfrom src.dashboard import common, {mod}\ncommon.setup()\n{mod}.render()\n"
 
 

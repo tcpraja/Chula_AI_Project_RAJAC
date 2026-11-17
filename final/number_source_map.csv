@@ -37,9 +37,9 @@ shadow_advice_share_pct,23.2818,reports/final_numbers.csv[shadow_advice_share_pc
 shadow_ai_only,505.0,reports/final_numbers.csv[shadow_ai_only]
 shadow_rule_only,164.0,reports/final_numbers.csv[shadow_rule_only]
 shadow_both,203.0,reports/final_numbers.csv[shadow_both]
-tests_total,114.0,reports/final_numbers.csv[tests_total]
-tests_passed,114.0,reports/final_numbers.csv[tests_passed]
-screenshots,7.0,reports/final_numbers.csv[screenshots]
+tests_total,122.0,reports/final_numbers.csv[tests_total]
+tests_passed,122.0,reports/final_numbers.csv[tests_passed]
+screenshots,8.0,reports/final_numbers.csv[screenshots]
 wall s generate,2.548,reports/ai_runtime_measured.csv[generate].wall_s_mean
 wall s train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean
 wall s shadow,2.364,reports/ai_runtime_measured.csv[shadow].wall_s_mean
@@ -76,8 +76,8 @@ pilot stop conditions (count),6.0,reports/pilot_scorecard.csv type=stop
 pilot weeks,6.0,docs/PILOT_SPEC.md 'Six-week pilot'
 tests test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_n]
 passed test_advisory_gate.py,23.0,reports/final_numbers.csv[tests_test_advisory_gate.py_passed]
-tests test_app_smoke.py,16.0,reports/final_numbers.csv[tests_test_app_smoke.py_n]
-passed test_app_smoke.py,16.0,reports/final_numbers.csv[tests_test_app_smoke.py_passed]
+tests test_app_smoke.py,17.0,reports/final_numbers.csv[tests_test_app_smoke.py_n]
+passed test_app_smoke.py,17.0,reports/final_numbers.csv[tests_test_app_smoke.py_passed]
 tests test_cleaning_engineering.py,21.0,reports/final_numbers.csv[tests_test_cleaning_engineering.py_n]
 passed test_cleaning_engineering.py,21.0,reports/final_numbers.csv[tests_test_cleaning_engineering.py_passed]
 tests test_energy_math.py,8.0,reports/final_numbers.csv[tests_test_energy_math.py_n]

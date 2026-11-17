@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "screenshots"
 PAGES = ["", "combustion", "recommendations", "whatif", "decisions", "value"]
-EXTRA = {"screen_3b_advice_chemistry": "recommendations?filter=advice"}
+EXTRA = {"screen_3b_advice_chemistry": "recommendations?filter=advice", "screen_7_optimize": "optimize?pos=295"}
 BROWSERS = [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
             r"C:\Program Files\Google\Chrome\Application\chrome.exe", "/usr/bin/chromium", "/usr/bin/google-chrome"]
 

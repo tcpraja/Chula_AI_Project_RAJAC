@@ -1,0 +1,13 @@
+# Thresholds for the real-time operating guidance on the Optimize page. ASSUMED / OWN-ESTIMATE engineering rules of thumb for the SYNTHETIC
+# heater, NOT approved limits (real limits only from a signed site config). They only decide the wording of a suggestion; BMS/SIS/DCS stay in charge.
+provenance: ASSUMED_RULES_OF_THUMB_NOT_APPROVED
+o2_tolerance_pct: 0.5           # O2 above the best allowed O2 by more than this -> suggest less air
+draft_target_pa: -35.0          # mid-band draft target (band itself comes from the guardrail config)
+stack_excess_k: 15.0            # stack temperature above the load-matched expectation by more than this -> suggest cleaning surfaces
+economizer_dp_high_pa: 550.0    # economizer dP above this -> fouling suspected
+co_warn_fraction: 0.5           # CO above this share of the limit -> warn
+unburnt_high_pct: 5.0           # unburnt carbon in ash above this -> burn-out problem
+moisture_high_pct: 25.0         # fuel moisture above this -> wet fuel handling advice
+htf_tout_dev_k: 3.0             # HTF supply temperature deviation from set point that is worth mentioning
+sensitivity_dt_k: 10.0          # stack temperature step for the lever table
+sensitivity_moisture_pts: 2.0   # moisture step for the lever table

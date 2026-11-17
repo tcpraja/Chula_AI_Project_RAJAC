@@ -205,7 +205,7 @@ h2,h3{font-weight:650}
 [data-testid="stColumn"] [data-testid="stCaptionContainer"]{border-left:none;padding-left:0}
 /* top page tabs as pill buttons */
 [data-testid="stTopNavLinkContainer"]{gap:.25rem}
-a[data-testid="stTopNavLink"]{width:136px;justify-content:center;overflow:visible;background:#fff;border:1px solid #d3d9e2;border-radius:999px;padding:.32rem .75rem;font-size:.82rem;color:#002E61;font-weight:600;
+a[data-testid="stTopNavLink"]{width:130px;justify-content:center;overflow:visible;background:#fff;border:1px solid #d3d9e2;border-radius:999px;padding:.32rem .4rem;font-size:.77rem;color:#002E61;font-weight:600;
   transition:all .15s;white-space:nowrap;box-shadow:0 1px 2px rgba(0,46,97,.06)}
 a[data-testid="stTopNavLink"]:hover{border-color:#009933;color:#006b24;background:#f1f9f4;transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,153,51,.18)}
 a[data-testid="stTopNavLink"][aria-current="page"]{background:#002E61;border-color:#002E61;color:#fff;box-shadow:0 3px 0 #009933,0 4px 10px rgba(0,46,97,.25)}
@@ -239,12 +239,13 @@ a[data-testid="stTopNavLink"][aria-current="page"] *{color:#fff}
 </style>
 """
 
-PAGE_INFO = {"live": ("1 of 6", "Live Performance", "Replay of the held-out period, row by row. The cursor never shows future rows."),
-             "combustion": ("2 of 6", "Combustion Diagnostics", "Fuel quality, flue gas, commands (not airflow), temperatures, draft, faults."),
-             "recs": ("3 of 6", "AI Recommendations", "A simulated option with interval and checklist. NO ADVICE is the fail-safe state."),
-             "whatif": ("4 of 6", "What-if Simulator", "Try a bounded FD / grate move. Out-of-bounds input gives an error and no result."),
-             "decisions": ("5 of 6", "Operator Decisions", "Role IDs only (OP-A / OP-B). Logs opinions; changes nothing in the plant."),
-             "value": ("6 of 6", "Business Value", "Simulated effect and assumption-driven sensitivities. No verified savings.")}
+PAGE_INFO = {"live": ("1 of 7", "Live Performance", "Replay of the held-out period, row by row. The cursor never shows future rows."),
+             "combustion": ("2 of 7", "Combustion Diagnostics", "Fuel quality, flue gas, commands (not airflow), temperatures, draft, faults."),
+             "recs": ("3 of 7", "AI Recommendations", "A simulated option with interval and checklist. NO ADVICE is the fail-safe state."),
+             "whatif": ("4 of 7", "What-if Simulator", "Try a bounded FD / grate move. Out-of-bounds input gives an error and no result."),
+             "decisions": ("5 of 7", "Operator Decisions", "Role IDs only (OP-A / OP-B). Logs opinions; changes nothing in the plant."),
+             "optimize": ("7 of 7", "Optimize", "Efficiency from the heat and mass balance: best reachable efficiency inside the limits, and what to raise or reduce."),
+             "value": ("6 of 7", "Business Value", "Simulated effect and assumption-driven sensitivities. No verified savings.")}
 
 
 def footer():

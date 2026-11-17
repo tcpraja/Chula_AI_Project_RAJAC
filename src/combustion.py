@@ -96,6 +96,24 @@ def losses(fuel, moisture_wb_pct, lhv_ar_mj_kg, o2_dry_pct, t_stack_c, t_amb_c, 
             "dry_flue_kmol_per_kg": fg["n_dry"], "wet_flue_kmol_per_kg": fg["n_wet"]}
 
 
+def mass_balance(fuel, moisture_wb_pct, o2_dry_pct, fuel_kgh, t_amb=30.0, rh=70.0):
+    """Hourly mass balance (kg/h) from stoichiometry. Inputs: fuel + humid air. Outputs: CO2, SO2, N2, excess O2, water vapour, ash.
+    Air is split as 20.95 % O2 / 79.05 % N2(+Ar) so the balance closes by construction of the species, which makes closure a real check."""
+    fg = flue_gas(fuel, moisture_wb_pct, o2_dry_pct, 0.0, t_amb, rh)
+    st, c, k = fg["st"], fg["st"]["comp"], float(fuel_kgh)
+    lam, o2f = fg["lambda"], fuel["air_o2_vol_frac"]
+    air_kmol = lam * st["air_kmol"]
+    air_dry_kg = air_kmol * (o2f * 32.0 + (1.0 - o2f) * 28.0)
+    w = float(humidity_ratio(t_amb, rh))
+    air_h2o_kg = w * air_dry_kg
+    inputs = {"fuel (as fired)": k, "combustion air (dry)": air_dry_kg * k, "air humidity": air_h2o_kg * k}
+    out = {"CO2": c["C"] / 12.0 * 44.0, "SO2": c["S"] / 32.0 * 64.0, "N2 (+Ar)": (c["N"] / 28.0 + (1.0 - o2f) * air_kmol) * 28.0,
+           "excess O2": o2f * (lam - 1.0) * st["air_kmol"] * 32.0, "water vapour": (fg["n_h2o_fuel"] * 18.0 + air_h2o_kg), "ash": c["ash"]}
+    out = {n: v * k for n, v in out.items()}
+    tin, tout = sum(inputs.values()), sum(out.values())
+    return {"in": inputs, "out": out, "in_total": tin, "out_total": tout, "closure_pct": 100.0 * (tout - tin) / tin, "lambda": lam}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--o2", type=float, default=7.0)

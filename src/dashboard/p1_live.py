@@ -12,6 +12,11 @@ WINDOWS = {"2 h": 24, "6 h": 72, "12 h": 144, "24 h": 288}
 def cursor_controls(n, key="cursor_slider"):
     """Slider + step buttons + autoplay. Returns the cursor index. Autoplay advances via a fragment timer."""
     ss = st.session_state
+    if key not in ss and "pos" in st.query_params:           # optional deep link: ?pos=<row> starts the replay at that row
+        try:
+            ss[key] = int(st.query_params["pos"])
+        except ValueError:
+            pass
     if "cursor_next" in ss:                       # applied before the widget exists (safe to set)
         ss[key] = min(max(int(ss.pop("cursor_next")), 0), n - 1)
     ss[key] = min(int(ss.get(key, n - 1)), n - 1)
