@@ -1,5 +1,6 @@
 """Screen 1 — Live Performance (replay of the filtered period; the cursor never reveals future rows)."""
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
@@ -7,6 +8,14 @@ from plotly.subplots import make_subplots
 from src.dashboard import common as C
 
 WINDOWS = {"2 h": 24, "6 h": 72, "12 h": 144, "24 h": 288}
+
+
+def step_play(ss, key, n):
+    """One timer tick: advance one row, or at the last row ask for Play to stop. Never assigns the toggle key (a widget) from the timer."""
+    if ss[key] >= n - 1:
+        ss["stop_play"] = True
+    else:
+        ss["cursor_next"] = ss[key] + 1
 
 
 def cursor_controls(n, key="cursor_slider"):
@@ -17,6 +26,8 @@ def cursor_controls(n, key="cursor_slider"):
             ss[key] = int(st.query_params["pos"])
         except ValueError:
             pass
+    if ss.pop("stop_play", False):                           # set by the timer at the last row; applied here, before the toggle exists
+        ss["playing"] = False
     if "cursor_next" in ss:                       # applied before the widget exists (safe to set)
         ss[key] = min(max(int(ss.pop("cursor_next")), 0), n - 1)
     ss[key] = min(int(ss.get(key, n - 1)), n - 1)
@@ -33,10 +44,7 @@ def cursor_controls(n, key="cursor_slider"):
     @st.fragment(run_every=1.0 if playing else None)
     def tick():
         if playing:
-            if ss[key] >= n - 1:
-                ss["playing"] = False
-            else:
-                ss["cursor_next"] = ss[key] + 1
+            step_play(ss, key, n)
             st.rerun()
     tick()
     return ss[key]
@@ -75,6 +83,11 @@ def _render_body():
         with m[4]:
             st.metric("Efficiency η", "UNAVAILABLE")
             st.markdown(C.badge("UNAVAILABLE"))
+    elif pd.isna(r["eta_pct"]) and pd.notna(r.get("eta_lo_pct")):
+        with m[4]:
+            st.metric("Efficiency η", f"{r['eta_lo_pct']:.0f}–{r['eta_hi_pct']:.0f} %")
+            st.markdown(C.badge(r["status_eta"]))
+            st.caption("no point value: this lot has no lab LHV, only an interval")
     else:
         metric(m[4], "Efficiency η", r["eta_pct"], "%", r["status_eta"])
     with m[5]:

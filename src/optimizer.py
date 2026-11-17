@@ -231,7 +231,8 @@ def run_split(d, F, eff, G, split):
     complete = x[need].notna().all(axis=1).to_numpy()
     ood = np.zeros(len(x), bool)
     ood[complete] = ood_d2(eff, x.loc[complete, OOD_COLS].to_numpy(float)) > eff["ood_thr"]
-    gr = gd.evaluate(x, G, ood=ood)
+    from src import monitor
+    gr = gd.evaluate(x, G, ood=ood, force_codes=monitor.enforced_codes())
     gr.loc[~complete & gr["eligible"], ["eligible", "outcome", "reason_codes"]] = [False, "NO_ADVICE", "LOW_FUEL_CONF"]
     fc = pr.predict(F[F["timestamp_local"].isin(x["timestamp_local"])].reset_index(drop=True), "selected").set_index("timestamp_local")["y_hat_kgh"]
     ver = eff["version"]

@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from src import cleaning, engineering, generate_synthetic as gen
@@ -35,9 +36,27 @@ def clean_frame(raw, cfg):
     return full, rej, rep, lag, rs
 
 
-def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
-    cfg = cleaning.load_cfg(cfg_path)
+LABEL_COLS = ["scenario_id", "is_fault_injected", "true_synthetic_best_action", "fuel_rate_true_kgh", "quality_flag", "advice_eligibility"]
+
+
+def site_cleaning_cfg(site_path):
+    """--site may be a plain cleaning-threshold yaml (Phases 1-7) or a site config (Phase 8: mode, limits, approvals)."""
+    if not site_path:
+        return None
+    import yaml
+    d = yaml.safe_load(Path(site_path).read_text(encoding="utf-8")) or {}
+    if "mode" in d or "site_id" in d:
+        from src import site_config
+        return site_config.load_site(site_path).validate().cleaning_cfg()
+    return cleaning.load_cfg(site_path)
+
+
+def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None, cfg=None):
+    cfg = cfg or cleaning.load_cfg(cfg_path)
     raw = pd.read_csv(raw_path)
+    for c in LABEL_COLS:                                   # real exports have no generator labels: evaluation sidecar gets blanks
+        if c not in raw.columns:
+            raw[c] = np.nan
     full, rej, rep, lag, rs = clean_frame(raw, cfg)
     out, rejected = Path(out), Path(rejected)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -51,6 +70,9 @@ def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
     if truth_path.exists():
         tr = pd.read_csv(truth_path, usecols=["timestamp_local", "best_action_eta_gain_pp", "eta_true", "Q_out_true_MW", "O2_true_pct_dry", "O2_opt_true_pct"])
         lab = lab.merge(tr.rename(columns={"timestamp_local": "_k"}), on="_k", how="left")
+    else:                                              # site data: no generator truth, evaluation columns stay blank (never invented)
+        for c in ("best_action_eta_gain_pp", "eta_true", "Q_out_true_MW", "O2_true_pct_dry", "O2_opt_true_pct"):
+            lab[c] = np.nan
     lab = lab.drop_duplicates("_k")
     ev = full[["timestamp_local"]].assign(_k=full["timestamp_local"].str[:19]).merge(lab, on="_k", how="left").drop(columns="_k")
     ev.to_csv(out.parent / "eval_labels.csv", index=False)
@@ -58,8 +80,9 @@ def stage_clean(raw_path=RAW, out=CLEAN, rejected=REJ, cfg_path=None):
                status_SFC=full["status_SFC"].value_counts().to_dict(), status_eta=full["status_eta"].value_counts().to_dict(),
                status_Q_out=full["status_Q_out"].value_counts().to_dict(), lhv_basis=full["LHV_basis"].value_counts().to_dict())
     (out.parent / "clean_report.json").write_text(json.dumps(rep, indent=1, default=str), encoding="utf-8")
-    from src import dq_report
-    dq_report.run(raw_path, cfg)
+    if raw["scenario_id"].notna().any():                   # the DQ report scores injected faults, which exist only in synthetic data
+        from src import dq_report
+        dq_report.run(raw_path, cfg)
     print(f"clean: raw {rep['n_raw']} -> clean {rep['n_clean']} + rejected {rep['n_rejected']}; lag_steps={lag}")
     print("rejected reasons:", rep["reject_counts"])
     print("status_SFC:", rep["status_SFC"], "| status_eta:", rep["status_eta"])
@@ -72,7 +95,10 @@ def stage_train():
     r = train.run()
     print(train.table_print(r["tbl"], train.NAMES))
     print("selected:", r["chosen"], "| best reference:", r["best_ref"], "| beats it (val/test):", r["beats_ref"], r["beats_test"])
-    train_extras.run(r)
+    if (ROOT / "data" / "raw_synthetic" / "synthetic_truth.csv").exists():       # robustness extras need generator truth: synthetic data only
+        train_extras.run(r)
+    else:
+        print("train_extras skipped: no generator truth file (site data)")
 
 
 def stage_optimize():
@@ -107,7 +133,7 @@ def main():
     if a.stage in ("all", "generate") and a.source == "synthetic":
         stage_generate()
     if a.stage in ("all", "clean"):
-        stage_clean(raw, cfg_path=a.site)
+        stage_clean(raw, cfg=site_cleaning_cfg(a.site))
     if a.stage in ("all", "baseline"):
         from src import baseline
         baseline.run()

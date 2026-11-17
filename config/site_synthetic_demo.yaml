@@ -1,0 +1,41 @@
+# SYNTHETIC demo site config: synthetic envelope limits, approval fields marked SYNTHETIC-TEST. Real sites start from config/site_template.yaml.
+site_id: SYNTHETIC_DEMO_SITE
+heater_id: HEATER_C_SYNTHETIC
+mode: SHADOW
+property_table_path: config/htf_properties.csv
+tag_map_path: config/tag_map_synthetic_site.yaml
+approval:
+  approver: SYNTHETIC-TEST (not a real approval)
+  date: '2026-01-01'
+  moc_reference: SYNTHETIC-TEST
+  notes: demo only
+limits:
+  draft_band_pa:
+  - -60.0
+  - -10.0
+  o2_floor_pct: 5.0
+  co_limit_ppm: 250.0
+  furnace_temp_limit_c: 1000.0
+  htf_out_limit_c: 300.0
+  eta_valid:
+  - 0.4
+  - 0.9
+  flow_valid_m3h:
+  - 500.0
+  - 900.0
+  stable_steps: 12
+  max_step_fd_pct: 4.0
+  max_step_grate_pct: 4.0
+  fd_range_pct:
+  - 20.0
+  - 100.0
+  grate_range_pct:
+  - 0.0
+  - 100.0
+  interval_width_max_sfc_kg_gj: 3.0
+cleaning_overrides: {}
+mv:
+  baseline_start: null
+  baseline_end: null
+  trial_start: null
+  trial_end: null

@@ -1,0 +1,8 @@
+feature,level,psi,n_ref,n_recent,status
+Q_out_MW,row,0.1981,12667,1952,WATCH
+fuel_moisture_wb_pct,lot,,55,11,INSUFFICIENT_DATA
+O2_pct_dry,row,0.0342,12667,1952,OK
+FD_command_pct,row,0.0593,12667,1952,OK
+grate_command_pct,row,0.0702,12667,1952,OK
+draft_pa,row,0.0536,12667,1952,OK
+stack_temp_C,row,0.0147,12667,1952,OK

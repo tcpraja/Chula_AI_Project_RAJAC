@@ -36,6 +36,9 @@ REASON_TEXT = {
     "PROPERTY_OOR": "HTF temperature outside the property table", "LIMITS_NOT_APPROVED": "Limits require OEM approval",
     "LOW_O2": "O2 below the synthetic floor", "HIGH_CO": "CO above the synthetic limit", "CMD_FEEDBACK": "Command and feedback disagree",
     "NO_BENEFIT": "No option with a pessimistic benefit (hold is best)",
+    "MODEL_DRIFT": "Monitor: inputs have drifted from the training data", "DATA_FAILURE": "Monitor: critical data invalid for too many days",
+    "MAE_WORSE_THAN_SIMPLE": "Monitor: the model is worse than the simple regression", "FALSE_ALERTS": "Monitor: too many false alerts per shift",
+    "SHADOW_MODE": "Shadow mode: advice is recorded but not shown to operators",
     "NO_RECORD": "No advisory record for this row (outside the held-out replay or an uploaded file) — fail-safe"}
 
 
@@ -309,7 +312,15 @@ def thin(df, n=3000):
 
 
 def gate_state(ts):
-    """Advisory record for a timestamp, or a fail-safe NO_ADVICE stub when none exists."""
+    """Advisory record for a timestamp, or a fail-safe NO_ADVICE stub when none exists. A monitor NO_ADVICE mode or SHADOW mode overrides it on site."""
+    from src import monitor, site_config
+    forced = monitor.enforced_codes()
+    site = site_config.from_env()
+    if site is not None and site.mode == "SHADOW":
+        forced = forced + ["SHADOW_MODE"]
+    if forced:
+        return {"timestamp": ts, "eligible": False, "decision": "NO_ADVICE", "reason_codes": forced, "proposed_simulated_settings": None,
+                "human_review_required": True, "model_version": "n/a", "advice_class": "NONE", "action": "NONE"}
     r = load_advisory().get(ts)
     if r is not None:
         return r

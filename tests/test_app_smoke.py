@@ -142,3 +142,49 @@ def test_shadow_replay_is_deterministic(tmp_path):
     shadow.run("test", b)
     assert hashlib.sha256(a.read_bytes()).digest() == hashlib.sha256(b.read_bytes()).digest()
     assert a.read_bytes() == (ROOT / "reports" / "shadow_replay.csv").read_bytes()
+
+
+def test_play_timer_stops_at_the_last_row_without_touching_the_toggle():
+    from src.dashboard import p1_live
+    ss = {"cursor_slider": 9}
+    p1_live.step_play(ss, "cursor_slider", 10)                 # at the last row: request stop, never assign the widget key 'playing'
+    assert ss.get("stop_play") is True and "playing" not in ss and "cursor_next" not in ss
+    ss = {"cursor_slider": 3}
+    p1_live.step_play(ss, "cursor_slider", 10)
+    assert ss == {"cursor_slider": 3, "cursor_next": 4}
+
+
+def test_stop_request_is_applied_before_the_toggle_exists():
+    lines = ['import sys', 'sys.path.insert(0, r"' + str(ROOT) + '")', 'import streamlit as st', 'from src.dashboard import p1_live',
+             'if "init" not in st.session_state:', '    st.session_state["init"] = 1', '    st.session_state["stop_play"] = True',
+             '    st.session_state["playing"] = True', 'p1_live.cursor_controls(10)']
+    at = AppTest.from_string(chr(10).join(lines), default_timeout=60).run()
+    assert not at.exception, [e.value for e in at.exception]
+    assert at.toggle[0].value is False
+
+
+def test_optimize_page_on_a_row_without_lab_assay_explains_instead_of_failing():
+    at = page("p7_optimize").run()
+    at.session_state["cursor_slider"] = 10 ** 9            # last test row: lot without lab LHV / moisture
+    at.run()
+    assert not at.exception, [e.value for e in at.exception]
+    assert any("no guess" in w.value.lower() or "Fuel lot" in w.value for w in at.warning) or len(at.metric) > 0
+
+
+def test_optimize_snapshot_with_no_evaluable_move_has_empty_candidates():
+    import json
+    import joblib
+    import numpy as np
+    from src import chem_advice, optimize_view as ov
+    d = common.load_default()
+    recs = {json.loads(line)["timestamp"]: json.loads(line) for line in (ROOT / "data" / "advisory" / "advisory_records_test.jsonl").read_text(encoding="utf-8").splitlines()}
+    ts = next(t for t, r in recs.items() if r["decision"] == "ADVICE")
+    i = d.index[d.timestamp_local == ts][0]
+    row = d.loc[i].copy()
+    row["draft_pa"] = np.nan                                  # the what-if model cannot evaluate any move without draft
+    s = ov.snapshot(row, chem_advice.lot_moisture(d, i), recs[ts], joblib.load(ROOT / "models" / "effect_model.joblib"), gd.load_limits(), ov.stack_reference(d))
+    assert s is None or s["candidates"].empty
+    no_o2 = d.loc[i].copy()
+    no_o2["O2_pct_dry"] = np.nan
+    assert ov.missing_inputs(no_o2, 17.0) == ["flue O2"]
+    assert "fuel moisture (lab value for the lot)" in ov.missing_inputs(d.loc[i], float("nan"))

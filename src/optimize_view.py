@@ -36,6 +36,14 @@ def _pick(row, name, default=np.nan):
     return float(v) if pd.notna(v) else default
 
 
+def missing_inputs(row, moisture):
+    """Names of the inputs a heat and mass balance needs but this row lacks (empty list = enough data)."""
+    need = {"fuel moisture (lab value for the lot)": moisture, "LHV (lab value for the lot)": _pick(row, "LHV_used_MJkg"), "flue O2": _pick(row, "O2_pct_dry"),
+            "stack temperature": _pick(row, "stack_temp_C"), "ambient temperature": _pick(row, "ambient_temp_C"), "fuel rate": _pick(row, "fuel_rate_aligned_kgh"),
+            "useful heat (load)": _pick(row, "Q_out_MW")}
+    return [k for k, v in need.items() if not np.isfinite(v)]
+
+
 def snapshot(row, moisture, gate, eff, G, stack_ref, fuel=None, ops=None):
     """gate: advisory record (or fail-safe stub). Returns None if the row lacks the data for a balance (no guesses are made)."""
     fuel, ops = fuel or cb.load_fuel(), ops or load_ops()

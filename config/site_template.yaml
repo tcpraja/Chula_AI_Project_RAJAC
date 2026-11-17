@@ -1,0 +1,32 @@
+# Site configuration TEMPLATE (Phase 8). SYNTHETIC placeholders only: real values are entered by the site, outside this repository.
+# MODE: SHADOW (read-only scoring, advice withheld) | ADVISORY (refused unless every limit is filled and approval is complete).
+site_id: SITE_TEMPLATE
+heater_id: HEATER_C_SYNTHETIC          # anonymized id used in outputs
+mode: SHADOW                           # SHADOW | ADVISORY (the MODE environment variable overrides it)
+property_table_path: config/htf_properties.csv   # replace with the site HTF datasheet table (T_C, rho_kgm3, cp_kJkgK); never extrapolated
+tag_map_path: config/tag_map_template.yaml       # the site's filled tag map
+approval:                              # all four needed before ADVISORY (sponsor, OT, EHS, OEM, MOC are recorded in the MOC reference)
+  approver: null                       # role or title of the approver, no personal names
+  date: null                           # YYYY-MM-DD
+  moc_reference: null                  # management-of-change record id
+  notes: null
+limits:                                # every limit must come from the OEM / EHS signed configuration; none may be invented
+  draft_band_pa: REQUIRES_OEM_APPROVAL
+  o2_floor_pct: REQUIRES_OEM_APPROVAL
+  co_limit_ppm: REQUIRES_OEM_APPROVAL
+  furnace_temp_limit_c: REQUIRES_OEM_APPROVAL
+  htf_out_limit_c: REQUIRES_OEM_APPROVAL
+  eta_valid: REQUIRES_OEM_APPROVAL
+  flow_valid_m3h: REQUIRES_OEM_APPROVAL
+  stable_steps: REQUIRES_OEM_APPROVAL
+  max_step_fd_pct: REQUIRES_OEM_APPROVAL
+  max_step_grate_pct: REQUIRES_OEM_APPROVAL
+  fd_range_pct: REQUIRES_OEM_APPROVAL
+  grate_range_pct: REQUIRES_OEM_APPROVAL
+  interval_width_max_sfc_kg_gj: REQUIRES_OEM_APPROVAL
+cleaning_overrides: {}                 # optional threshold overrides for cleaning/engineering (config/cleaning_engineering.yaml keys)
+mv:                                    # measurement & verification windows (YYYY-MM-DD); trial mode requires all four
+  baseline_start: null
+  baseline_end: null
+  trial_start: null
+  trial_end: null

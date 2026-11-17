@@ -1,0 +1,17 @@
+.venv
+.git
+__pycache__
+*.pyc
+.pytest_cache
+assets
+final
+data
+reports
+models
+*.db
+*.pdf
+*.pptx
+HMI_1.jpg
+HMI_2.png
+PID.pdf
+Interlock checking document.pdf

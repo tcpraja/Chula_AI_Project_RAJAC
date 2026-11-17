@@ -4,3 +4,5 @@ __pycache__/
 company_private/
 .streamlit/secrets.toml
 data/operator_log.db
+data/audit_log.db
+data/site_style/

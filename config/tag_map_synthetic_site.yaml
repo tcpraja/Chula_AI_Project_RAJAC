@@ -1,0 +1,783 @@
+# SYNTHETIC demo tag map: invented tags SITE_<NAME>, every site column available. Not a real site.
+version: 1
+provenance: TEMPLATE; no real tag names. The site fills site_tag/available/units;
+  never taken from this repository
+time:
+  site_tag: SITE_TIME
+  format: null
+  timezone: Asia/Bangkok
+  critical: true
+any_of_critical:
+- - fuel_rate_measured_kgh
+  - fuel_totalizer_kg
+columns:
+  CO_ppm:
+    source: site
+    site_tag: SITE_CO_PPM
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: ppm
+    internal_unit: ppm
+    conversion: identity
+    note: flue-gas CO; absent = NO_CO
+  CO_true_ppm:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  FD_command_pct:
+    source: site
+    site_tag: SITE_FD_COMMAND_PCT
+    available: true
+    critical: true
+    combustion: false
+    group: fans/air
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: FD fan COMMAND, not airflow
+  HTF_Tin_C:
+    source: site
+    site_tag: SITE_HTF_TIN_C
+    available: true
+    critical: true
+    combustion: false
+    group: HTF
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: HTF return temperature
+  HTF_Tin_true_C:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  HTF_Tout_C:
+    source: site
+    site_tag: SITE_HTF_TOUT_C
+    available: true
+    critical: true
+    combustion: false
+    group: HTF
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: HTF supply temperature
+  HTF_Tout_SP_C:
+    source: site
+    site_tag: SITE_HTF_TOUT_SP_C
+    available: true
+    critical: false
+    combustion: false
+    group: HTF
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: HTF supply set point
+  HTF_Tout_heater_true_C:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  HTF_bypass_pct:
+    source: site
+    site_tag: SITE_HTF_BYPASS_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: HTF
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: bypass opening; absent = heat balance UNVERIFIED
+  HTF_cp_kJkgK:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  HTF_flow_m3h:
+    source: site
+    site_tag: SITE_HTF_FLOW_M3H
+    available: true
+    critical: true
+    combustion: false
+    group: HTF
+    site_unit: m3/h
+    internal_unit: m3/h
+    conversion: identity
+    note: HTF volumetric flow
+  HTF_flow_true_m3h:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  HTF_pump_status:
+    source: site
+    site_tag: SITE_HTF_PUMP_STATUS
+    available: true
+    critical: false
+    combustion: false
+    group: HTF
+    site_unit: 0/1
+    internal_unit: 0/1
+    conversion: identity
+    note: pump running
+  HTF_rho_kgm3:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  ID_command_pct:
+    source: site
+    site_tag: SITE_ID_COMMAND_PCT
+    available: true
+    critical: true
+    combustion: false
+    group: fans/air
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: ID fan COMMAND, not airflow
+  LHV_true_MJkg:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  O2_opt_true_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  O2_pct_dry:
+    source: site
+    site_tag: SITE_O2_PCT_DRY
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: '% dry'
+    internal_unit: '% dry'
+    conversion: identity
+    note: flue-gas O2; basis (wet/dry) must be confirmed
+  O2_true_pct_dry:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  Q_demand_MW:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  Q_in_MW:
+    source: site
+    site_tag: SITE_Q_IN_MW
+    available: true
+    critical: false
+    combustion: false
+    group: energy
+    site_unit: Mkcal/h
+    internal_unit: MW
+    conversion: mkcal_h_to_mw
+    note: reported fuel heat (display)
+  Q_in_true_MW:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  Q_out_MW:
+    source: site
+    site_tag: SITE_Q_OUT_MW
+    available: true
+    critical: false
+    combustion: false
+    group: energy
+    site_unit: Mkcal/h
+    internal_unit: MW
+    conversion: mkcal_h_to_mw
+    note: reported (display) heat; used only for unit-slip checks
+  Q_out_true_MW:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  SFC_kg_GJ:
+    source: site
+    site_tag: SITE_SFC_KG_GJ
+    available: true
+    critical: false
+    combustion: false
+    group: energy
+    site_unit: kg/GJ
+    internal_unit: kg/GJ
+    conversion: identity
+    note: reported SFC (display)
+  advice_eligibility:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  alarm_code:
+    source: site
+    site_tag: SITE_ALARM_CODE
+    available: true
+    critical: false
+    combustion: false
+    group: alarms/interlocks
+    site_unit: '-'
+    internal_unit: '-'
+    conversion: identity
+    note: active alarm code(s)
+    default_if_unavailable: ''
+  ambient_RH_pct:
+    source: site
+    site_tag: SITE_AMBIENT_RH_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: ambient
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: ambient humidity
+  ambient_temp_C:
+    source: site
+    site_tag: SITE_AMBIENT_TEMP_C
+    available: true
+    critical: false
+    combustion: false
+    group: ambient
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: ambient temperature
+  ash_true_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  bed_tau_min:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  best_action_eta_gain_pp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  bypass_frac_true:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  case_end:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  case_id:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  case_start:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  co_available:
+    source: computed
+    note: 'derived by the adapter: 1 where CO is measured'
+  date:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  description:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  draft_SP_pa:
+    source: site
+    site_tag: SITE_DRAFT_SP_PA
+    available: true
+    critical: false
+    combustion: false
+    group: furnace/draft
+    site_unit: mmWC
+    internal_unit: Pa
+    conversion: mmwc_to_pa
+    note: draft set point
+  draft_pa:
+    source: site
+    site_tag: SITE_DRAFT_PA
+    available: true
+    critical: true
+    combustion: false
+    group: furnace/draft
+    site_unit: mmWC
+    internal_unit: Pa
+    conversion: mmwc_to_pa
+    note: furnace draft; mmWC x 9.80665 = Pa; negative = normal
+  draft_true_pa:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  economizer_dP_pa:
+    source: site
+    site_tag: SITE_ECONOMIZER_DP_PA
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: mmWC
+    internal_unit: Pa
+    conversion: mmwc_to_pa
+    note: economizer differential pressure
+  eta_direct_pct:
+    source: site
+    site_tag: SITE_ETA_DIRECT_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: energy
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: reported efficiency (display)
+  eta_true:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  expected_detection:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fan_derated:
+    source: site
+    site_tag: SITE_FAN_DERATED
+    available: true
+    critical: false
+    combustion: false
+    group: maintenance
+    site_unit: 0/1
+    internal_unit: 0/1
+    conversion: identity
+    note: unknown derate is treated as 0; cmd-vs-power check still runs
+    default_if_unavailable: 0
+  fan_power_kW_FD:
+    source: site
+    site_tag: SITE_FAN_POWER_KW_FD
+    available: true
+    critical: false
+    combustion: false
+    group: fans/air
+    site_unit: kW
+    internal_unit: kW
+    conversion: identity
+    note: FD motor power
+  fan_power_kW_ID:
+    source: site
+    site_tag: SITE_FAN_POWER_KW_ID
+    available: true
+    critical: false
+    combustion: false
+    group: fans/air
+    site_unit: kW
+    internal_unit: kW
+    conversion: identity
+    note: ID motor power
+  fault_type:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  feeder_speed_pct:
+    source: site
+    site_tag: SITE_FEEDER_SPEED_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: fuel rate
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: feeder speed
+  flue_temp_C:
+    source: site
+    site_tag: SITE_FLUE_TEMP_C
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: flue temperature
+  fouling_index:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fuel_LHV_asfired_MJkg:
+    source: site
+    site_tag: SITE_FUEL_LHV_ASFIRED_MJKG
+    available: true
+    critical: false
+    combustion: false
+    group: fuel lot
+    site_unit: MJ/kg
+    internal_unit: MJ/kg
+    conversion: identity
+    note: lab result per lot; absent = LHV unknown (never invented)
+  fuel_ash_pct:
+    source: site
+    site_tag: SITE_FUEL_ASH_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: ash
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: lab ash
+  fuel_burn_true_kgh:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fuel_feed_true_kgh:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fuel_lot:
+    source: site
+    site_tag: SITE_FUEL_LOT
+    available: true
+    critical: true
+    combustion: false
+    group: fuel lot
+    site_unit: '-'
+    internal_unit: '-'
+    conversion: identity
+    note: lot / batch id; needed for lot-aware splits
+  fuel_lot_idx:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fuel_mass_basis:
+    source: site
+    site_tag: SITE_FUEL_MASS_BASIS
+    available: true
+    critical: false
+    combustion: false
+    group: fuel rate
+    site_unit: '-'
+    internal_unit: '-'
+    conversion: identity
+    note: WEIGH_BELT|VOLUMETRIC; unknown = VOLUMETRIC (conservative)
+    default_if_unavailable: VOLUMETRIC
+  fuel_moisture_wb_pct:
+    source: site
+    site_tag: SITE_FUEL_MOISTURE_WB_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: fuel lot
+    site_unit: '%wb'
+    internal_unit: '%wb'
+    conversion: identity
+    note: lab result per lot
+  fuel_price_index:
+    source: site
+    site_tag: SITE_FUEL_PRICE_INDEX
+    available: true
+    critical: false
+    combustion: false
+    group: energy/cost
+    site_unit: index
+    internal_unit: index
+    conversion: identity
+    note: optional cost index
+  fuel_rate_measured_kgh:
+    source: site
+    site_tag: SITE_FUEL_RATE_MEASURED_KGH
+    available: true
+    critical: true
+    combustion: false
+    group: fuel rate
+    site_unit: kg/s
+    internal_unit: kg/h
+    conversion: kgs_to_kgh
+    note: belt-weigher rate; kg/s on many displays
+  fuel_rate_true_kgh:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  fuel_totalizer_kg:
+    source: site
+    site_tag: SITE_FUEL_TOTALIZER_KG
+    available: true
+    critical: false
+    combustion: false
+    group: fuel rate
+    site_unit: t
+    internal_unit: kg
+    conversion: t_to_kg
+    note: totalizer (resets are detected)
+  furnace_temp_C:
+    source: site
+    site_tag: SITE_FURNACE_TEMP_C
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: furnace temperature
+  grate_command_pct:
+    source: site
+    site_tag: SITE_GRATE_COMMAND_PCT
+    available: true
+    critical: true
+    combustion: false
+    group: grate
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: grate speed COMMAND
+  grate_opt_true_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  heater_id:
+    source: computed
+    note: 'derived by the adapter: from the site config'
+  implied_kgday:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  injected_case:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  injected_end:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  injected_rows:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  injected_start:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  interlock_active:
+    source: site
+    site_tag: SITE_INTERLOCK_ACTIVE
+    available: true
+    critical: true
+    combustion: false
+    group: alarms/interlocks
+    site_unit: 0/1
+    internal_unit: 0/1
+    conversion: identity
+    note: any trip/interlock active (read-only status)
+  is_fault_injected:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  kgday_disp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  kgs_disp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  lambda_true:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  lhv_known:
+    source: computed
+    note: 'derived by the adapter: 1 where a lab LHV value exists'
+  mkcal_day_disp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  mkcal_h_disp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  moisture_true_wb_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  mw_disp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  mw_from_mkcal_h:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  new:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  old:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  operating_mode:
+    source: site
+    site_tag: SITE_OPERATING_MODE
+    available: true
+    critical: true
+    combustion: false
+    group: state
+    site_unit: '-'
+    internal_unit: '-'
+    conversion: identity
+    note: value_map site status -> STARTUP|STEADY|RAMP|STANDBY|TRIP|FEEDER_STOP
+    value_map:
+      STARTUP: STARTUP
+      STEADY: STEADY
+      RAMP: RAMP
+      STANDBY: STANDBY
+      TRIP: TRIP
+      FEEDER_STOP: FEEDER_STOP
+  quality_flag:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  reason_code:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  reasons:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  record_id:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  rel_diff_fuel_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  scenario_id:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  shift_id:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  sootblow:
+    source: site
+    site_tag: SITE_SOOTBLOW
+    available: true
+    critical: false
+    combustion: false
+    group: maintenance
+    site_unit: 0/1
+    internal_unit: 0/1
+    conversion: identity
+    note: sootblowing active; unknown treated as 0
+    default_if_unavailable: 0
+  source:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  stack_temp_C:
+    source: site
+    site_tag: SITE_STACK_TEMP_C
+    available: true
+    critical: false
+    combustion: true
+    group: combustion
+    site_unit: degC
+    internal_unit: degC
+    conversion: identity
+    note: stack temperature
+  time:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  timestamp:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  true_synthetic_best_action:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  unburnt_in_ash_pct:
+    source: site
+    site_tag: SITE_UNBURNT_IN_ASH_PCT
+    available: true
+    critical: false
+    combustion: false
+    group: ash
+    site_unit: '%'
+    internal_unit: '%'
+    conversion: identity
+    note: lab unburnt carbon
+  unburnt_true_pct:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  variable:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site
+  verdict:
+    source: generator_only
+    available: false
+    note: synthetic truth/label/log column or tool-derived value; never read from
+      a site

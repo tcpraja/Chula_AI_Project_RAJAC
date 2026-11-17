@@ -1,0 +1,16 @@
+# Monitoring thresholds (Phase 8). ASSUMED / OWN-ESTIMATE, set before looking at any real data; stop conditions follow docs/PILOT_SPEC.md.
+provenance: ASSUMED_NOT_APPROVED
+psi_features: [Q_out_MW, fuel_moisture_wb_pct, O2_pct_dry, FD_command_pct, grate_command_pct, draft_pa, stack_temp_C]
+lot_level_features: [fuel_moisture_wb_pct]   # lab values per lot: PSI is computed on one value per lot, and needs >= 30 lots in each sample
+psi_bins: 10
+psi_warn: 0.10                 # watch
+psi_max: 0.25                  # above this on any monitored feature -> NO_ADVICE (drift); conventional PSI rule of thumb
+recent_days: 7                 # recent window compared with the training reference
+critical_signals: [HTF_flow_m3h, HTF_Tin_C, HTF_Tout_C, fuel_rate_measured_kgh, draft_pa]
+dq_day_valid_min_pct: 50.0     # a day is invalid if fewer than this share of rows have every critical signal valid
+dq_invalid_days_max: 3         # PILOT_SPEC stop: critical data invalid > 3 consecutive days -> NO_ADVICE
+eligible_target_pct: 60.0      # PILOT_SPEC target T1 (reported, not a stop)
+mae_worse_weeks: 2             # PILOT_SPEC stop: MAE worse than simple regression 2 consecutive weeks -> NO_ADVICE
+false_alerts_per_shift_max: 3.0  # PILOT_SPEC stop: > 3 / shift for 1 week -> NO_ADVICE
+false_alerts_per_shift_target: 1.0
+shift_hours: 8

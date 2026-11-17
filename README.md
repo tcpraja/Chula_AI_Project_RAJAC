@@ -30,3 +30,7 @@ Screenshots for the report go in `assets/screenshots/screen_1.png … screen_6.p
 .venv\Scripts\python -m src.pipeline --stage all         # clean rebuild incl. final/ (proposal, appendix, deck, notes, Q&A) and number -> source map
 ```
 `final/` holds Heater_C_Final_Proposal.pdf (2 pages), Appendix.pdf, Heater_C_Final_Deck.pptx (5 slides), 6_min_speaker_notes.md, panel_QA.md, source_and_AI_error_log.md, rubric_checklist.md and number_source_map.csv. Every number in them comes from reports/*.csv via `src/build_final.py`.
+
+## Pilot package (Phase 8, synthetic only)
+Read-only adapters (`src/adapters/`), site config (`config/site_template.yaml`), tag map (`config/tag_map_template.yaml`), monitor (`python -m src.monitor`), retrain (`python -m src.retrain --dry-run`), audit log (`python -m src.audit --verify`), M&V (`python -m src.mv_report --mode retrospective`), Docker files and site documents (INSTALL_SITE.md, OPERATIONS.md, ROLLBACK.md, SECURITY_NOTES.md).
+Scripts to run yourself outside Claude Code, printing file paths only: `run_real_retrospective.ps1`, `run_real_live_shadow.ps1`, `run_real_mv.ps1`. Demo data: `python -m src.site_demo` (invented tags, site units).

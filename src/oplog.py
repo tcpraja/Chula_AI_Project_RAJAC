@@ -58,6 +58,9 @@ def add(role, decision, reason, note, rec, data_source, path=None):
     if errs:
         raise ValueError("; ".join(errs))
     now = datetime.now(ZoneInfo("Asia/Bangkok")).isoformat(timespec="seconds")
+    from src import audit                       # tamper-evident copy of every operator decision (hash chain)
+    audit.append("operator", role, "DECISION", {"advisory_ts": rec["timestamp"], "advisory_decision": rec["decision"], "action": rec.get("action"),
+                                                 "model_version": rec.get("model_version")}, f"{decision}:{reason}", note or None)
     with connect(path) as con:
         con.execute("INSERT INTO decisions (logged_at, role_id, advisory_ts, advisory_decision, advisory_action, decision, reason_code, note,"
                     " model_version, data_source) VALUES (?,?,?,?,?,?,?,?,?,?)",

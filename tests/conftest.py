@@ -17,3 +17,10 @@ def _keep_effect_model_bytes():
     yield
     if keep is not None:
         p.write_bytes(keep)
+
+
+@pytest.fixture(autouse=True)
+def _isolated_logs(tmp_path, monkeypatch):
+    """Operator log and audit log go to a temp folder in every test (never the real data/ files)."""
+    monkeypatch.setenv("HEATER_OPLOG_DB", str(tmp_path / "op.db"))
+    monkeypatch.setenv("HEATER_AUDIT_DB", str(tmp_path / "audit.db"))

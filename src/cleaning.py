@@ -198,7 +198,7 @@ def clean(raw, cfg=None, lag_steps=0):
         fb |= ((df[cmd] >= cfg["cmd_feedback_min_cmd"]) & ((df[pw] / exp - 1).abs() > cfg["cmd_feedback_tol"])).fillna(False).to_numpy()
     df["cmd_feedback_mismatch"] = fb.astype(int)
     # 8 flags carried to engineering
-    df["heat_balance_status"] = np.where(df["HTF_bypass_pct"] > 0, "UNVERIFIED", "OK")
+    df["heat_balance_status"] = np.where(df["HTF_bypass_pct"].fillna(1.0) > 0, "UNVERIFIED", "OK")   # unknown bypass = unverified
     df["fuel_rel_unc"] = np.where(df["fuel_mass_basis"] == "VOLUMETRIC", cfg["unc"]["fuel_vol_rel"], cfg["unc"]["fuel_belt_rel"])
     # 9 split
     all_r = pd.concat({k: v.fillna(False).astype(bool) for k, v in reasons.items()}, axis=1)

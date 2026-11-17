@@ -1,0 +1,19 @@
+{
+ "schema": 1,
+ "champion": "L-98c3eead",
+ "entries": [
+  {
+   "version": "L-98c3eead",
+   "created": "2026-11-17T19:51:43+07:00",
+   "data_sha256": "98c3eeadc68231b88e868867b6e26944c843b8f4e2b6560fefa7f85dcd345b96",
+   "metrics": {
+    "test_mae_kgh": 53.922,
+    "simple_regression_mae_kgh": 106.376,
+    "valb_mae_kgh": 54.984
+   },
+   "status": "champion",
+   "approver": "SYNTHETIC-BASELINE (not a real approval)",
+   "note": "initial champion from the Phase 3 selection; SYNTHETIC"
+  }
+ ]
+}

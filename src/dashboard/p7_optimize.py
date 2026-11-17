@@ -40,7 +40,10 @@ def _render_body():
     st.markdown(f"**Replay time:** {row['t']:%Y-%m-%d %H:%M} {C.TZ_LABEL} · mode `{row['operating_mode']}` · lot `{row['fuel_lot']}`")
     s = ov.snapshot(row, chem_advice.lot_moisture(df, i), gate, C.effect_model(), C.limits(), stack_ref())
     if s is None:
-        st.warning("Not enough data on this row for a heat and mass balance (needs moisture, LHV, O2, stack temperature, fuel rate and load). No guess is made.")
+        miss = ov.missing_inputs(row, chem_advice.lot_moisture(df, i))
+        st.warning("No heat and mass balance for this row, and no guess is made. Missing: " + (", ".join(miss) or "inputs") + f". Fuel lot `{row['fuel_lot']}` "
+                   + ("has no lab assay yet (LHV and moisture are never invented)." if any("lab" in m for m in miss) else "lacks measurements.")
+                   + " Step back to a row from an assayed lot, or widen the replay.")
         return
     now, best = s["now"], s["best"]
     gain = (s["eta_best"] - now["eta_indirect_pct"]) if best else 0.0
@@ -89,8 +92,11 @@ def _render_body():
 
     st.subheader("Predicted effect of a forward-fan move (grate unchanged)")
     cd = s["candidates"].copy()
-    cd["Checks pass"] = cd["Checks pass"].map({True: "✅ pass", False: "❌ fail / hold"})
-    st.dataframe(cd.round(2), hide_index=True, width="stretch")
+    if cd.empty:
+        st.info("No forward-fan move can be evaluated on this row (the what-if model needs complete inputs and a move inside the allowed range).")
+    else:
+        cd["Checks pass"] = cd["Checks pass"].map({True: "✅ pass", False: "❌ fail / hold"})
+        st.dataframe(cd.round(2), hide_index=True, width="stretch")
     C.provenance(f"{label}. Each row re-runs the what-if model (ridge efficiency response, stoichiometric O2 from FD, CO and draft models, OOD check) plus the chemistry efficiency at the predicted O2. "
                  "A move is only a candidate if every constraint passes. Associational model on synthetic data.")
 

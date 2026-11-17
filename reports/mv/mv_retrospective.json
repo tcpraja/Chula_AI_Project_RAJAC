@@ -1,0 +1,32 @@
+{
+ "ok": true,
+ "delta_sfc_kg_gj": 0.043681661330779775,
+ "ci90_lo": -0.7360606896976123,
+ "ci90_hi": 0.7677667267389515,
+ "delta_pct": 0.045361411544033024,
+ "ci90_pct": [
+  -0.7643654304702734,
+  0.79729070278928
+ ],
+ "baseline_norm_sfc": 96.29696220625169,
+ "n_base_windows": 3825,
+ "n_trial_windows": 4111,
+ "n_lots_base": 42,
+ "n_lots_trial": 41,
+ "n_boot_used": 500,
+ "trial_useful_heat_gj": 10530.432558,
+ "fuel_kg_change": 459.986788665173,
+ "fuel_kg_change_ci90": [
+  -7751.0374514556715,
+  8084.915736200945
+ ],
+ "fuel_energy_kwh_thermal": 2032.9802130735864,
+ "fan_kw_change": -1.912671122815489,
+ "fan_kwh_change_over_trial": -655.8868058654781,
+ "verdict": "NO SAVING CLAIMED (CI includes 0)",
+ "saving_reported": false,
+ "mode": "retrospective",
+ "windows": "first half vs second half (split on a lot boundary)",
+ "ai_kwh_6w_base": 3.6336938500000002,
+ "label": "SYNTHETIC unless run on site data; a saving is claimed only if the 90 % CI excludes 0"
+}
