@@ -12,6 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "assets" / "screenshots"
 PAGES = ["", "combustion", "recommendations", "whatif", "decisions", "value"]
+EXTRA = {"screen_3b_advice_chemistry": "recommendations?filter=advice"}
 BROWSERS = [r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe", r"C:\Program Files\Microsoft\Edge\Application\msedge.exe",
             r"C:\Program Files\Google\Chrome\Application\chrome.exe", "/usr/bin/chromium", "/usr/bin/google-chrome"]
 
@@ -33,8 +34,8 @@ def main():
                     break
             except Exception:
                 time.sleep(0.5)
-        shot = lambda i, pg: subprocess.run([browser, "--headless=new", "--disable-gpu", "--hide-scrollbars", "--window-size=1500,1900", "--virtual-time-budget=40000",
-                                             f"--screenshot={OUT / f'screen_{i}.png'}", f"http://127.0.0.1:{a.port}/{pg}"], capture_output=True, timeout=180)
+        shot = lambda i, pg, h=1900: subprocess.run([browser, "--headless=new", "--disable-gpu", "--hide-scrollbars", f"--window-size=1500,{h}", "--virtual-time-budget=40000",
+                                                     f"--screenshot={OUT / (f'screen_{i}.png' if isinstance(i, int) else i + '.png')}", f"http://127.0.0.1:{a.port}/{pg}"], capture_output=True, timeout=180)
         shot(1, "")                                   # warm-up: first run loads and caches the data
         for i, pg in enumerate(PAGES, 1):
             prev = None
@@ -46,6 +47,16 @@ def main():
                 prev = cur
                 time.sleep(2)
             print(f"screen_{i}.png", len(cur), "bytes", "(stable)" if cur == prev and len(cur) > 100_000 else "(NOT stable)")
+        for name, pg in EXTRA.items():                 # extra views (not part of the six appendix screens)
+            prev = None
+            for attempt in range(8):
+                shot(name, pg, 3300)
+                cur = (OUT / f"{name}.png").read_bytes()
+                if cur == prev and len(cur) > 100_000:
+                    break
+                prev = cur
+                time.sleep(2)
+            print(f"{name}.png", len(cur), "bytes")
     finally:
         proc.terminate()
 

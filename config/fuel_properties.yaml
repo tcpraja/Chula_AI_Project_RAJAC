@@ -1,0 +1,19 @@
+# Palm-kernel-shell (PKS) fuel properties for the combustion chemistry view. ASSUMED / OWN-ESTIMATE: generic literature-typical
+# ranges, NOT company data. Replace with the site lab ultimate analysis (dry basis) before any site use.
+provenance: ASSUMED_GENERIC_PKS_LITERATURE_TYPICAL_NOT_APPROVED
+ultimate_dry_wt_pct:      # sums to 100 on a dry basis, ash included
+  C: 48.5
+  H: 6.0
+  O: 41.5
+  N: 0.6
+  S: 0.1
+  ash: 3.3
+latent_heat_water_mj_kg: 2.442     # at 25 degC (physical constant)
+cp_vapour_kj_kgk: 1.9              # water vapour, approximate
+mcp_dry_flue_kj_kmolk: 31.0        # molar heat capacity of dry flue gas, approximate (N2-rich)
+heat_of_combustion_co_kj_kmol: 283000.0
+heat_of_combustion_c_mj_kg: 32.8   # carbon to CO2, for unburnt carbon in ash
+air_o2_vol_frac: 0.2095
+mw_air_kg_kmol: 28.96
+radiation_other_loss_pct: 1.5      # ASSUMED radiation, convection and unaccounted loss
+default_unburnt_in_ash_pct: 3.0    # ASSUMED when no lab value exists (synthetic mean is about 2.9)

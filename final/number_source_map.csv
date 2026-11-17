@@ -37,9 +37,9 @@ shadow_advice_share_pct,23.2818,reports/final_numbers.csv[shadow_advice_share_pc
 shadow_ai_only,505.0,reports/final_numbers.csv[shadow_ai_only]
 shadow_rule_only,164.0,reports/final_numbers.csv[shadow_rule_only]
 shadow_both,203.0,reports/final_numbers.csv[shadow_both]
-tests_total,107.0,reports/final_numbers.csv[tests_total]
-tests_passed,107.0,reports/final_numbers.csv[tests_passed]
-screenshots,6.0,reports/final_numbers.csv[screenshots]
+tests_total,114.0,reports/final_numbers.csv[tests_total]
+tests_passed,114.0,reports/final_numbers.csv[tests_passed]
+screenshots,7.0,reports/final_numbers.csv[screenshots]
 wall s generate,2.548,reports/ai_runtime_measured.csv[generate].wall_s_mean
 wall s train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean
 wall s shadow,2.364,reports/ai_runtime_measured.csv[shadow].wall_s_mean
