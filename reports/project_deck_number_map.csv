@@ -1,0 +1,132 @@
+label,value,source
+MAE kg/h P,70.8439,"reports/model_comparison.csv[model=P,eligible_test,ALL].MAE"
+MAE kg/h P2,58.4597,"reports/model_comparison.csv[model=P2,eligible_test,ALL].MAE"
+MAE kg/h B,106.3764,"reports/model_comparison.csv[model=B,eligible_test,ALL].MAE"
+MAE kg/h L,53.9217,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE"
+MAE kg/h C0,55.7703,"reports/model_comparison.csv[model=C0,eligible_test,ALL].MAE"
+MAE kg/h C,55.367,"reports/model_comparison.csv[model=C,eligible_test,ALL].MAE"
+L better than P (persistence) %,23.8865,computed from reports/model_comparison.csv MAE
+L better than P2 (repeat current feed) %,7.7626,computed from reports/model_comparison.csv MAE
+L better than B (2-variable regression) %,49.3104,computed from reports/model_comparison.csv MAE
+C0 (boosting) worse than L %,3.4282,computed from reports/model_comparison.csv MAE
+L 90 % interval coverage %,90.083,"reports/model_comparison.csv[model=L,eligible_test,ALL].coverage"
+L MAE CI low,48.7642,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE_ci_lo"
+L MAE CI high,59.6346,"reports/model_comparison.csv[model=L,eligible_test,ALL].MAE_ci_hi"
+AI exact-action hit %,8.99,"reports/scenario_comparison.csv[AI_advisory*,actionable*].hit_rate_exact"
+Rule+default exact hit %,8.58,"reports/scenario_comparison.csv[rule_P75+default_action*,actionable*].hit_rate_exact"
+AI false-alert rate %,29.17,"reports/scenario_comparison.csv[AI_advisory*,actionable*].false_alert_rate"
+Rule false-alert rate %,15.28,"reports/scenario_comparison.csv[rule_P75+default_action*,actionable*].false_alert_rate"
+AI any-alert hit %,43.26,"reports/scenario_comparison.csv[AI_advisory*,actionable*].hit_rate_any_alert"
+Rule any-alert hit %,22.4,"reports/scenario_comparison.csv[rule_P75_alert_only*,actionable*].hit_rate_any_alert"
+rows_total,18655.0,reports/final_numbers.csv[rows_total]
+days_total,64.7743,reports/final_numbers.csv[days_total]
+lots_total,132.0,reports/final_numbers.csv[lots_total]
+eligible_share_pct,26.9258,reports/final_numbers.csv[eligible_share_pct]
+diag_only_share_pct,17.0893,reports/final_numbers.csv[diag_only_share_pct]
+baseline_sfc_median,96.7402,reports/final_numbers.csv[baseline_sfc_median]
+baseline_sfc_p25,89.9813,reports/final_numbers.csv[baseline_sfc_p25]
+baseline_sfc_p75,102.642,reports/final_numbers.csv[baseline_sfc_p75]
+baseline_sfc_n,3283.0,reports/final_numbers.csv[baseline_sfc_n]
+test_rows,3041.0,reports/final_numbers.csv[test_rows]
+test_share_pct,16.3013,reports/final_numbers.csv[test_share_pct]
+shadow_advice,708.0,reports/final_numbers.csv[shadow_advice]
+shadow_no_advice,1518.0,reports/final_numbers.csv[shadow_no_advice]
+shadow_diag_only,815.0,reports/final_numbers.csv[shadow_diag_only]
+shadow_advice_share_pct,23.2818,reports/final_numbers.csv[shadow_advice_share_pct]
+shadow_ai_only,505.0,reports/final_numbers.csv[shadow_ai_only]
+shadow_rule_only,164.0,reports/final_numbers.csv[shadow_rule_only]
+shadow_both,203.0,reports/final_numbers.csv[shadow_both]
+tests_total,155.0,reports/final_numbers.csv[tests_total]
+tests_passed,155.0,reports/final_numbers.csv[tests_passed]
+screenshots,8.0,reports/final_numbers.csv[screenshots]
+wall s generate,2.548,reports/ai_runtime_measured.csv[generate].wall_s_mean
+wall s train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean
+wall s shadow,2.364,reports/ai_runtime_measured.csv[shadow].wall_s_mean
+wall s dashboard_start_to_healthy,1.542,reports/ai_runtime_measured.csv[dashboard_start_to_healthy].wall_s_mean
+one_time [Pessimistic],1.5816,"reports/economics_summary.csv[one_time,Pessimistic]"
+running [Pessimistic],0.4312,"reports/economics_summary.csv[running,Pessimistic]"
+net [Pessimistic],-416.3367,"reports/economics_summary.csv[net,Pessimistic]"
+breakeven [Pessimistic],1.3961,"reports/economics_summary.csv[breakeven,Pessimistic]"
+sim_pct [Pessimistic],0.048,"reports/economics_summary.csv[sim_pct,Pessimistic]"
+kwh_6w [Pessimistic],9.0625,"reports/economics_summary.csv[kwh_6w,Pessimistic]"
+one_time [Base],0.8831,"reports/economics_summary.csv[one_time,Base]"
+running [Base],0.2148,"reports/economics_summary.csv[running,Base]"
+net [Base],-154.7791,"reports/economics_summary.csv[net,Base]"
+breakeven [Base],0.4293,"reports/economics_summary.csv[breakeven,Base]"
+sim_pct [Base],0.12,"reports/economics_summary.csv[sim_pct,Base]"
+kwh_6w [Base],3.6337,"reports/economics_summary.csv[kwh_6w,Base]"
+one_time [Optimistic],0.4282,"reports/economics_summary.csv[one_time,Optimistic]"
+running [Optimistic],0.0826,"reports/economics_summary.csv[running,Optimistic]"
+net [Optimistic],93.0791,"reports/economics_summary.csv[net,Optimistic]"
+breakeven [Optimistic],0.1129,"reports/economics_summary.csv[breakeven,Optimistic]"
+sim_pct [Optimistic],0.24,"reports/economics_summary.csv[sim_pct,Optimistic]"
+kwh_6w [Optimistic],1.3681,"reports/economics_summary.csv[kwh_6w,Optimistic]"
+payback years [Optimistic],4.5999,"reports/economics_summary.csv[payback,Optimistic]"
+kwh_month [Base],2.5955,"reports/economics_summary.csv[kwh_month,Base]"
+kwh_year [Base],31.5785,"reports/economics_summary.csv[kwh_year,Base]"
+energy_delta_fuel_energy_kWh_thermal [point],7558.8376,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,point]"
+energy_delta_fuel_energy_kWh_thermal [lo90],9110.7193,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,lo90]"
+energy_delta_fuel_energy_kWh_thermal [hi90],5935.5835,"reports/economics_summary.csv[energy_delta_fuel_energy_kWh_thermal,hi90]"
+energy_fan_FD_delta_kWh_electric [synthetic],49.6933,"reports/economics_summary.csv[energy_fan_FD_delta_kWh_electric,synthetic]"
+energy_window_hours [synthetic],253.4167,"reports/economics_summary.csv[energy_window_hours,synthetic]"
+fuel kWh per AI kWh (window vs 6 wk),2080.2076,computed from reports/economics_summary.csv
+pilot targets (count),9.0,reports/pilot_scorecard.csv type=target
+pilot stop conditions (count),6.0,reports/pilot_scorecard.csv type=stop
+pilot weeks,6.0,docs/PILOT_SPEC.md 'Six-week pilot'
+data-dictionary columns,106.0,reports/03_data_dictionary.csv
+tag-map site columns,40.0,config/tag_map_template.yaml
+tag-map critical columns,11.0,config/tag_map_template.yaml
+dashboard pages,7.0,app.py
+guardrail reason codes,21.0,src/guardrails.py CODES
+raw rows,18706.0,data/clean/clean_report.json
+clean rows,18655.0,data/clean/clean_report.json
+rejected rows,51.0,data/clean/clean_report.json
+fuel-to-heat lag steps,2.0,data/clean/clean_report.json
+rejected FROZEN_SENSOR,27.0,data/clean/clean_report.json
+rejected HEAT_IMPLAUSIBLE,14.0,data/clean/clean_report.json
+volumetric-fuel rows,1152.0,data/clean/clean_report.json
+baseline R2 train,0.91,reports/energy_baseline.md
+baseline MAE test kg/GJ,2.37,reports/energy_baseline.md
+critic findings,20.0,reports/ai_critique_log.md
+genuine errors fixed,5.0,reports/ai_critique_log.md
+FD range low,20.0,config/guardrail_limits.yaml
+FD range high,100.0,config/guardrail_limits.yaml
+grate range low,0.0,config/guardrail_limits.yaml
+grate range high,100.0,config/guardrail_limits.yaml
+max step % per axis,4.0,config/guardrail_limits.yaml
+O2 floor %,5.0,config/guardrail_limits.yaml
+CO limit ppm,250.0,config/guardrail_limits.yaml
+lambda_fan_kg_gj_per_kw,0.02,config/guardrail_limits.yaml
+lambda_move_kg_gj_per_pct,0.03,config/guardrail_limits.yaml
+lambda_width,0.25,config/guardrail_limits.yaml
+candidate moves in grid,25.0,config/guardrail_limits.yaml grid
+bootstrap draws (effect model),200.0,config/guardrail_limits.yaml
+excess air lambda,1.5369,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+stoichiometric air kg/kg,4.8374,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+flue O2 now %,7.3357,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss dry_flue_gas,10.3423,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss water_vapour,1.8579,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss CO,0.0189,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss unburnt_carbon,0.1708,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+loss radiation_other,1.5,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+eta chemistry %,86.1101,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+eta heat balance %,71.7785,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+best allowed O2 %,5.3,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+delta eta chemistry pts,0.3453,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+delta eta ridge pp,0.252,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+objective J,-0.2497,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+best reachable eta %,87.489,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+room to improve points,1.3789,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+mass balance closure %,0.0,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+lever O2 points,1.3789,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+lever stack -10 K points,0.578,example advised row 2026-03-01 00:35:00+07:00 (data/clean + advisory_records_test.jsonl)
+monitor data quality %,98.1989,reports/monitoring/latest.json
+monitor max PSI,0.1981,reports/monitoring/latest.json
+false alerts per shift,1.9888,reports/monitoring/latest.json
+A/A effect %,0.0454,reports/mv/mv_retrospective.json
+A/A CI low %,-0.7644,reports/mv/mv_retrospective.json
+A/A CI high %,0.7973,reports/mv/mv_retrospective.json
+recovered effect %,-2.8588,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+recovered CI low %,-3.6553,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+recovered CI high %,-2.1343,computed at build: mv_report.estimate with a known -3 % effect injected (200 draws)
+smallest resolvable effect % (half-width of A/A interval),0.7808,reports/mv/mv_retrospective.json

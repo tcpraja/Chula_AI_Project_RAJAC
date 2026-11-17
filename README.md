@@ -34,3 +34,6 @@ Screenshots for the report go in `assets/screenshots/screen_1.png … screen_6.p
 ## Pilot package (Phase 8, synthetic only)
 Read-only adapters (`src/adapters/`), site config (`config/site_template.yaml`), tag map (`config/tag_map_template.yaml`), monitor (`python -m src.monitor`), retrain (`python -m src.retrain --dry-run`), audit log (`python -m src.audit --verify`), M&V (`python -m src.mv_report --mode retrospective`), Docker files and site documents (INSTALL_SITE.md, OPERATIONS.md, ROLLBACK.md, SECURITY_NOTES.md).
 Scripts to run yourself outside Claude Code, printing file paths only: `run_real_retrospective.ps1`, `run_real_live_shadow.ps1`, `run_real_mv.ps1`. Demo data: `python -m src.site_demo` (invented tags, site units).
+
+## Full project presentation (50 slides)
+`reports/Heater_C_Full_Project_Presentation.pptx` (and a PDF copy) walks through the whole project: problem, plan, every tool (why, how, what), the AI concepts, the chemistry, the dashboard with how to start it and every input, and the pilot package. Rebuild with `python -m src.build_project_deck` (numbers come from project files and are logged in `reports/project_deck_number_map.csv`). Written dashboard guide: `reports/dashboard_how_to_use.md`.
