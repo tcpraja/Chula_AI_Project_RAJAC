@@ -84,7 +84,7 @@ def evaluate(df, limits=None, ood=None, force_codes=None):
             "FAN_DERATE": num("fan_derated") > 0,
             "UNSAFE_DRAFT": ~((draft >= d0) & (draft <= d1)),
             "HIGH_TEMP": ~((furn <= L["furnace_temp_limit_c"]) & (tout <= L["htf_out_limit_c"])),
-            "STALE_DATA": df["frozen_signals"].fillna("").astype(str).str.len().gt(0).to_numpy(),
+            "STALE_DATA": df["frozen_signals"].astype("string").fillna("").str.len().gt(0).to_numpy(),
             "ENERGY_BALANCE": (df["heat_balance_status"] == "UNVERIFIED").to_numpy()
             | ((mode == "STEADY") & ~((eta >= 100 * L["eta_valid"][0]) & (eta <= 100 * L["eta_valid"][1]))),
             "PROPERTY_OOR": ~prop_ok,

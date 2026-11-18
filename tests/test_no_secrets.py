@@ -3,7 +3,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUTPUT_DIRS = ["reports", "final", "models", "data/clean", "data/holdout", "data/stress", "data/raw_synthetic"]
+OUTPUT_DIRS = ["reports", "final", "models", "data/clean", "data/holdout", "data/stress", "data/raw_synthetic", "submission"]
 TEXT_EXT = {".md", ".csv", ".txt", ".json", ".yaml", ".yml", ".py", ".html", ".svg", ".toml"}
 
 

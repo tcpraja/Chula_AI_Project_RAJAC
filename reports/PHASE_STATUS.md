@@ -5,3 +5,5 @@ E2E on a label-free site-style export ran in 27 s; monitor NORMAL; M&V recovers 
 Open: Docker image not built (needs network, awaiting OK); real-data run left to the user; no authentication on dashboard/audit actors; M&V resolves only about ±0.8 %.
 Open (earlier): visual check of PDFs/deck, timed rehearsal, PC power unmetered, THB inputs fictional, real-data processing location (D3).
 Next: Phase 9 only if requested.
+
+Final audit (18 Nov 2026): 37 gaps (CP01-CP24 + 13); CP10 menu fixed on validation (exact hit 9.0->22.6 %, false alerts unchanged 29.2 %, OPEN); M&V power added (MDE80 1.6 % at 21 d); economics market-anchored (base -150k THB/yr); request revised to 6-week read-only shadow (78k-382k THB). Deliverables: submission/Heater_C_Final_*; sign-off reports/audit/audit_signoff.md; 181 passed, 1 skipped.

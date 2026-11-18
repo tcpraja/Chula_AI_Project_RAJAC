@@ -1,0 +1,57 @@
+{
+  "windows": [
+    {
+      "window_days": 7,
+      "pairs": 8,
+      "hw90_pct": 2.1636,
+      "mde80_pct": 3.2711,
+      "aa_sd_pct": 1.3157,
+      "false_saving_share": 0.125
+    },
+    {
+      "window_days": 10,
+      "pairs": 7,
+      "hw90_pct": 1.6088,
+      "mde80_pct": 2.4323,
+      "aa_sd_pct": 1.1395,
+      "false_saving_share": 0.0
+    },
+    {
+      "window_days": 14,
+      "pairs": 6,
+      "hw90_pct": 1.4511,
+      "mde80_pct": 2.1939,
+      "aa_sd_pct": 0.8787,
+      "false_saving_share": 0.0
+    },
+    {
+      "window_days": 21,
+      "pairs": 4,
+      "hw90_pct": 1.0819,
+      "mde80_pct": 1.6356,
+      "aa_sd_pct": 0.4749,
+      "false_saving_share": 0.0
+    },
+    {
+      "window_days": 28,
+      "pairs": 2,
+      "hw90_pct": 0.8262,
+      "mde80_pct": 1.2491,
+      "aa_sd_pct": 0.6815,
+      "false_saving_share": 0.0
+    }
+  ],
+  "fit_hw90_pct": {
+    "a": 7.775840053918257,
+    "b": -0.6594947480205454
+  },
+  "k80": 1.5118541033434651,
+  "required_days_per_window": {
+    "generator_illustration_0.24pct": 365.3,
+    "half_of_it_0.12pct": 1044.9,
+    "one_pct": 42.0
+  },
+  "data_days": 64.99652777777777,
+  "six_week_trial_mde80_pct": 0.9993849844585643,
+  "provenance": "SYNTHETIC A/A; extrapolated beyond the data where required_days > data_days/2 (OWN-ESTIMATE)"
+}

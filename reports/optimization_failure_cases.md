@@ -1,26 +1,26 @@
 # Optimization failure cases (SYNTHETIC - NOT FOR PLANT OPERATION)
-Test advice rows scored: 708. Predicted efficiency gain averages 0.67 pp vs the generator's best-available 0.60 pp; correlation 0.86; 0.0 % of advice over-claims by > 1 pp.
-Advice where the generator says HOLD (false alerts): 63; advice with a different action than the generator's best: 511 (of which opposite direction on FD or grate: 2).
+Test advice rows scored: 708. Predicted efficiency gain averages 0.58 pp vs the generator's best-available 0.60 pp; correlation 0.88; 0.0 % of advice over-claims by > 1 pp.
+Advice where the generator says HOLD (false alerts): 63; advice with a different action than the generator's best: 308 (of which opposite direction on FD or grate: 2).
 
-Advice outside the generator's action menu (4-step move combined with a second axis, can never be an exact hit): 355.
+Advice outside the generator's action menu (4-step move combined with a second axis, can never be an exact hit): 0.
 
 ## 1 False alerts with the largest predicted gain
 | timestamp_local | action | label | pred_deta | best_action_eta_gain_pp |
 |---|---|---|---|---|
 | 2026-03-07 06:55:00+07:00 | FD-4 | HOLD | 0.56 | 0.14 |
-| 2026-03-01 17:20:00+07:00 | FD-2&GRATE-4 | HOLD | 0.46 | 0.04 |
 | 2026-03-01 08:50:00+07:00 | FD+2&GRATE-2 | HOLD | 0.4 | 0.06 |
 | 2026-03-01 09:10:00+07:00 | FD+2&GRATE-2 | HOLD | 0.39 | 0.03 |
 | 2026-03-01 08:55:00+07:00 | FD+2&GRATE-2 | HOLD | 0.39 | 0.04 |
+| 2026-03-07 08:10:00+07:00 | FD+2 | HOLD | 0.36 | 0.14 |
 
 ## 2 Largest over-claims (predicted minus generator best gain, pp)
 | timestamp_local | action | label | pred_deta | best_action_eta_gain_pp |
 |---|---|---|---|---|
 | 2026-03-01 05:25:00+07:00 | FD-4 | FD-4 | 1.49 | 0.51 |
-| 2026-03-05 19:40:00+07:00 | FD-4&GRATE-4 | FD-2&GRATE-2 | 1.02 | 0.25 |
-| 2026-03-02 16:35:00+07:00 | FD-4&GRATE-4 | FD-4 | 1.23 | 0.48 |
-| 2026-03-07 17:00:00+07:00 | FD-4&GRATE-4 | FD-2&GRATE-2 | 1.11 | 0.41 |
-| 2026-03-06 07:55:00+07:00 | FD+4&GRATE-2 | FD+2&GRATE-2 | 1.38 | 0.69 |
+| 2026-03-06 07:55:00+07:00 | FD+4 | FD+2&GRATE-2 | 1.29 | 0.69 |
+| 2026-03-06 09:35:00+07:00 | FD+4 | FD+2&GRATE-2 | 1.34 | 0.83 |
+| 2026-03-05 19:40:00+07:00 | FD-4 | FD-2&GRATE-2 | 0.76 | 0.25 |
+| 2026-03-06 08:00:00+07:00 | FD+4 | FD+2&GRATE-2 | 1.18 | 0.71 |
 
 ## 3 Eligible rows with no advice but a large true gain (missed)
 | timestamp_local | true_synthetic_best_action | best_action_eta_gain_pp |
@@ -36,14 +36,14 @@ Advice outside the generator's action menu (4-step move combined with a second a
 |---|---|---|
 | FD+2 | 20.0 | 0.6 |
 | FD+2&GRATE+2 | 6.0 | 0.0 |
-| FD+2&GRATE-2 | 22.0 | 0.364 |
-| FD+4 | 52.0 | 0.423 |
+| FD+2&GRATE-2 | 22.0 | 0.682 |
+| FD+4 | 52.0 | 0.827 |
 | FD-2 | 11.0 | 0.364 |
 | FD-2&GRATE+2 | 35.0 | 0.0 |
-| FD-2&GRATE-2 | 69.0 | 0.072 |
-| FD-4 | 352.0 | 0.134 |
+| FD-2&GRATE-2 | 69.0 | 0.58 |
+| FD-4 | 352.0 | 0.494 |
 | GRATE+4 | 1.0 | 0.0 |
-| GRATE-4 | 77.0 | 0.468 |
+| GRATE-4 | 77.0 | 0.636 |
 | HOLD | 63.0 | 0.0 |
 
 ## Why it fails (diagnosis)

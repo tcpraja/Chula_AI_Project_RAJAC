@@ -1,0 +1,121 @@
+key,value,source,evidence_label
+rows_total,18655.0,reports/final_numbers.csv[rows_total],SYNTHETIC
+days_total,64.7743,reports/final_numbers.csv[days_total],SYNTHETIC
+lots_total,132.0,reports/final_numbers.csv[lots_total],SYNTHETIC
+eligible_share_pct,26.9258,reports/final_numbers.csv[eligible_share_pct],SYNTHETIC
+baseline_sfc_median,96.7402,reports/final_numbers.csv[baseline_sfc_median],SYNTHETIC
+baseline_sfc_p25,89.9813,reports/final_numbers.csv[baseline_sfc_p25],SYNTHETIC
+baseline_sfc_p75,102.642,reports/final_numbers.csv[baseline_sfc_p75],SYNTHETIC
+test_rows,3041.0,reports/final_numbers.csv[test_rows],SYNTHETIC
+shadow_advice,708.0,reports/final_numbers.csv[shadow_advice],SYNTHETIC
+shadow_no_advice,1518.0,reports/final_numbers.csv[shadow_no_advice],SYNTHETIC
+shadow_diag_only,815.0,reports/final_numbers.csv[shadow_diag_only],SYNTHETIC
+raw_rows,18706.0,data/clean/clean_report.json,SYNTHETIC
+eligible_rows,5023.0,data/clean/clean_heater_c.csv eligibility=ELIGIBLE*,SYNTHETIC
+eta_median,67.51574,"data/clean/clean_heater_c.csv eta_pct, eligible rows",SYNTHETIC
+eta_p25,66.06174,"same, 25th percentile",SYNTHETIC
+eta_p75,68.91639,"same, 75th percentile",SYNTHETIC
+mae_L,53.92172,"reports/model_comparison.csv[L,eligible_test,ALL].MAE",SYNTHETIC
+mae_P2,58.45971,"reports/model_comparison.csv[P2,eligible_test,ALL].MAE",SYNTHETIC
+mae_P,70.84386,"reports/model_comparison.csv[P,eligible_test,ALL].MAE",SYNTHETIC
+mae_B,106.37638,"reports/model_comparison.csv[B,eligible_test,ALL].MAE",SYNTHETIC
+mae_C0,55.77029,"reports/model_comparison.csv[C0,eligible_test,ALL].MAE",SYNTHETIC
+mae_L_lo,48.76416,reports/model_comparison.csv L MAE_ci_lo,SYNTHETIC
+mae_L_hi,59.63461,reports/model_comparison.csv L MAE_ci_hi,SYNTHETIC
+cov_L,90.083,reports/model_comparison.csv L coverage,SYNTHETIC
+gain_vs_P2,7.762594101133928,computed: (MAE_P2 - MAE_L) / MAE_P2,SYNTHETIC
+ai_exact_pct,22.6,"reports/scenario_comparison.csv[AI_advisory,actionable].hit_rate_exact",SYNTHETIC
+ai_direction_pct,26.83,"reports/scenario_comparison.csv[AI_advisory,actionable].hit_rate_direction",SYNTHETIC
+ai_precision_pct,47.599999999999994,"reports/scenario_comparison.csv[AI_advisory,actionable].precision_exact",SYNTHETIC
+ai_fa_pct,29.17,"reports/scenario_comparison.csv[AI_advisory,actionable].false_alert_rate",SYNTHETIC
+ai_any_pct,43.26,"reports/scenario_comparison.csv[AI_advisory,actionable].hit_rate_any_alert",SYNTHETIC
+rule_exact_pct,8.58,"reports/scenario_comparison.csv[rule_P75+default,actionable].hit_rate_exact",SYNTHETIC
+rule_direction_pct,9.26,"reports/scenario_comparison.csv[rule_P75+default,actionable].hit_rate_direction",SYNTHETIC
+rule_precision_pct,34.88,"reports/scenario_comparison.csv[rule_P75+default,actionable].precision_exact",SYNTHETIC
+rule_fa_pct,15.28,"reports/scenario_comparison.csv[rule_P75+default,actionable].false_alert_rate",SYNTHETIC
+rule_any_pct,22.400000000000002,"reports/scenario_comparison.csv[rule_P75_alert_only,actionable]",SYNTHETIC
+ai_alerts,708.0,reports/scenario_comparison.csv AI alerts,SYNTHETIC
+rule_alerts,367.0,reports/scenario_comparison.csv rule alerts,SYNTHETIC
+n_actionable,1491.0,reports/scenario_comparison.csv n_target_rows,SYNTHETIC
+val_rule_fa_pct,43.45,reports/menu_calibration.csv validation rule false-alert,SYNTHETIC
+val_best_exact_pct,30.09,reports/menu_calibration.csv validation max exact,SYNTHETIC
+chosen_combo,≤2 % two-axis,reports/menu_calibration.csv chosen,OWN-ESTIMATE
+chosen_min_benefit,0.0,reports/menu_calibration.csv chosen,OWN-ESTIMATE
+fa_per_shift,1.9888194672805,reports/monitoring/latest.json false_alerts_per_shift,SYNTHETIC
+data_quality_pct,98.19887429643528,reports/monitoring/latest.json data_quality_pct,SYNTHETIC
+mv_hw_pct,0.7808280666297767,reports/mv/mv_retrospective.json (A/A 90 % half-width),SYNTHETIC
+mde80_21d,1.6356,reports/mv/mv_power.json windows[21].mde80_pct,"SYNTHETIC A/A, OWN-ESTIMATE method"
+mde80_42d,0.9993849844585643,"reports/mv/mv_power.json six_week_trial_mde80_pct (fit, extrapolated)",OWN-ESTIMATE extrapolation
+days_for_024,365.3,reports/mv/mv_power.json,OWN-ESTIMATE extrapolation
+days_for_1pct,42.0,reports/mv/mv_power.json,OWN-ESTIMATE extrapolation
+net_pess,-415782.04506002495,"reports/economics_summary.csv[net,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+net_base,-150243.2289824106,"reports/economics_summary.csv[net,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+net_opti,127944.22061862715,"reports/economics_summary.csv[net,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+running_pess,433281.9375331012,"reports/economics_summary.csv[running,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+running_base,215576.16088189516,"reports/economics_summary.csv[running,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+running_opti,82054.4890582875,"reports/economics_summary.csv[running,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+one_time_pess,1581600.0,"reports/economics_summary.csv[one_time,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+one_time_base,883100.0,"reports/economics_summary.csv[one_time,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+one_time_opti,428150.0,"reports/economics_summary.csv[one_time,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+breakeven_pess,1.010103159720314,"reports/economics_summary.csv[breakeven,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+breakeven_base,0.33654188202700924,"reports/economics_summary.csv[breakeven,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+breakeven_opti,0.07970512527681063,"reports/economics_summary.csv[breakeven,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+sim_pct_pess,0.04079721574008518,"reports/economics_summary.csv[sim_pct,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+sim_pct_base,0.10199303935021294,"reports/economics_summary.csv[sim_pct,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+sim_pct_opti,0.20398607870042587,"reports/economics_summary.csv[sim_pct,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_6w_pess,9.062512611111112,"reports/economics_summary.csv[kwh_6w,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_6w_base,3.6336938500000002,"reports/economics_summary.csv[kwh_6w,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_6w_opti,1.3681077069444445,"reports/economics_summary.csv[kwh_6w,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_year_pess,78.75755007275133,"reports/economics_summary.csv[kwh_year,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_year_base,31.57852988690476,"reports/economics_summary.csv[kwh_year,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+kwh_year_opti,11.889507453207672,"reports/economics_summary.csv[kwh_year,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+gross_pess,17499.892473076226,"reports/economics_summary.csv[gross,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+gross_base,65332.931899484574,"reports/economics_summary.csv[gross,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+gross_opti,209998.70967691464,"reports/economics_summary.csv[gross,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+fuel_cost_pess,42894820.530318104,"reports/economics_summary.csv[fuel_cost,Pessimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+fuel_cost_base,64056265.32527504,"reports/economics_summary.csv[fuel_cost,Base]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+fuel_cost_opti,102947569.27276343,"reports/economics_summary.csv[fuel_cost,Optimistic]",SYNTHETIC x ASSUMED/PUBLISHED inputs (FICTIONAL sensitivity)
+payback_opt,3.346380148550973,"reports/economics_summary.csv[payback,Optimistic]",FICTIONAL sensitivity
+fuel_kwh_th,6412.360715434269,reports/economics_summary.csv energy point,SYNTHETIC
+fuel_kwh_lo,5025.410815097819,reports/economics_summary.csv energy hi90,SYNTHETIC
+fuel_kwh_hi,7668.934595263558,reports/economics_summary.csv energy lo90,SYNTHETIC
+fuel_kg,1478.2548058506893,reports/economics_summary.csv energy_delta_fuel_kg,SYNTHETIC
+fan_kwh,43.20200822419654,reports/economics_summary.csv fan,SYNTHETIC
+win_h,253.41666666666666,reports/economics_summary.csv window hours,SYNTHETIC
+fuel_kgh,2859.6547020212065,reports/economics_summary.csv fuel mean,SYNTHETIC
+a_tariff_pess,4.15,src/economics.py assumptions()['tariff'],"PUBLISHED (Thai ERC average tariff: 4.15 Jan-Apr 2025, 3.98 May-Aug 2025, 3.88 Jan-Apr 2026; Nation Thailand, Bangkok Post)"
+a_tariff_base,3.98,src/economics.py assumptions()['tariff'],"PUBLISHED (Thai ERC average tariff: 4.15 Jan-Apr 2025, 3.98 May-Aug 2025, 3.88 Jan-Apr 2026; Nation Thailand, Bangkok Post)"
+a_tariff_opt,3.88,src/economics.py assumptions()['tariff'],"PUBLISHED (Thai ERC average tariff: 4.15 Jan-Apr 2025, 3.98 May-Aug 2025, 3.88 Jan-Apr 2026; Nation Thailand, Bangkok Post)"
+a_price_pess,2500.0,src/economics.py assumptions()['price'],"OWN-ESTIMATE from PUBLISHED anchors (3,200 THB/t oil-palm shell in arXiv 2406.00056 citing DEDE; FOB listings US$90-170/t at ~33 THB/US$)"
+a_price_base,3200.0,src/economics.py assumptions()['price'],"OWN-ESTIMATE from PUBLISHED anchors (3,200 THB/t oil-palm shell in arXiv 2406.00056 citing DEDE; FOB listings US$90-170/t at ~33 THB/US$)"
+a_price_opt,4500.0,src/economics.py assumptions()['price'],"OWN-ESTIMATE from PUBLISHED anchors (3,200 THB/t oil-palm shell in arXiv 2406.00056 citing DEDE; FOB listings US$90-170/t at ~33 THB/US$)"
+a_eng_d_pess,40.0,src/economics.py assumptions()['eng_d'],ASSUMED
+a_eng_d_base,25.0,src/economics.py assumptions()['eng_d'],ASSUMED
+a_eng_d_opt,15.0,src/economics.py assumptions()['eng_d'],ASSUMED
+a_eng_rate_pess,9000.0,src/economics.py assumptions()['eng_rate'],ASSUMED (fictional)
+a_eng_rate_base,7000.0,src/economics.py assumptions()['eng_rate'],ASSUMED (fictional)
+a_eng_rate_opt,5000.0,src/economics.py assumptions()['eng_rate'],ASSUMED (fictional)
+a_rev_h_pess,6.0,src/economics.py assumptions()['rev_h'],ASSUMED
+a_rev_h_base,3.0,src/economics.py assumptions()['rev_h'],ASSUMED
+a_rev_h_opt,1.5,src/economics.py assumptions()['rev_h'],ASSUMED
+a_rate_pess,600.0,src/economics.py assumptions()['rate'],ASSUMED (fictional)
+a_rate_base,450.0,src/economics.py assumptions()['rate'],ASSUMED (fictional)
+a_rate_opt,350.0,src/economics.py assumptions()['rate'],ASSUMED (fictional)
+a_co_an_pess,1200000.0,src/economics.py assumptions()['co_an'],OWN-ESTIMATE range (not a quote)
+a_co_an_base,700000.0,src/economics.py assumptions()['co_an'],OWN-ESTIMATE range (not a quote)
+a_co_an_opt,350000.0,src/economics.py assumptions()['co_an'],OWN-ESTIMATE range (not a quote)
+a_hours_pess,6000.0,src/economics.py assumptions()['hours'],ASSUMED
+a_hours_base,7000.0,src/economics.py assumptions()['hours'],ASSUMED
+a_hours_opt,8000.0,src/economics.py assumptions()['hours'],ASSUMED
+a_p_busy_pess,100.0,src/economics.py assumptions()['p_busy'],OWN-ESTIMATE (no wattmeter)
+a_p_busy_base,60.0,src/economics.py assumptions()['p_busy'],OWN-ESTIMATE (no wattmeter)
+a_p_busy_opt,35.0,src/economics.py assumptions()['p_busy'],OWN-ESTIMATE (no wattmeter)
+a_real_pess,0.2,src/economics.py assumptions()['real'],ASSUMED
+a_real_base,0.5,src/economics.py assumptions()['real'],ASSUMED
+a_real_opt,1.0,src/economics.py assumptions()['real'],ASSUMED
+pilot_cost_pess,381600.0,computed: eng_d x eng_rate + 6 wk x rev_h x rate (src/economics.py assumptions),OWN-ESTIMATE (ASSUMED inputs)
+pilot_cost_base,183100.0,computed: eng_d x eng_rate + 6 wk x rev_h x rate (src/economics.py assumptions),OWN-ESTIMATE (ASSUMED inputs)
+pilot_cost_opt,78150.0,computed: eng_d x eng_rate + 6 wk x rev_h x rate (src/economics.py assumptions),OWN-ESTIMATE (ASSUMED inputs)
+t_train,18.505,reports/ai_runtime_measured.csv[train].wall_s_mean,MEASURED-IN-PROTOTYPE
+ai_kwh_cost_base,14.462101523000001,computed: kWh_6w x tariff,OWN-ESTIMATE x PUBLISHED
+fuel_per_ai_kwh,1764.6948202403646,computed: thermal kWh (253 h window) / AI kWh (6 weeks),SYNTHETIC

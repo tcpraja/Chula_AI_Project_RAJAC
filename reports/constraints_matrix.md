@@ -24,8 +24,8 @@ Test split rows: 3041; guardrail-eligible: 826; decisions: {'NO_ADVICE': 1518, '
 
 ## Candidate constraints (per eligible row, 25-move FD x grate grid at fixed demand)
 Move <= 4.0 % FD / 4.0 % grate; FD in [20.0, 100.0], grate in [0.0, 100.0]; predicted O2 >= floor + 0.3; predicted CO x 1.25 <= limit; predicted draft in band; candidate state not OOD.
-Candidates dropped (sum over eligible rows x 25): {'LOW_O2_OR_CO_RISK': 1018, 'OOD': 252, 'DRAFT': 0, 'RANGE_OR_MOVE': 0}.
-'Less excess O2' (O2 falls, floor and CO margin kept) is kept apart from 'low-O2 / CO risk' (dropped, never offered). Advice classes on test rows: {'NONE': 2333, 'LESS_EXCESS_O2': 465, 'MORE_AIR_COMPLETE_COMBUSTION': 168, 'GRATE_BALANCE': 75}.
+Candidates dropped (sum over eligible rows x 25): {'LOW_O2_OR_CO_RISK': 1018, 'OOD': 252, 'DRAFT': 0, 'RANGE_OR_MOVE': 9912}.
+'Less excess O2' (O2 falls, floor and CO margin kept) is kept apart from 'low-O2 / CO risk' (dropped, never offered). Advice classes on test rows: {'NONE': 2333, 'LESS_EXCESS_O2': 447, 'MORE_AIR_COMPLETE_COMBUSTION': 159, 'GRATE_BALANCE': 102}.
 
 ## Models behind the checks (OWN-ESTIMATE, training split only)
 Efficiency response ridge: train R2 0.467, residual SD 1.71 pp, 51 lots, 200 lot-bootstraps. O2 from FD: lambda proportional to FD at fixed demand (stoichiometric). Fan power: kW = k (FD/100)^3, correlation with data 0.9997.

@@ -1,4 +1,4 @@
-# Advisory guardrail limits and optimizer weights (Phase 4, SPEC C7).
+﻿# Advisory guardrail limits and optimizer weights (Phase 4, SPEC C7).
 # SYNTHETIC normalized envelopes, ASSUMED / NOT APPROVED. Never real plant limits (CLAUDE rule 4).
 # A real site config must replace these; any limit set to REQUIRES_OEM_APPROVAL forces NO_ADVICE (LIMITS_NOT_APPROVED).
 provenance: SYNTHETIC_ASSUMED_NOT_APPROVED
@@ -29,4 +29,4 @@ optimizer:                           # tuning weights, OWN-ESTIMATE (arbitrary, 
   n_boot: 200
   seed: 42
   ci_level: 0.90
-  combo_max_step_pct: null           # null = full 5x5 grid; 2 = two-axis moves only up to 2 % (sensitivity run)
+  combo_max_step_pct: 2              # CP10: chosen on VALIDATION only (src.calibrate_menu); null = full 5x5 grid

@@ -1,0 +1,67 @@
+{
+  "proposal_pages": 3,
+  "appendix_pages": 3,
+  "slides": 5,
+  "proposal_sections": true,
+  "student_id_everywhere": true,
+  "consistency": {
+    "exact hit": {
+      "proposal": true,
+      "deck": true
+    },
+    "rule exact": {
+      "proposal": true,
+      "deck": true
+    },
+    "AI false alerts": {
+      "proposal": true,
+      "deck": true
+    },
+    "rule false alerts": {
+      "proposal": true,
+      "deck": true
+    },
+    "forecast gain": {
+      "proposal": true,
+      "deck": true
+    },
+    "pilot cost low": {
+      "proposal": true,
+      "deck": true
+    },
+    "pilot cost high": {
+      "proposal": true,
+      "deck": true
+    },
+    "AI kWh": {
+      "proposal": true,
+      "deck": true
+    },
+    "eligible": {
+      "proposal": true,
+      "deck": true
+    }
+  },
+  "consistency_ok": true,
+  "denylist_hits": [],
+  "script_words": 702,
+  "script_minutes_at_140wpm": 5.01,
+  "deck_pdf_pages": 5,
+  "pytest": {
+    "tests": 182,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 181
+  },
+  "files": {
+    "proposal": true,
+    "deck": true,
+    "appendix": true,
+    "register": true,
+    "validation": true,
+    "business": true,
+    "script": true,
+    "compliance": true
+  }
+}

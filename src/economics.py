@@ -74,8 +74,12 @@ def assumptions():
         "n_train": ("Training runs in the 6 weeks", "runs", 14, 7, 3, "ASSUMED", "weekly refit + initial"),
         "n_shadow": ("Shadow replay runs in the 6 weeks", "runs", 84, 42, 6, "ASSUMED", "daily (pessimistic: twice daily; optimistic: weekly)"),
         "open_h": ("Dashboard open hours per working day", "h/day", 10, 6, 3, "ASSUMED", ""),
-        "tariff": ("Electricity price", "THB/kWh", 5.5, 4.0, 3.0, "ASSUMED (fictional)", "placeholder, replace with site tariff"),
-        "price": ("Fuel price", "THB/tonne", 1800, 2500, 3200, "ASSUMED (fictional)", "placeholder, replace with site purchase price"),
+        "tariff": ("Electricity price", "THB/kWh", 4.15, 3.98, 3.88,
+                   "PUBLISHED (Thai ERC average tariff: 4.15 Jan-Apr 2025, 3.98 May-Aug 2025, 3.88 Jan-Apr 2026; Nation Thailand, Bangkok Post)",
+                   "national average incl. Ft; a site tariff (TOU, demand charge) will differ; replace with the site bill"),
+        "price": ("Fuel price (palm-kernel shell, delivered)", "THB/tonne", 2500, 3200, 4500,
+                  "OWN-ESTIMATE from PUBLISHED anchors (3,200 THB/t oil-palm shell in arXiv 2406.00056 citing DEDE; FOB listings US$90-170/t at ~33 THB/US$)",
+                  "no current Thai market quote found; replace with the site purchase price"),
         "hours": ("Heater operating hours per year", "h/yr", 6000, 7000, 8000, "ASSUMED", ""),
         "real": ("Share of the simulated fuel effect realised in practice", "fraction", 0.2, 0.5, 1.0, "ASSUMED",
                  "synthetic gains are generator illustrations; 0 would mean no effect at all"),
@@ -83,7 +87,9 @@ def assumptions():
         "rate": ("Loaded labour rate", "THB/h", 600, 450, 350, "ASSUMED (fictional)", ""),
         "eng_d": ("Engineering effort (integration, MOC, validation), one-time", "days", 40, 25, 15, "ASSUMED", ""),
         "eng_rate": ("Engineering day rate", "THB/day", 9000, 7000, 5000, "ASSUMED (fictional)", ""),
-        "co_an": ("CO-analyser allowance, one-time, if no usable CO sensor", "THB", 1200000, 700000, 350000, OWN + " range (fictional, not a quote)", ""),
+        "co_an": ("CO-analyser allowance, one-time, if no usable CO sensor", "THB", 1200000, 700000, 350000, OWN + " range (not a quote)",
+                  "PUBLISHED equipment-only floors: in-situ zirconia O2 analyser from CAD 3,085 (Alpha Controls, Fuji ZKM-2); portable O2/CO analysers US$1,100-5,000 (listings). "
+                  "Installed continuous CO adds tapping, wiring, controller and commissioning; get a vendor quote"),
         "upkeep": ("Software upkeep and re-validation", "THB/yr", 250000, 150000, 60000, "ASSUMED (fictional)", ""),
     }
 

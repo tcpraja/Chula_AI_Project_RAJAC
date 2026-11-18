@@ -9,23 +9,23 @@
  "fuel_mean_kgh_all_rows": 2859.6547020212065,
  "lhv_mean_MJkg": 15.972575122134536,
  "delta_fuel_kg": {
-  "point": -1739.353979303601,
-  "lo90": -2096.0912202868276,
-  "hi90": -1364.7418755177655
+  "point": -1478.2548058506893,
+  "lo90": -1767.5980534996545,
+  "hi90": -1157.6829413199873
  },
  "delta_fuel_energy_MJ": {
-  "point": -27211.815313190455,
-  "lo90": -32798.58957080991,
-  "hi90": -21368.100476607833
+  "point": -23084.498575563368,
+  "lo90": -27608.16454294881,
+  "hi90": -18091.478934352148
  },
  "delta_fuel_energy_kWh_thermal": {
-  "point": -7558.837586997348,
-  "lo90": -9110.719325224976,
-  "hi90": -5935.583465724398
+  "point": -6412.360715434269,
+  "lo90": -7668.934595263558,
+  "hi90": -5025.410815097819
  },
- "fan_FD_delta_kWh_electric": -49.693333294474755,
- "fan_FD_increase_kWh_electric": 12.095158814056953,
- "fan_FD_decrease_kWh_electric": -61.78849210853168,
+ "fan_FD_delta_kWh_electric": -43.20200822419654,
+ "fan_FD_increase_kWh_electric": 11.15847118646973,
+ "fan_FD_decrease_kWh_electric": -54.360479410666244,
  "fan_penalty_note": "signed: negative = FD fan electricity avoided; LESS_EXCESS_O2 moves lower FD",
  "mean_fan_kW_FD_plus_ID_all_rows": 39.267036336731344
 }
