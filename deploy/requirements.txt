@@ -1,0 +1,12 @@
+# Dashboard runtime for Streamlit Community Cloud. Versions = the local environment the dashboard was tested in,
+# except scikit-learn = 1.9.1, the version the committed models/*.joblib were trained with (see requirements-runtime.txt).
+streamlit==1.58.0
+pandas==3.0.3
+numpy==2.4.6
+scipy==1.17.1
+scikit-learn==1.9.1
+joblib==1.5.3
+PyYAML==6.0.3
+pydantic==2.13.5
+plotly==7.1.0
+matplotlib==3.11.0
