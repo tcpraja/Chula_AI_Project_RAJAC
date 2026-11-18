@@ -57,7 +57,8 @@ def _chem_section(df, row, rec, is_def, label):
     fig.update_xaxes(title_text="loss, % of fuel LHV")
     C.chart(fig, f"{label}. Indirect heat-loss balance per kg as-fired fuel (LHV basis): dry flue gas = n·Mcp·(T_stack − T_amb); vapour sensible heat; CO = n_CO·283 MJ/kmol; unburnt carbon in ash × 32.8 MJ/kg; "
                  "radiation ASSUMED. Fuel analysis is ASSUMED generic palm-kernel shell (config/fuel_properties.yaml), so this is an OWN-ESTIMATE; "
-                 "the gap to the HTF heat-balance η is a closure check, not an error bar.", "chem_loss")
+                 "the gap to the HTF heat-balance η is a closure check, not an error bar.", "chem_loss",
+            title="Heat-loss breakdown: now vs. proposed")
     cv = v["curve"]
     fig = go.Figure()
     fig.add_scatter(x=cv["O2_pct"], y=cv["dry_flue_gas_loss"], name="dry flue-gas loss", line=dict(color="#002E61"))
@@ -72,7 +73,8 @@ def _chem_section(df, row, rec, is_def, label):
     fig.update_xaxes(title_text="flue-gas O2, % dry")
     fig.update_yaxes(title_text="loss, % of LHV")
     C.chart(fig, f"{label}. Trade-off at this row's stack temperature, load, moisture and grate: stack loss falls as air is cut, CO loss (ridge CO model, OWN-ESTIMATE) rises when air gets short; "
-                 "red band = below the synthetic O2 floor (ASSUMED / NOT APPROVED). CO curve is blank where CO is not measured.", "chem_curve")
+                 "red band = below the synthetic O2 floor (ASSUMED / NOT APPROVED). CO curve is blank where CO is not measured.", "chem_curve",
+            title="Excess-air trade-off: stack loss vs. CO loss")
     if "objective" in v:
         st.markdown("**Optimizer objective, term by term** (lower is better; weights OWN-ESTIMATE, set before results, not tuned): J = ΔSFC + λ₁·Δfan power + λ₂·|move| + λ₃·interval width")
         o = pd.DataFrame({"Term": list(v["objective"]), "Value (kg/GJ-equivalent)": [f"{x:+.3f}" for x in v["objective"].values()]})

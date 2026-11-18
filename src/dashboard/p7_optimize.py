@@ -78,7 +78,8 @@ def _render_body():
         fig.update_layout(yaxis=dict(autorange="reversed"), height=300)
         fig.update_xaxes(title_text="efficiency gain, percentage points (each lever alone)")
         C.chart(fig, f"{label}. Lever sensitivities from the loss balance: air to the best allowed O2, stack temperature −{ov.load_ops()['sensitivity_dt_k']:g} K, fuel moisture, CO burn-out, unburnt carbon. "
-                     "OWN-ESTIMATE on an ASSUMED fuel analysis; the stack and moisture levers are not real-time controls.", "levers", height=300)
+                     "OWN-ESTIMATE on an ASSUMED fuel analysis; the stack and moisture levers are not real-time controls.", "levers", height=300,
+                title="Efficiency gain per lever")
     with c2:
         mw = s["loss_mw"]
         names = ["Fuel heat in", "Dry flue gas", "Water vapour", "CO", "Unburnt carbon", "Radiation / other (ASSUMED)", "Unaccounted (closure)", "Useful heat to HTF"]
@@ -88,7 +89,8 @@ def _render_body():
         fig.update_layout(height=300)
         fig.update_yaxes(title_text="MW")
         C.chart(fig, f"{label}. Heat balance now: fuel heat = fuel kg/h × LHV ÷ 3600; losses from the chemistry; useful heat = HTF flow × cp × ΔT (property table). "
-                     "'Unaccounted' is what the chemistry does not explain (the synthetic efficiency is a generator assumption, so a gap is expected).", "heat", height=300)
+                     "'Unaccounted' is what the chemistry does not explain (the synthetic efficiency is a generator assumption, so a gap is expected).", "heat", height=300,
+                title="Heat balance waterfall (MW)")
 
     st.subheader("Predicted effect of a forward-fan move (grate unchanged)")
     cd = s["candidates"].copy()
@@ -128,7 +130,10 @@ def _render_body():
     fig.add_scatter(x=tr["t"], y=tr["o2"], name="flue O2 % dry", line=dict(color="#CC0033"), secondary_y=True)
     if best:
         fig.add_hline(y=s["o2_best"], line=dict(color="#CC0033", dash="dash"), secondary_y=True, annotation_text="best allowed O2")
+    C.bands(fig, tr["t"], tr["eta_hb"], "eta_pct", "#009933", label=False)
+    C.bands(fig, tr["t"], tr["o2"], "O2_pct_dry", "#CC0033", secondary_y=True, label=False)
     fig.update_yaxes(title_text="efficiency, %", secondary_y=False, range=[60, 95])
     fig.update_yaxes(title_text="O2, % dry", secondary_y=True, range=[4, 12], showgrid=False)
     C.chart(fig, f"{label}. Trailing 6 h to the replay cursor, 5-min rows: indirect efficiency from the loss balance, HTF heat-balance efficiency where computable, and flue O2 against the best allowed O2 for the current row. "
-                 "Moisture per row is the lab value of its fuel lot (never interpolated).", "trend")
+                 "Moisture per row is the lab value of its fuel lot (never interpolated).", "trend",
+            title="Efficiency and flue O2 trend (trailing 6 h)")

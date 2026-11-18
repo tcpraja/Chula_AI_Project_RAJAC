@@ -295,12 +295,172 @@ def provenance(text):
 COLORWAY = ["#002E61", "#009933", "#CC0033", "#4d7aa8", "#66b87a", "#e07a90"]
 
 
-def chart(fig, prov, key=None, height=300):
+# ---------------------------------------------------------------- operating window + SPC bands
+# Operating window = synthetic guardrail envelope (config/guardrail_limits.yaml, ASSUMED / NOT APPROVED; CLAUDE rule 4).
+# value: limit key holding [lo, hi], or (lo_key, hi_key) for one-sided limits; scale converts fractions to %.
+WINDOWS = {"O2_pct_dry": (("o2_floor_pct", None), 1.0), "CO_ppm": ((None, "co_limit_ppm"), 1.0),
+           "furnace_temp_C": ((None, "furnace_temp_limit_c"), 1.0), "HTF_Tout_C": ((None, "htf_out_limit_c"), 1.0),
+           "draft_pa": ("draft_band_pa", 1.0), "HTF_flow_m3h": ("flow_valid_m3h", 1.0), "eta_pct": ("eta_valid", 100.0),
+           "FD_command_pct": ("fd_range_pct", 1.0), "grate_command_pct": ("grate_range_pct", 1.0)}
+SPC_LABELS = {"HTF_Tin_C": "HTF inlet temp, °C", "HTF_Tout_C": "HTF outlet temp, °C", "HTF_flow_m3h": "HTF flow, m³/h",
+              "fuel_rate_aligned_kgh": "Fuel rate, kg/h", "SFC_kg_GJ": "SFC, kg/GJ", "Q_out_MW": "Useful heat, MW", "eta_pct": "Efficiency η, %",
+              "fuel_moisture_wb_pct": "Fuel moisture, % wb", "LHV_used_MJkg": "LHV used, MJ/kg", "O2_pct_dry": "Flue O2, % dry",
+              "CO_ppm": "CO, ppm", "FD_command_pct": "FD command, %", "ID_command_pct": "ID command, %", "grate_command_pct": "Grate command, %",
+              "furnace_temp_C": "Furnace temp, °C", "flue_temp_C": "Flue temp, °C", "stack_temp_C": "Stack temp, °C", "draft_pa": "Furnace draft, Pa",
+              "unburnt_in_ash_pct": "Unburnt in ash, %", "economizer_dP_pa": "Economizer dP, Pa"}
+SPC_NOTE = ("Bands: shaded = SPC control band, CL ± 3σ (OWN-ESTIMATE: mean and overall SD of the reference rows; overall SD, not moving range, "
+            "because 5-min data are autocorrelated); red lines = operating window ({prov}). ● orange = beyond ±3σ, ✕ red = outside the window.")
+
+
+@st.cache_data(show_spinner=False)
+def _lhv_envelope():
+    import yaml
+    return yaml.safe_load((ROOT / "config" / "cleaning_engineering.yaml").read_text(encoding="utf-8"))["lhv_band"]["envelope_mjkg"]
+
+
+def window(col):
+    """(lo, hi, status) of the operating window for a column; status '' when none is defined."""
+    if col == "LHV_used_MJkg":
+        lo, hi = _lhv_envelope()
+        return float(lo), float(hi), "ASSUMED (LHV plausibility envelope)"
+    if col not in WINDOWS:
+        return None, None, ""
+    spec, scale = WINDOWS[col]
+    L = limits()["limits"]
+    raw = L.get(spec) if isinstance(spec, str) else [L.get(spec[0]) if spec[0] else None, L.get(spec[1]) if spec[1] else None]
+    if raw is None or isinstance(raw, str) or any(isinstance(v, str) for v in raw):
+        return None, None, gd.PLACEHOLDER
+    num = [float(v) * scale if v is not None else None for v in raw]
+    return num[0], num[1], "ASSUMED"
+
+
+def _valid(df, col):
+    s = pd.to_numeric(df[col], errors="coerce")
+    if col == "CO_ppm" and "co_available" in df.columns:
+        s = s.where(df["co_available"] == 1)
+    if col == "eta_pct" and "status_eta" in df.columns:
+        s = s.where(df["status_eta"] != "UNAVAILABLE")
+    if col == "SFC_kg_GJ" and "status_SFC" in df.columns:
+        s = s.where(df["status_SFC"] == "CALCULATED")
+    if col == "fuel_moisture_wb_pct" and "fuel_lot" in df.columns:   # one lab value per lot, not one per 5-min row
+        return s.groupby(df["fuel_lot"]).first().dropna()
+    return s.dropna()
+
+
+def _ref_stats(df):
+    """Reference period for the control limits: training split (else the first 30 % of the file), steady ELIGIBLE rows when ≥ 30."""
+    if "split" in df.columns and (df["split"] == "train").any():
+        r, src = df[df["split"] == "train"], "training split"
+    else:
+        r, src = df.iloc[: max(10, int(len(df) * 0.3))], "first 30 % of the file"
+    if "eligibility" in r.columns:
+        e = r[r["eligibility"].astype(str).str.startswith("ELIGIBLE")]
+        if len(e) >= 30:
+            r, src = e, src + ", steady ELIGIBLE rows"
+    out = {}
+    for col in SPC_LABELS:
+        if col in r.columns:
+            s = _valid(r, col)
+            if len(s) >= 10 and s.std() > 0:
+                m, sd = float(s.mean()), float(s.std())
+                lcl = m - 3 * sd if col == "draft_pa" else max(0.0, m - 3 * sd)   # physical floor: only draft can be negative
+                out[col] = {"cl": m, "sigma": sd, "lcl": lcl, "ucl": m + 3 * sd, "n": int(len(s)), "src": src}
+    return out
+
+
+@st.cache_data(show_spinner=False)
+def _default_stats():
+    return _ref_stats(load_default())
+
+
+def spc_stats():
+    df, _, is_def = active_frame()
+    return _default_stats() if is_def else _ref_stats(df)
+
+
+def _rgba(hex_color, a):
+    h = hex_color.lstrip("#")
+    return f"rgba({int(h[0:2], 16)},{int(h[2:4], 16)},{int(h[4:6], 16)},{a})"
+
+
+def bands(fig, t, y, col, color="#002E61", secondary_y=False, label=True):
+    """Draw the SPC control band (CL ± 3σ) and the operating window for one series, and mark the points outside either."""
+    kw = {"secondary_y": True} if secondary_y else {}
+    s = spc_stats().get(col)
+    lo, hi, _ = window(col)
+    y = pd.to_numeric(pd.Series(y).reset_index(drop=True), errors="coerce")
+    t = pd.Series(t).reset_index(drop=True)
+    font = dict(size=9, color=color)
+    if s:
+        fig.add_hrect(y0=s["lcl"], y1=s["ucl"], fillcolor=_rgba(color, .07), line_width=0, layer="below", **kw)
+        fig.add_hline(y=s["cl"], line=dict(color=color, width=1, dash="dot"), **kw,
+                      **({"annotation_text": f"CL {s['cl']:,.3g}", "annotation_position": "top left", "annotation_font": font} if label else {}))
+        for v, nm in ((s["ucl"], "UCL"), (s["lcl"], "LCL")):
+            fig.add_hline(y=v, line=dict(color=_rgba(color, .55), width=1, dash="dash"), **kw,
+                          **({"annotation_text": f"{nm} {v:,.3g}", "annotation_position": "top left" if nm == "UCL" else "bottom left",
+                              "annotation_font": font} if label else {}))
+        ooc = (y > s["ucl"]) | (y < s["lcl"])
+    else:
+        ooc = pd.Series(False, index=y.index)
+    red = "#CC0033"
+    out = pd.Series(False, index=y.index)
+    for v, nm in ((lo, "window min"), (hi, "window max")):
+        if v is not None:
+            fig.add_hline(y=v, line=dict(color=red, width=1.6), annotation_text=f"{nm} {v:,.4g}", annotation_position="top right" if nm == "window max" else "bottom right",
+                          annotation_font=dict(size=9, color=red), **kw)
+            out |= (y > v) if nm == "window max" else (y < v)
+    name = SPC_LABELS.get(col, col)
+    ooc &= ~out
+    if ooc.any():
+        fig.add_scatter(x=t[ooc], y=y[ooc], mode="markers", marker=dict(size=6, color="#f28e2b", line=dict(width=0.5, color="#fff")),
+                        name=f"{name}: beyond ±3σ", legendgroup="ooc", **kw)
+    if out.any():
+        fig.add_scatter(x=t[out], y=y[out], mode="markers", marker=dict(size=7, color=red, symbol="x"), name=f"{name}: outside window", legendgroup="out", **kw)
+    fig.update_layout(meta={"spc": True})
+
+
+def window_table(df, cols, prov_label):
+    """Operating window + SPC limits + in-view behaviour per signal (one row each)."""
+    stats, rows = spc_stats(), []
+    for col in cols:
+        if col not in df.columns:
+            continue
+        s, (lo, hi, status), v = stats.get(col), window(col), _valid(df, col)
+        win = "none defined (SPC only)" if not status else (status if status == gd.PLACEHOLDER else
+              (f"{lo:,.4g} – {hi:,.4g}" if lo is not None and hi is not None else (f"≥ {lo:,.4g}" if lo is not None else f"≤ {hi:,.4g}")))
+        out_w = ((v < lo) if lo is not None else False) | ((v > hi) if hi is not None else False)
+        cpk = None
+        if len(v) > 1 and v.std() > 0 and (lo is not None or hi is not None):
+            m, sd = v.mean(), v.std()
+            cpk = min(([(m - lo) / (3 * sd)] if lo is not None else []) + ([(hi - m) / (3 * sd)] if hi is not None else []))
+        rows.append({"Signal": SPC_LABELS.get(col, col), "Operating window": win,
+                     "CL": round(s["cl"], 3) if s else None, "LCL (−3σ)": round(s["lcl"], 3) if s else None,
+                     "UCL (+3σ)": round(s["ucl"], 3) if s else None, "σ": round(s["sigma"], 3) if s else None,
+                     "Reference n": s["n"] if s else None, "Points in view": int(len(v)),
+                     "% outside window": round(100 * float(np.mean(out_w)), 2) if status and status != gd.PLACEHOLDER and len(v) else None,
+                     "% beyond ±3σ": round(100 * float(((v > s["ucl"]) | (v < s["lcl"])).mean()), 2) if s and len(v) else None,
+                     "Cpk vs window": round(float(cpk), 2) if cpk is not None and np.isfinite(cpk) else None})
+    st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+    src = next(iter(stats.values()))["src"] if stats else "n/a"
+    provenance(f"{prov_label}. Window = {limits().get('provenance', 'SYNTHETIC_ASSUMED_NOT_APPROVED')} guardrail envelope (LHV: cleaning-config plausibility envelope). "
+               f"CL / LCL / UCL = mean and mean ± 3 × overall SD of the reference rows ({src}); OWN-ESTIMATE. % columns and Cpk = rows in the current time filter "
+               "(numerator = rows outside, denominator = valid rows in view; CO only where measured, moisture one value per fuel lot). "
+               "Cpk = distance from the in-view mean to the nearest window limit ÷ 3σ (in-view σ); < 1.33 means the process is tight against the window. Synthetic data: not a plant capability.")
+
+
+def chart(fig, prov, key=None, height=300, title=None):
     fig.update_layout(template="plotly_white", height=height, margin=dict(l=8, r=8, t=28, b=8), colorway=COLORWAY, hovermode="x unified",
                       legend=dict(orientation="h", y=1.14, x=0, font=dict(size=11)), paper_bgcolor="#ffffff", plot_bgcolor="#fafbfd",
                       font=dict(family="Arial, Calibri, sans-serif", size=12, color="#333333"))
+    if title:
+        # title in the top margin; legend moves just above the plot area so the two never overlap
+        fig.update_layout(title=dict(text=f"<b>{title}</b>", x=0, xanchor="left", xref="paper", y=1, yref="container", yanchor="top",
+                                     pad=dict(t=8), font=dict(size=14, color="#002E61")),
+                          margin=dict(t=72), legend=dict(y=1.02, yanchor="bottom"))
     fig.update_xaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#dfe5ee", linewidth=1)
     fig.update_yaxes(gridcolor="#e6e9ee", zeroline=False, showline=True, mirror=True, linecolor="#dfe5ee", linewidth=1)
+    if isinstance(fig.layout.meta, dict) and fig.layout.meta.get("spc"):
+        prov = f"{prov} {SPC_NOTE.format(prov=limits().get('provenance', 'SYNTHETIC_ASSUMED_NOT_APPROVED'))}"
     with st.container(border=True):
         st.plotly_chart(fig, width="stretch", key=key)
         provenance(prov)

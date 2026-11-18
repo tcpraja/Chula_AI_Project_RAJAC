@@ -36,14 +36,16 @@ def _render_body():
         mm = p.dropna(subset=["fuel_moisture_wb_pct"])
         fig.add_scatter(x=mm["t"], y=mm["fuel_moisture_wb_pct"], mode="lines+markers", marker=dict(size=3), name="moisture % wb")
         n_lot = _lot_lines(fig, p)
+        C.bands(fig, mm["t"], mm["fuel_moisture_wb_pct"], "fuel_moisture_wb_pct")
         fig.update_yaxes(title_text="% wet basis")
-        C.chart(fig, f"{label}. Fuel moisture, % wet basis, lab sample per lot (gaps = no sample; not imputed). Dotted lines = fuel-lot changes ({n_lot} in view).", "m")
+        C.chart(fig, f"{label}. Fuel moisture, % wet basis, lab sample per lot (gaps = no sample; not imputed). Dotted lines = fuel-lot changes ({n_lot} in view).", "m", title="Fuel moisture by lot")
     with c2:
         lhv = p.dropna(subset=["LHV_used_MJkg"])
         fig = go.Figure(go.Scatter(x=lhv["t"], y=lhv["LHV_used_MJkg"], name="LHV used MJ/kg"))
         _lot_lines(fig, p)
+        C.bands(fig, lhv["t"], lhv["LHV_used_MJkg"], "LHV_used_MJkg")
         fig.update_yaxes(title_text="MJ/kg as-fired")
-        C.chart(fig, f"{label}. As-fired LHV used in the heat balance, MJ/kg. Basis per row below; only LAB_LOT is a lab value, the others are bands/estimates (PROXY).", "lhv")
+        C.chart(fig, f"{label}. As-fired LHV used in the heat balance, MJ/kg. Basis per row below; only LAB_LOT is a lab value, the others are bands/estimates (PROXY).", "lhv", title="Fuel heating value (LHV) used")
         vc = df["LHV_basis"].value_counts()
         st.markdown("**LHV status** " + " · ".join(f"{C.badge('CALCULATED' if k == 'LAB_LOT' else 'PROXY')} {k} {v / n_all:.0%}" for k, v in vc.items()))
 
@@ -51,21 +53,21 @@ def _render_body():
     c1, c2 = st.columns(2)
     with c1:
         fig = go.Figure(go.Scatter(x=p["t"], y=p["O2_pct_dry"], name="O2 % dry"))
-        fig.add_hline(y=C.limits()["limits"]["o2_floor_pct"], line=dict(color="#d1495b", dash="dash"), annotation_text="synthetic floor (ASSUMED)")
+        C.bands(fig, p["t"], p["O2_pct_dry"], "O2_pct_dry")
         fig.update_yaxes(title_text="% dry")
-        C.chart(fig, f"{label}. Flue-gas O2, % dry. Floor is a synthetic normalized envelope (ASSUMED / NOT APPROVED).", "o2")
+        C.chart(fig, f"{label}. Flue-gas O2, % dry. Floor is a synthetic normalized envelope (ASSUMED / NOT APPROVED).", "o2", title="Flue-gas oxygen (O2)")
     with c2:
         if (df["co_available"] == 0).all():
             st.error("CO sensor not available in this data")
         else:
             co = p.assign(CO=p["CO_ppm"].where(p["co_available"] == 1))
             fig = go.Figure(go.Scatter(x=co["t"], y=co["CO"], name="CO ppm"))
-            fig.add_hline(y=C.limits()["limits"]["co_limit_ppm"], line=dict(color="#d1495b", dash="dash"), annotation_text="synthetic limit (ASSUMED)")
+            C.bands(fig, co["t"], co["CO"].clip(upper=1000.0), "CO_ppm")
             cap = 1000.0
             n_clip = int((co["CO"] > cap).sum())
             fig.update_yaxes(title_text="ppm", range=[0, cap])
             C.chart(fig, f"{label}. CO, ppm; blank where the sensor is not available. Limit is a synthetic envelope. Axis clipped at {cap:,.0f} ppm so the limit stays readable: "
-                         f"{n_clip} plotted point(s) above it are off-scale (not removed from the data).", "co")
+                         f"{n_clip} plotted point(s) above it are off-scale (not removed from the data).", "co", title="Carbon monoxide (CO)")
             share = (df["co_available"] == 0).mean()
             if share:
                 st.warning(f"CO sensor not available for {share:.0%} of rows in range — those rows can only be DIAGNOSTIC ONLY (no advice).")
@@ -76,39 +78,50 @@ def _render_body():
         fig = go.Figure()
         fig.add_scatter(x=p["t"], y=p["FD_command_pct"], name="FD command %")
         fig.add_scatter(x=p["t"], y=p["ID_command_pct"], name="ID command %")
+        C.bands(fig, p["t"], p["FD_command_pct"], "FD_command_pct", C.COLORWAY[0], label=False)
+        C.bands(fig, p["t"], p["ID_command_pct"], "ID_command_pct", C.COLORWAY[1], label=False)
         fig.update_yaxes(title_text="% of command range")
-        C.chart(fig, f"{label}. Fan COMMANDS, % — command, not airflow (no airflow measurement exists). Efficiency ≠ fan command.", "fans")
+        C.chart(fig, f"{label}. Fan COMMANDS, % — command, not airflow (no airflow measurement exists). Efficiency ≠ fan command.", "fans", title="FD / ID fan commands")
         st.caption("⚠ FD / ID values are **command, not airflow**.")
     with c2:
         fig = go.Figure(go.Scatter(x=p["t"], y=p["grate_command_pct"], name="grate command %"))
+        C.bands(fig, p["t"], p["grate_command_pct"], "grate_command_pct")
         fig.update_yaxes(title_text="% of command range")
-        C.chart(fig, f"{label}. Grate speed COMMAND, % (command, not measured grate position).", "grate")
+        C.chart(fig, f"{label}. Grate speed COMMAND, % (command, not measured grate position).", "grate", title="Grate speed command")
 
     # temps, draft
     c1, c2 = st.columns(2)
     with c1:
         fig = go.Figure()
-        for col, nm in (("furnace_temp_C", "furnace °C"), ("flue_temp_C", "flue °C"), ("stack_temp_C", "stack °C")):
+        for k, (col, nm) in enumerate((("furnace_temp_C", "furnace °C"), ("flue_temp_C", "flue °C"), ("stack_temp_C", "stack °C"))):
             fig.add_scatter(x=p["t"], y=p[col], name=nm)
-        C.chart(fig, f"{label}. Furnace, flue and stack temperatures, °C, 5-min rows. Synthetic envelope: furnace ≤ {C.limits()['limits']['furnace_temp_limit_c']:g} °C (ASSUMED).", "temps")
+            C.bands(fig, p["t"], p[col], col, C.COLORWAY[k], label=False)
+        C.chart(fig, f"{label}. Furnace, flue and stack temperatures, °C, 5-min rows. Synthetic envelope: furnace ≤ {C.limits()['limits']['furnace_temp_limit_c']:g} °C (ASSUMED).", "temps", title="Furnace, flue and stack temperatures")
     with c2:
         lim = C.limits()["limits"]["draft_band_pa"]
         fig = go.Figure(go.Scatter(x=p["t"], y=p["draft_pa"], name="draft Pa"))
-        fig.add_hrect(y0=lim[0], y1=lim[1], fillcolor="rgba(60,160,90,.15)", line_width=0, annotation_text="synthetic band")
+        fig.add_hrect(y0=lim[0], y1=lim[1], fillcolor="rgba(60,160,90,.10)", line_width=0, layer="below", annotation_text="operating window")
+        C.bands(fig, p["t"], p["draft_pa"], "draft_pa")
         fig.update_yaxes(title_text="Pa (negative = normal)")
-        C.chart(fig, f"{label}. Furnace draft, Pa. Shaded = synthetic draft band (ASSUMED / NOT APPROVED).", "draft")
+        C.chart(fig, f"{label}. Furnace draft, Pa. Shaded = synthetic draft band (ASSUMED / NOT APPROVED).", "draft", title="Furnace draft")
 
     # ash / economizer
     c1, c2 = st.columns(2)
     with c1:
         u = df.dropna(subset=["unburnt_in_ash_pct"])
         fig = go.Figure(go.Scatter(x=u["t"], y=u["unburnt_in_ash_pct"], mode="markers", name="unburnt in ash %"))
+        C.bands(fig, u["t"], u["unburnt_in_ash_pct"], "unburnt_in_ash_pct")
         fig.update_yaxes(title_text="% unburnt in ash")
-        C.chart(fig, f"{label}. Unburnt carbon in ash, %, lab samples only ({len(u)} in range); not interpolated.", "ash")
+        C.chart(fig, f"{label}. Unburnt carbon in ash, %, lab samples only ({len(u)} in range); not interpolated.", "ash", title="Unburnt carbon in ash")
     with c2:
         fig = go.Figure(go.Scatter(x=p["t"], y=p["economizer_dP_pa"], name="economizer dP Pa"))
+        C.bands(fig, p["t"], p["economizer_dP_pa"], "economizer_dP_pa")
         fig.update_yaxes(title_text="Pa")
-        C.chart(fig, f"{label}. Economizer differential pressure, Pa; a rising trend would indicate fouling (synthetic).", "dp")
+        C.chart(fig, f"{label}. Economizer differential pressure, Pa; a rising trend would indicate fouling (synthetic).", "dp", title="Economizer differential pressure")
+
+    st.subheader("Operating window and SPC control limits")
+    C.window_table(df, ["fuel_moisture_wb_pct", "LHV_used_MJkg", "O2_pct_dry", "CO_ppm", "FD_command_pct", "ID_command_pct", "grate_command_pct",
+                        "furnace_temp_C", "flue_temp_C", "stack_temp_C", "draft_pa", "unburnt_in_ash_pct", "economizer_dP_pa"], label)
 
     # faults
     st.subheader("Faults and abnormal conditions")

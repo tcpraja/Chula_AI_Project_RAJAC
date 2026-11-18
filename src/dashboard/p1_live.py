@@ -107,27 +107,39 @@ def _render_body():
     fig.add_scatter(x=w["t"], y=w["HTF_Tin_C"], name="HTF in °C", row=1, col=1)
     fig.add_scatter(x=w["t"], y=w["HTF_Tout_C"], name="HTF out °C", row=1, col=1)
     fig.add_scatter(x=w["t"], y=w["HTF_flow_m3h"], name="HTF flow m³/h", line=dict(dash="dot"), secondary_y=True)
+    C.bands(fig, w["t"], w["HTF_Tin_C"], "HTF_Tin_C", C.COLORWAY[0], label=False)
+    C.bands(fig, w["t"], w["HTF_Tout_C"], "HTF_Tout_C", C.COLORWAY[1], label=False)
+    C.bands(fig, w["t"], w["HTF_flow_m3h"], "HTF_flow_m3h", C.COLORWAY[2], secondary_y=True, label=False)
     fig.update_yaxes(title_text="°C", secondary_y=False)
     fig.update_yaxes(title_text="m³/h", secondary_y=True)
-    C.chart(fig, f"{label}. HTF temperatures and volumetric flow, trailing {win} to the replay cursor, 5-min rows. Measured-in-simulation signals, no uncertainty shown.", "c1")
+    C.chart(fig, f"{label}. HTF temperatures and volumetric flow, trailing {win} to the replay cursor, 5-min rows. Measured-in-simulation signals, no uncertainty shown.", "c1",
+            title="HTF inlet / outlet temperature and flow")
 
     fig = go.Figure(go.Scatter(x=w["t"], y=w["fuel_rate_aligned_kgh"], name="fuel kg/h"))
+    C.bands(fig, w["t"], w["fuel_rate_aligned_kgh"], "fuel_rate_aligned_kgh")
     fig.update_yaxes(title_text="kg/h")
-    C.chart(fig, f"{label}. Fuel mass flow (belt/volumetric basis per row, shifted by the estimated fuel→heat lag), kg/h, trailing {win}.", "c2")
+    C.chart(fig, f"{label}. Fuel mass flow (belt/volumetric basis per row, shifted by the estimated fuel→heat lag), kg/h, trailing {win}.", "c2", title="Fuel feed rate (lag-aligned)")
 
     fig = go.Figure()
     fig.add_scatter(x=w["t"], y=w["p75"], line=dict(width=0), showlegend=False, hoverinfo="skip")
     fig.add_scatter(x=w["t"], y=w["p25"], line=dict(width=0), fill="tonexty", fillcolor="rgba(0,46,97,.12)", name="baseline P25–P75")
     fig.add_scatter(x=w["t"], y=w["SFC_kg_GJ"], name="SFC kg/GJ", line=dict(color="#009933"))
+    C.bands(fig, w["t"], w["SFC_kg_GJ"].where(w["status_SFC"] == "CALCULATED"), "SFC_kg_GJ", "#009933")
     fig.update_yaxes(title_text="kg/GJ")
     C.chart(fig, f"{label}. SFC = fuel mass (kg) ÷ useful HTF heat (GJ), per 5-min row; PROXY/UNAVAILABLE rows left blank or flagged on the tile. "
-                 "Band = P25–P75 of training-split eligible CALCULATED SFC in the same 1 MW load band (OWN-ESTIMATE), a reference, not a target.", "c3")
+                 "Band = P25–P75 of training-split eligible CALCULATED SFC in the same 1 MW load band (OWN-ESTIMATE), a reference, not a target.", "c3",
+            title="Specific fuel consumption vs. baseline band")
 
     fig = make_subplots(specs=[[{"secondary_y": True}]])
     fig.add_scatter(x=w["t"], y=w["Q_out_MW"], name="useful MW")
     eta = w["eta_pct"].where(w["status_eta"] != "UNAVAILABLE")
     fig.add_scatter(x=w["t"], y=eta, name="η % (only where computable)", line=dict(dash="dot"), secondary_y=True)
+    C.bands(fig, w["t"], w["Q_out_MW"], "Q_out_MW", C.COLORWAY[0], label=False)
+    C.bands(fig, w["t"], eta, "eta_pct", C.COLORWAY[1], secondary_y=True, label=False)
     fig.update_yaxes(title_text="MW", secondary_y=False)
     fig.update_yaxes(title_text="η %", secondary_y=True)
     C.chart(fig, f"{label}. Useful heat = m_HTF·cp(T)·ΔT (HTF property table, no water cp), MW; η = useful heat ÷ fuel LHV heat (PROXY when LHV is estimated). "
-                 "Gaps = not computable.", "c4")
+                 "Gaps = not computable.", "c4", title="Useful heat output and efficiency")
+
+    with st.expander("Operating window and SPC control limits (table)", expanded=False):
+        C.window_table(w, ["HTF_Tin_C", "HTF_Tout_C", "HTF_flow_m3h", "fuel_rate_aligned_kgh", "SFC_kg_GJ", "Q_out_MW", "eta_pct"], f"{label}, trailing {win}")

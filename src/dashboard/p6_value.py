@@ -52,7 +52,8 @@ def _render_body():
                 marker_color=["#999999", "#009933"])
     fig.update_yaxes(range=[min(98, 100 + es["lo"] - 0.3), 100.3], title_text="SFC index (base = 100)")
     C.chart(fig, f"{label}. Index = 100 × (1 + share of rows with ADVICE × mean predicted ΔSFC ÷ SFC), next-interval, same useful heat; error bar = mean of row-level 90 % "
-                 "bootstrap bounds × share (coefficient uncertainty only, not model error). Assumes every advice is followed, which no one has verified. OWN-ESTIMATE model on synthetic data.", "idx")
+                 "bootstrap bounds × share (coefficient uncertainty only, not model error). Assumes every advice is followed, which no one has verified. OWN-ESTIMATE model on synthetic data.", "idx",
+            title="Simulated SFC index: baseline vs. advice followed")
 
     st.subheader("THB sensitivity (ASSUMED inputs — edit them)")
     c = st.columns(5)
@@ -82,7 +83,8 @@ def _render_body():
                                         arrayminus=(t["saving point"] - t["saving pessimistic"]))))
     fig.update_yaxes(title_text="THB/yr (simulated)")
     C.chart(fig, f"{label}. THB/yr = simulated ΔSFC share × fuel tonnes/yr ({fuel_kgh:,.0f} kg/h mean over scored rows × {hours:,.0f} h) × ASSUMED price × fuel_price_index scenario "
-                 f"(P10/P50/P90 of the synthetic index relative to P50). Bars = point; whiskers = 90 % bounds. ASSUMED inputs, synthetic effect: not a savings claim.", "thb")
+                 f"(P10/P50/P90 of the synthetic index relative to P50). Bars = point; whiskers = 90 % bounds. ASSUMED inputs, synthetic effect: not a savings claim.", "thb",
+            title="Simulated fuel saving by price scenario (THB/yr)")
 
     st.subheader("Electricity")
     fan_kw = float((scored["fan_power_kW_FD"] + scored["fan_power_kW_ID"]).mean())

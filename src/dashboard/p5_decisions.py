@@ -71,6 +71,7 @@ def _render_body():
     g = a.groupby(["shift_id", "variable"]).size().reset_index(name="changes")
     fig = px.bar(g, x="shift_id", y="changes", color="variable", barmode="group")
     C.chart(fig, "data/raw_synthetic/operator_action_log.csv — count of simulated setpoint/command changes per synthetic shift crew "
-                 f"(OP-A / OP-B / OP-C labels are generator shift IDs), {len(a):,} changes in range, selected time filter.", "shift")
+                 f"(OP-A / OP-B / OP-C labels are generator shift IDs), {len(a):,} changes in range, selected time filter.", "shift",
+            title="Operator changes per shift crew")
     src = a["source"].value_counts()
     st.caption("Change sources in range: " + ", ".join(f"{k} {v}" for k, v in src.items()) + " (EXPLORATION = generator-injected variation).")

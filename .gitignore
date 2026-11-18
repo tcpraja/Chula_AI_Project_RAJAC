@@ -7,3 +7,9 @@ data/operator_log.db
 data/audit_log.db
 data/site_style/
 assets/screenshots/_deck_crops/
+data/audit_log.db-journal
+# real plant reference documents: kept local only, never pushed (CLAUDE rule 1); removed from all history
+HMI_1.jpg
+HMI_2.png
+PID.pdf
+Interlock checking document.pdf
